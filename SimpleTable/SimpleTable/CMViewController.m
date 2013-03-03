@@ -20,7 +20,7 @@
     self.tableData = [[NSMutableArray alloc] init];
     
     // Create and add 10 data items to the table data array
-    for (NSUInteger i = 0; i < 10; i++) {
+    for (NSUInteger i = 0; i < 99999; i++) {
         // The cell will contain a string "Item X"
         NSString *dataString = [NSString stringWithFormat:@"Item %d",i];
         
@@ -30,6 +30,7 @@
     
     // Print out the contents of the array into the log
     NSLog(@"The tableData array contains %@", self.tableData);
+    NSLog(@"The are %d cells initially", self.cellCount);
 }
 
 
@@ -51,10 +52,16 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIndentifier];
     if (!cell) {
+        // A new cell has been created, so increment the counter
+        self.cellCount ++;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIndentifier];
     }
     
     [cell.textLabel setText:[self.tableData objectAtIndex:indexPath.row]];
+    
+    // log the cell count
+    NSLog(@"There are now %d cells",self.cellCount);
+    
     return cell;
 }
 
