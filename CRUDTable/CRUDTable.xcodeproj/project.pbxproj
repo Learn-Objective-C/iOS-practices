@@ -1,0 +1,306 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		41A17FE416E3A782005BB2C2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41A17FE316E3A782005BB2C2 /* UIKit.framework */; };
+		41A17FE616E3A782005BB2C2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41A17FE516E3A782005BB2C2 /* Foundation.framework */; };
+		41A17FE816E3A782005BB2C2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41A17FE716E3A782005BB2C2 /* CoreGraphics.framework */; };
+		41A17FEE16E3A782005BB2C2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FEC16E3A782005BB2C2 /* InfoPlist.strings */; };
+		41A17FF016E3A782005BB2C2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A17FEF16E3A782005BB2C2 /* main.m */; };
+		41A17FF416E3A782005BB2C2 /* LVNAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A17FF316E3A782005BB2C2 /* LVNAppDelegate.m */; };
+		41A17FF616E3A782005BB2C2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FF516E3A782005BB2C2 /* Default.png */; };
+		41A17FF816E3A782005BB2C2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FF716E3A782005BB2C2 /* Default@2x.png */; };
+		41A17FFA16E3A782005BB2C2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FF916E3A782005BB2C2 /* Default-568h@2x.png */; };
+		41A17FFD16E3A782005BB2C2 /* LVNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A17FFC16E3A782005BB2C2 /* LVNViewController.m */; };
+		41A1800016E3A782005BB2C2 /* LVNViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FFE16E3A782005BB2C2 /* LVNViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		41A17FE016E3A782005BB2C2 /* CRUDTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CRUDTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		41A17FE316E3A782005BB2C2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		41A17FE516E3A782005BB2C2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		41A17FE716E3A782005BB2C2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		41A17FEB16E3A782005BB2C2 /* CRUDTable-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CRUDTable-Info.plist"; sourceTree = "<group>"; };
+		41A17FED16E3A782005BB2C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		41A17FEF16E3A782005BB2C2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		41A17FF116E3A782005BB2C2 /* CRUDTable-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CRUDTable-Prefix.pch"; sourceTree = "<group>"; };
+		41A17FF216E3A782005BB2C2 /* LVNAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LVNAppDelegate.h; sourceTree = "<group>"; };
+		41A17FF316E3A782005BB2C2 /* LVNAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LVNAppDelegate.m; sourceTree = "<group>"; };
+		41A17FF516E3A782005BB2C2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		41A17FF716E3A782005BB2C2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		41A17FF916E3A782005BB2C2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		41A17FFB16E3A782005BB2C2 /* LVNViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LVNViewController.h; sourceTree = "<group>"; };
+		41A17FFC16E3A782005BB2C2 /* LVNViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LVNViewController.m; sourceTree = "<group>"; };
+		41A17FFF16E3A782005BB2C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LVNViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		41A17FDD16E3A782005BB2C2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41A17FE416E3A782005BB2C2 /* UIKit.framework in Frameworks */,
+				41A17FE616E3A782005BB2C2 /* Foundation.framework in Frameworks */,
+				41A17FE816E3A782005BB2C2 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		41A17FD716E3A782005BB2C2 = {
+			isa = PBXGroup;
+			children = (
+				41A17FE916E3A782005BB2C2 /* CRUDTable */,
+				41A17FE216E3A782005BB2C2 /* Frameworks */,
+				41A17FE116E3A782005BB2C2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		41A17FE116E3A782005BB2C2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				41A17FE016E3A782005BB2C2 /* CRUDTable.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		41A17FE216E3A782005BB2C2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				41A17FE316E3A782005BB2C2 /* UIKit.framework */,
+				41A17FE516E3A782005BB2C2 /* Foundation.framework */,
+				41A17FE716E3A782005BB2C2 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		41A17FE916E3A782005BB2C2 /* CRUDTable */ = {
+			isa = PBXGroup;
+			children = (
+				41A17FF216E3A782005BB2C2 /* LVNAppDelegate.h */,
+				41A17FF316E3A782005BB2C2 /* LVNAppDelegate.m */,
+				41A17FFB16E3A782005BB2C2 /* LVNViewController.h */,
+				41A17FFC16E3A782005BB2C2 /* LVNViewController.m */,
+				41A17FFE16E3A782005BB2C2 /* LVNViewController.xib */,
+				41A17FEA16E3A782005BB2C2 /* Supporting Files */,
+			);
+			path = CRUDTable;
+			sourceTree = "<group>";
+		};
+		41A17FEA16E3A782005BB2C2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				41A17FEB16E3A782005BB2C2 /* CRUDTable-Info.plist */,
+				41A17FEC16E3A782005BB2C2 /* InfoPlist.strings */,
+				41A17FEF16E3A782005BB2C2 /* main.m */,
+				41A17FF116E3A782005BB2C2 /* CRUDTable-Prefix.pch */,
+				41A17FF516E3A782005BB2C2 /* Default.png */,
+				41A17FF716E3A782005BB2C2 /* Default@2x.png */,
+				41A17FF916E3A782005BB2C2 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		41A17FDF16E3A782005BB2C2 /* CRUDTable */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 41A1800316E3A782005BB2C2 /* Build configuration list for PBXNativeTarget "CRUDTable" */;
+			buildPhases = (
+				41A17FDC16E3A782005BB2C2 /* Sources */,
+				41A17FDD16E3A782005BB2C2 /* Frameworks */,
+				41A17FDE16E3A782005BB2C2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CRUDTable;
+			productName = CRUDTable;
+			productReference = 41A17FE016E3A782005BB2C2 /* CRUDTable.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		41A17FD816E3A782005BB2C2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = LVN;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = home.vn;
+			};
+			buildConfigurationList = 41A17FDB16E3A782005BB2C2 /* Build configuration list for PBXProject "CRUDTable" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 41A17FD716E3A782005BB2C2;
+			productRefGroup = 41A17FE116E3A782005BB2C2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				41A17FDF16E3A782005BB2C2 /* CRUDTable */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		41A17FDE16E3A782005BB2C2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41A17FEE16E3A782005BB2C2 /* InfoPlist.strings in Resources */,
+				41A17FF616E3A782005BB2C2 /* Default.png in Resources */,
+				41A17FF816E3A782005BB2C2 /* Default@2x.png in Resources */,
+				41A17FFA16E3A782005BB2C2 /* Default-568h@2x.png in Resources */,
+				41A1800016E3A782005BB2C2 /* LVNViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		41A17FDC16E3A782005BB2C2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				41A17FF016E3A782005BB2C2 /* main.m in Sources */,
+				41A17FF416E3A782005BB2C2 /* LVNAppDelegate.m in Sources */,
+				41A17FFD16E3A782005BB2C2 /* LVNViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		41A17FEC16E3A782005BB2C2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				41A17FED16E3A782005BB2C2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		41A17FFE16E3A782005BB2C2 /* LVNViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				41A17FFF16E3A782005BB2C2 /* en */,
+			);
+			name = LVNViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		41A1800116E3A782005BB2C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		41A1800216E3A782005BB2C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		41A1800416E3A782005BB2C2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CRUDTable/CRUDTable-Prefix.pch";
+				INFOPLIST_FILE = "CRUDTable/CRUDTable-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		41A1800516E3A782005BB2C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CRUDTable/CRUDTable-Prefix.pch";
+				INFOPLIST_FILE = "CRUDTable/CRUDTable-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		41A17FDB16E3A782005BB2C2 /* Build configuration list for PBXProject "CRUDTable" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41A1800116E3A782005BB2C2 /* Debug */,
+				41A1800216E3A782005BB2C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		41A1800316E3A782005BB2C2 /* Build configuration list for PBXNativeTarget "CRUDTable" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				41A1800416E3A782005BB2C2 /* Debug */,
+				41A1800516E3A782005BB2C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 41A17FD816E3A782005BB2C2 /* Project object */;
+}

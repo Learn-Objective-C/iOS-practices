@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BNViewController : UIViewController
+@interface BNViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) NSArray *tableData;
+@property (strong, nonatomic) IBOutlet UITableView *theTableView;
 
 @end

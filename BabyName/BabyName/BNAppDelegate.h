@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class BNName;
 
 @class BNViewController;
 
@@ -15,5 +16,9 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) BNViewController *viewController;
+
+@property (strong, nonatomic) NSMutableArray *tableData;
+
+- (BNName *)createNameWithNonsenseDataWithIndex:(int)index;
 
 @end

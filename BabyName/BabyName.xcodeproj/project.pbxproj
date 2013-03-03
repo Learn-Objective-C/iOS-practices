@@ -19,6 +19,13 @@
 		4196D9D416E22D9200C99F99 /* BNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4196D9D316E22D9200C99F99 /* BNViewController.m */; };
 		4196D9D716E22D9200C99F99 /* BNViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9D516E22D9200C99F99 /* BNViewController.xib */; };
 		4196D9E216E22E8B00C99F99 /* BNName.m in Sources */ = {isa = PBXBuildFile; fileRef = 4196D9E116E22E8B00C99F99 /* BNName.m */; };
+		4196D9E716E2FC1700C99F99 /* BNDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4196D9E516E2FC1700C99F99 /* BNDetailViewController.m */; };
+		4196D9E816E2FC1700C99F99 /* BNDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9E616E2FC1700C99F99 /* BNDetailViewController.xib */; };
+		4196D9EE16E3020D00C99F99 /* icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9E916E3020D00C99F99 /* icon1.png */; };
+		4196D9EF16E3020D00C99F99 /* icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9EA16E3020D00C99F99 /* icon2.png */; };
+		4196D9F016E3020D00C99F99 /* icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9EB16E3020D00C99F99 /* icon3.png */; };
+		4196D9F116E3020D00C99F99 /* icon4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9EC16E3020D00C99F99 /* icon4.png */; };
+		4196D9F216E3020D00C99F99 /* icon5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9ED16E3020D00C99F99 /* icon5.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +47,14 @@
 		4196D9D616E22D9200C99F99 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/BNViewController.xib; sourceTree = "<group>"; };
 		4196D9E016E22E8B00C99F99 /* BNName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNName.h; sourceTree = "<group>"; };
 		4196D9E116E22E8B00C99F99 /* BNName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNName.m; sourceTree = "<group>"; };
+		4196D9E416E2FC1700C99F99 /* BNDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNDetailViewController.h; sourceTree = "<group>"; };
+		4196D9E516E2FC1700C99F99 /* BNDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNDetailViewController.m; sourceTree = "<group>"; };
+		4196D9E616E2FC1700C99F99 /* BNDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BNDetailViewController.xib; sourceTree = "<group>"; };
+		4196D9E916E3020D00C99F99 /* icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon1.png; sourceTree = "<group>"; };
+		4196D9EA16E3020D00C99F99 /* icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon2.png; sourceTree = "<group>"; };
+		4196D9EB16E3020D00C99F99 /* icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3.png; sourceTree = "<group>"; };
+		4196D9EC16E3020D00C99F99 /* icon4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon4.png; sourceTree = "<group>"; };
+		4196D9ED16E3020D00C99F99 /* icon5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon5.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +101,7 @@
 		4196D9C016E22D9200C99F99 /* BabyName */ = {
 			isa = PBXGroup;
 			children = (
+				4196D9F316E3021600C99F99 /* Assets */,
 				4196D9DD16E22E3500C99F99 /* App Controllers */,
 				4196D9DE16E22E5300C99F99 /* View Controllers */,
 				4196D9DF16E22E6300C99F99 /* Views */,
@@ -123,6 +139,8 @@
 			children = (
 				4196D9D216E22D9200C99F99 /* BNViewController.h */,
 				4196D9D316E22D9200C99F99 /* BNViewController.m */,
+				4196D9E416E2FC1700C99F99 /* BNDetailViewController.h */,
+				4196D9E516E2FC1700C99F99 /* BNDetailViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -130,6 +148,7 @@
 		4196D9DF16E22E6300C99F99 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4196D9E616E2FC1700C99F99 /* BNDetailViewController.xib */,
 				4196D9D516E22D9200C99F99 /* BNViewController.xib */,
 			);
 			name = Views;
@@ -142,6 +161,18 @@
 				4196D9E116E22E8B00C99F99 /* BNName.m */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		4196D9F316E3021600C99F99 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4196D9E916E3020D00C99F99 /* icon1.png */,
+				4196D9EA16E3020D00C99F99 /* icon2.png */,
+				4196D9EB16E3020D00C99F99 /* icon3.png */,
+				4196D9EC16E3020D00C99F99 /* icon4.png */,
+				4196D9ED16E3020D00C99F99 /* icon5.png */,
+			);
+			name = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +232,12 @@
 				4196D9CF16E22D9200C99F99 /* Default@2x.png in Resources */,
 				4196D9D116E22D9200C99F99 /* Default-568h@2x.png in Resources */,
 				4196D9D716E22D9200C99F99 /* BNViewController.xib in Resources */,
+				4196D9E816E2FC1700C99F99 /* BNDetailViewController.xib in Resources */,
+				4196D9EE16E3020D00C99F99 /* icon1.png in Resources */,
+				4196D9EF16E3020D00C99F99 /* icon2.png in Resources */,
+				4196D9F016E3020D00C99F99 /* icon3.png in Resources */,
+				4196D9F116E3020D00C99F99 /* icon4.png in Resources */,
+				4196D9F216E3020D00C99F99 /* icon5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +252,7 @@
 				4196D9CB16E22D9200C99F99 /* BNAppDelegate.m in Sources */,
 				4196D9D416E22D9200C99F99 /* BNViewController.m in Sources */,
 				4196D9E216E22E8B00C99F99 /* BNName.m in Sources */,
+				4196D9E716E2FC1700C99F99 /* BNDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +375,7 @@
 				4196D9DC16E22D9200C99F99 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
