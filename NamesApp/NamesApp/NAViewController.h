@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NAViewController : UIViewController
+@interface NAViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) NSArray *tableData;
+@property (nonatomic, strong) UILocalizedIndexedCollation *collation;
+@property (nonatomic, strong) NSMutableArray *outerArray;
+@property (nonatomic, strong) NSArray *indexTitlesArray;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+- (void)configureSectionData;
 
 @end

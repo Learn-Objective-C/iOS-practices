@@ -16,8 +16,7 @@
 		41A17FF616E3A782005BB2C2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FF516E3A782005BB2C2 /* Default.png */; };
 		41A17FF816E3A782005BB2C2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FF716E3A782005BB2C2 /* Default@2x.png */; };
 		41A17FFA16E3A782005BB2C2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FF916E3A782005BB2C2 /* Default-568h@2x.png */; };
-		41A17FFD16E3A782005BB2C2 /* LVNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A17FFC16E3A782005BB2C2 /* LVNViewController.m */; };
-		41A1800016E3A782005BB2C2 /* LVNViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FFE16E3A782005BB2C2 /* LVNViewController.xib */; };
+		41A1800816E3ADE8005BB2C2 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A1800716E3ADE8005BB2C2 /* TableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,9 +33,8 @@
 		41A17FF516E3A782005BB2C2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		41A17FF716E3A782005BB2C2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		41A17FF916E3A782005BB2C2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		41A17FFB16E3A782005BB2C2 /* LVNViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LVNViewController.h; sourceTree = "<group>"; };
-		41A17FFC16E3A782005BB2C2 /* LVNViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LVNViewController.m; sourceTree = "<group>"; };
-		41A17FFF16E3A782005BB2C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LVNViewController.xib; sourceTree = "<group>"; };
+		41A1800616E3ADE8005BB2C2 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		41A1800716E3ADE8005BB2C2 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +83,9 @@
 			children = (
 				41A17FF216E3A782005BB2C2 /* LVNAppDelegate.h */,
 				41A17FF316E3A782005BB2C2 /* LVNAppDelegate.m */,
-				41A17FFB16E3A782005BB2C2 /* LVNViewController.h */,
-				41A17FFC16E3A782005BB2C2 /* LVNViewController.m */,
-				41A17FFE16E3A782005BB2C2 /* LVNViewController.xib */,
 				41A17FEA16E3A782005BB2C2 /* Supporting Files */,
+				41A1800616E3ADE8005BB2C2 /* TableViewController.h */,
+				41A1800716E3ADE8005BB2C2 /* TableViewController.m */,
 			);
 			path = CRUDTable;
 			sourceTree = "<group>";
@@ -163,7 +160,6 @@
 				41A17FF616E3A782005BB2C2 /* Default.png in Resources */,
 				41A17FF816E3A782005BB2C2 /* Default@2x.png in Resources */,
 				41A17FFA16E3A782005BB2C2 /* Default-568h@2x.png in Resources */,
-				41A1800016E3A782005BB2C2 /* LVNViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +172,7 @@
 			files = (
 				41A17FF016E3A782005BB2C2 /* main.m in Sources */,
 				41A17FF416E3A782005BB2C2 /* LVNAppDelegate.m in Sources */,
-				41A17FFD16E3A782005BB2C2 /* LVNViewController.m in Sources */,
+				41A1800816E3ADE8005BB2C2 /* TableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,14 +185,6 @@
 				41A17FED16E3A782005BB2C2 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		41A17FFE16E3A782005BB2C2 /* LVNViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				41A17FFF16E3A782005BB2C2 /* en */,
-			);
-			name = LVNViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

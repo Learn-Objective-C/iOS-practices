@@ -8,7 +8,7 @@
 
 #import "LVNAppDelegate.h"
 
-#import "LVNViewController.h"
+#import "TableViewController.h"
 
 @implementation LVNAppDelegate
 
@@ -16,8 +16,12 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[LVNViewController alloc] initWithNibName:@"LVNViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
+    TableViewController *vc = [[TableViewController alloc] init];
+    
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+
+    
+    self.window.rootViewController = nvc;
     [self.window makeKeyAndVisible];
     return YES;
 }

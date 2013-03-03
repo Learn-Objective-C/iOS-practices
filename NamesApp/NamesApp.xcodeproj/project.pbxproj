@@ -18,6 +18,7 @@
 		41A17FC616E3852C005BB2C2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FC516E3852C005BB2C2 /* Default-568h@2x.png */; };
 		41A17FC916E3852C005BB2C2 /* NAViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A17FC816E3852C005BB2C2 /* NAViewController.m */; };
 		41A17FCC16E3852C005BB2C2 /* NAViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FCA16E3852C005BB2C2 /* NAViewController.xib */; };
+		41A17FD516E385D6005BB2C2 /* Names.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FD416E385D6005BB2C2 /* Names.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		41A17FC716E3852C005BB2C2 /* NAViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NAViewController.h; sourceTree = "<group>"; };
 		41A17FC816E3852C005BB2C2 /* NAViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NAViewController.m; sourceTree = "<group>"; };
 		41A17FCB16E3852C005BB2C2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NAViewController.xib; sourceTree = "<group>"; };
+		41A17FD416E385D6005BB2C2 /* Names.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Names.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,12 +85,11 @@
 		41A17FB516E3852B005BB2C2 /* NamesApp */ = {
 			isa = PBXGroup;
 			children = (
-				41A17FBE16E3852C005BB2C2 /* NAAppDelegate.h */,
-				41A17FBF16E3852C005BB2C2 /* NAAppDelegate.m */,
-				41A17FC716E3852C005BB2C2 /* NAViewController.h */,
-				41A17FC816E3852C005BB2C2 /* NAViewController.m */,
-				41A17FCA16E3852C005BB2C2 /* NAViewController.xib */,
+				41A17FD616E39A61005BB2C2 /* App Controllers */,
+				41A17FD216E38564005BB2C2 /* View Controllers */,
+				41A17FD316E38572005BB2C2 /* Views */,
 				41A17FB616E3852B005BB2C2 /* Supporting Files */,
+				41A17FD416E385D6005BB2C2 /* Names.plist */,
 			);
 			path = NamesApp;
 			sourceTree = "<group>";
@@ -105,6 +106,32 @@
 				41A17FC516E3852C005BB2C2 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		41A17FD216E38564005BB2C2 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				41A17FC716E3852C005BB2C2 /* NAViewController.h */,
+				41A17FC816E3852C005BB2C2 /* NAViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		41A17FD316E38572005BB2C2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				41A17FCA16E3852C005BB2C2 /* NAViewController.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		41A17FD616E39A61005BB2C2 /* App Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				41A17FBE16E3852C005BB2C2 /* NAAppDelegate.h */,
+				41A17FBF16E3852C005BB2C2 /* NAAppDelegate.m */,
+			);
+			name = "App Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +191,7 @@
 				41A17FC416E3852C005BB2C2 /* Default@2x.png in Resources */,
 				41A17FC616E3852C005BB2C2 /* Default-568h@2x.png in Resources */,
 				41A17FCC16E3852C005BB2C2 /* NAViewController.xib in Resources */,
+				41A17FD516E385D6005BB2C2 /* Names.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +327,7 @@
 				41A17FD116E3852C005BB2C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
