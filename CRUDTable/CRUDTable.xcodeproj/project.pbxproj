@@ -17,6 +17,10 @@
 		41A17FF816E3A782005BB2C2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FF716E3A782005BB2C2 /* Default@2x.png */; };
 		41A17FFA16E3A782005BB2C2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A17FF916E3A782005BB2C2 /* Default-568h@2x.png */; };
 		41A1800816E3ADE8005BB2C2 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A1800716E3ADE8005BB2C2 /* TableViewController.m */; };
+		41A1800A16E4E686005BB2C2 /* mac_blue_flowers.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A1800916E4E686005BB2C2 /* mac_blue_flowers.png */; };
+		41A1800C16E4E820005BB2C2 /* CRUDTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41A1800B16E4E820005BB2C2 /* CRUDTableViewCell.xib */; };
+		41A1801416E4F6FA005BB2C2 /* animation_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A1801316E4F6FA005BB2C2 /* animation_bg.png */; };
+		41A1801616E4F732005BB2C2 /* home_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 41A1801516E4F732005BB2C2 /* home_2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +39,10 @@
 		41A17FF916E3A782005BB2C2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		41A1800616E3ADE8005BB2C2 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		41A1800716E3ADE8005BB2C2 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		41A1800916E4E686005BB2C2 /* mac_blue_flowers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mac_blue_flowers.png; sourceTree = "<group>"; };
+		41A1800B16E4E820005BB2C2 /* CRUDTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CRUDTableViewCell.xib; sourceTree = "<group>"; };
+		41A1801316E4F6FA005BB2C2 /* animation_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = animation_bg.png; path = ../animation_bg.png; sourceTree = "<group>"; };
+		41A1801516E4F732005BB2C2 /* home_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,11 +89,15 @@
 		41A17FE916E3A782005BB2C2 /* CRUDTable */ = {
 			isa = PBXGroup;
 			children = (
+				41A1801516E4F732005BB2C2 /* home_2.png */,
+				41A1801316E4F6FA005BB2C2 /* animation_bg.png */,
+				41A1800916E4E686005BB2C2 /* mac_blue_flowers.png */,
 				41A17FF216E3A782005BB2C2 /* LVNAppDelegate.h */,
 				41A17FF316E3A782005BB2C2 /* LVNAppDelegate.m */,
 				41A17FEA16E3A782005BB2C2 /* Supporting Files */,
 				41A1800616E3ADE8005BB2C2 /* TableViewController.h */,
 				41A1800716E3ADE8005BB2C2 /* TableViewController.m */,
+				41A1800B16E4E820005BB2C2 /* CRUDTableViewCell.xib */,
 			);
 			path = CRUDTable;
 			sourceTree = "<group>";
@@ -160,6 +172,10 @@
 				41A17FF616E3A782005BB2C2 /* Default.png in Resources */,
 				41A17FF816E3A782005BB2C2 /* Default@2x.png in Resources */,
 				41A17FFA16E3A782005BB2C2 /* Default-568h@2x.png in Resources */,
+				41A1800A16E4E686005BB2C2 /* mac_blue_flowers.png in Resources */,
+				41A1800C16E4E820005BB2C2 /* CRUDTableViewCell.xib in Resources */,
+				41A1801416E4F6FA005BB2C2 /* animation_bg.png in Resources */,
+				41A1801616E4F732005BB2C2 /* home_2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +303,7 @@
 				41A1800516E3A782005BB2C2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
