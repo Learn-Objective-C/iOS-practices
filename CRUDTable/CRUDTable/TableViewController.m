@@ -30,7 +30,7 @@ static NSString *cellIdentifier;
     
     self.tableData = [[NSMutableArray alloc] initWithObjects:@"One", @"Two", @"Three" , @"Four", @"Five" ,nil];
     cellIdentifier = @"cellIdentifier";
-    [self.tableView registerNib:[UINib nibWithNibName:@"CRUDTableViewCell" bundle:nil] forCellReuseIdentifier:@"cellIdentifier"];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"CRUDTableViewCell" bundle:nil] forCellReuseIdentifier:@"cellIdentifier"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,35 +48,38 @@ static NSString *cellIdentifier;
 {
     static const int kLabel = 1010;
     static const int kImage = 1020;
-    static const int kImageBackground = 1030;
+    //static const int kImageBackground = 1030;
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    //if (!cell) {
-        // cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-      //  UINib *nib = [UINib nibWithNibName:@"CRUDTableViewCell" bundle:nil];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        //UINib *nib = [UINib nibWithNibName:@"CRUDTableViewCell" bundle:nil];
         //cell = [[nib instantiateWithOwner:self options:0] objectAtIndex:0];
         
         // Create a custom cell
-//        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 200, 25)];
-//        [myLabel setTag:kLabel];
-//        
-//        // Add the new label to the content View
-//        [cell.contentView addSubview:myLabel];
-//        
-//        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 25)];
-//        [myImageView setTag:kImage];
+        UILabel *myLabel = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 200, 25)];
+        [myLabel setTag:kLabel];
         
-        //[cell.contentView addSubview:myImageView];
-   // }
+        // Add the new label to the content View
+        [cell.contentView addSubview:myLabel];
+        
+        UIImageView *myImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 50, 25)];
+        [myImageView setTag:kImage];
+    
+        [cell.contentView addSubview:myImageView];
+    }
     
     UIImageView *myImageView = (UIImageView *)[cell viewWithTag:kImage];
     [myImageView setImage:[UIImage imageNamed:@"mac_blue_flowers"]];
     
-    UIImageView *myBackgroundView = (UIImageView *)[cell viewWithTag:kImageBackground];
-    [myBackgroundView setImage:[UIImage imageNamed:@"animation_bg"]];
+    
+    // UIImageView *myBackgroundView = (UIImageView *)[cell viewWithTag:kImageBackground];
+    // [myBackgroundView setImage:[UIImage imageNamed:@"animation_bg"]];
+    // [myBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 
     
     UILabel *myLabel = (UILabel *)[cell viewWithTag:kLabel];
+    [myLabel setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin];
     
     
     
@@ -145,6 +148,23 @@ static NSString *cellIdentifier;
     [self.tableData removeObjectAtIndex:sourceIndexPath.row];
     [self.tableData insertObject:temp atIndex:destinationIndexPath.row];
 }
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    NSLog(@"Change orientation");
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationPortrait;
+}
+
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
+
 
 
 
