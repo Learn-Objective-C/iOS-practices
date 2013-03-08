@@ -1,24 +1,24 @@
 //
-//  NAAppDelegate.m
-//  NamesApp
+//  LVNAppDelegate.m
+//  CellInteraction
 //
-//  Created by Long Vinh Nguyen on 3/3/13.
+//  Created by Long Vinh Nguyen on 3/6/13.
 //  Copyright (c) 2013 home.vn. All rights reserved.
 //
 
-#import "NAAppDelegate.h"
+#import "LVNAppDelegate.h"
+#import "TableViewController.h"
 
-#import "NAViewController.h"
-
-@implementation NAAppDelegate
+@implementation LVNAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    NAViewController *na = [[NAViewController alloc] initWithNibName:@"NAViewController" bundle:nil];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:na];
-    self.window.rootViewController = nav;
+    TableViewController *tvc = [[TableViewController alloc] initWithStyle:UITableViewStylePlain];
+    
+    self.window.rootViewController = tvc;
+    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }

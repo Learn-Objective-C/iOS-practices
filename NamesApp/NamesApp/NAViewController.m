@@ -10,7 +10,17 @@
 
 
 @implementation NAViewController
-@synthesize collation, tableData, outerArray, indexTitlesArray;
+@synthesize collation, tableData, outerArray, indexTitlesArray, tableView = _tableView, filteredListContent;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nil];
+    if (self) {
+        [self.navigationItem setTitle:@"Names Search"];
+        filteredListContent = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -26,6 +36,7 @@
     self.collation = [UILocalizedIndexedCollation currentCollation];
     [self configureSectionData];
 }
+
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -65,29 +76,53 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return collation.sectionIndexTitles.count;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return 1;
+    } else {
+        return collation.sectionIndexTitles.count;
+    }
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    NSString *theLetter = [self.collation.sectionIndexTitles objectAtIndex:section];
-    
-    if (![theLetter isEqualToString:@"#"]) {
-        NSString *titleString = [NSString stringWithFormat:@"Names for the letter %@", theLetter];
+    NSString *titleString = nil;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        if ([filteredListContent count] == 0) {
+            return nil;
+        }
+        titleString = [NSString stringWithFormat:@"Names for the letter %c", [[filteredListContent objectAtIndex:0] characterAtIndex:0]];
         return titleString;
+    } else {
+        NSString *theLetter = [self.collation.sectionIndexTitles objectAtIndex:section];
+
+        if (![theLetter isEqualToString:@"#"]) {
+            titleString = [NSString stringWithFormat:@"Names for the letter %@", theLetter];
+            return titleString;
+        }
     }
-    return nil;
+    return titleString;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    return self.collation.sectionIndexTitles;
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        return [NSArray array];
+    } else
+        return self.collation.sectionIndexTitles;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *innerArray = [self.outerArray objectAtIndex:section];
-    return [innerArray count];
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView)
+	{
+        return [self.filteredListContent count];
+    }
+	else
+	{
+        NSArray *innerArray = [self.outerArray objectAtIndex:section];
+        return [innerArray count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,9 +134,16 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    // Get the inner array for this section
-    NSArray *innerArray = [self.outerArray objectAtIndex:indexPath.section];
-    NSString *theName = [innerArray objectAtIndex:indexPath.row];
+    NSString *theName;
+    
+    if (tableView == self.searchDisplayController.searchResultsTableView) {
+        theName = [self.filteredListContent objectAtIndex:indexPath.row];
+    } else {
+        // Get the inner array for this section
+        NSArray *innerArray = [self.outerArray objectAtIndex:indexPath.section];
+        theName = [innerArray objectAtIndex:indexPath.row];
+        
+    }
     
     [cell.textLabel setText:theName];
     return cell;
@@ -127,6 +169,30 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 50.0;
+}
+
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString];
+    return YES;
+}
+
+- (void)filterContentForSearchText:(NSString *)searchText
+{
+    [self.filteredListContent removeAllObjects];
+    
+    if ([searchText isEqualToString:@"All"]) {
+        filteredListContent = [tableData mutableCopy];
+        return;
+    }
+    
+    for (NSString *name in tableData) {
+        NSComparisonResult result = [name compare:searchText options:(NSCaseInsensitiveSearch | NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+        if (result == NSOrderedSame) {
+            [self.filteredListContent addObject:name];
+        }
+    }
 }
 
 
