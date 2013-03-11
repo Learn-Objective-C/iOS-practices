@@ -40,4 +40,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)clickOnButton:(id)sender {
+    NSLog(@"Click on custom button");
+}
 @end

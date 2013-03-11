@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *derivationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *notesLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+- (IBAction)clickOnButton:(id)sender;
 
 
 
