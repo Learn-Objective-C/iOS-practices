@@ -11,6 +11,7 @@
 @interface BNViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *tableData;
+@property (nonatomic, strong) NSMutableArray *selectedNames;
 @property (strong, nonatomic) IBOutlet UITableView *theTableView;
 
 @end

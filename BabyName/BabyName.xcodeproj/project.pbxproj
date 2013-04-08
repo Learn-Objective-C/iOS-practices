@@ -26,6 +26,11 @@
 		4196D9F016E3020D00C99F99 /* icon3.png in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9EB16E3020D00C99F99 /* icon3.png */; };
 		4196D9F116E3020D00C99F99 /* icon4.png in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9EC16E3020D00C99F99 /* icon4.png */; };
 		4196D9F216E3020D00C99F99 /* icon5.png in Resources */ = {isa = PBXBuildFile; fileRef = 4196D9ED16E3020D00C99F99 /* icon5.png */; };
+		41EE346C1713057000EF2823 /* BNCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41EE346B1713057000EF2823 /* BNCell.m */; };
+		41EE346F1713061D00EF2823 /* checkbox_checked_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 41EE346D1713061D00EF2823 /* checkbox_checked_icon.png */; };
+		41EE34701713061D00EF2823 /* checkbox_unchecked.png in Resources */ = {isa = PBXBuildFile; fileRef = 41EE346E1713061D00EF2823 /* checkbox_unchecked.png */; };
+		41EE34721713064F00EF2823 /* BNCellandHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41EE34711713064F00EF2823 /* BNCellandHeader.xib */; };
+		41EE347417131CAC00EF2823 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41EE347317131CAC00EF2823 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +60,12 @@
 		4196D9EB16E3020D00C99F99 /* icon3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon3.png; sourceTree = "<group>"; };
 		4196D9EC16E3020D00C99F99 /* icon4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon4.png; sourceTree = "<group>"; };
 		4196D9ED16E3020D00C99F99 /* icon5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon5.png; sourceTree = "<group>"; };
+		41EE346A1713057000EF2823 /* BNCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNCell.h; sourceTree = "<group>"; };
+		41EE346B1713057000EF2823 /* BNCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNCell.m; sourceTree = "<group>"; };
+		41EE346D1713061D00EF2823 /* checkbox_checked_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_checked_icon.png; sourceTree = "<group>"; };
+		41EE346E1713061D00EF2823 /* checkbox_unchecked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox_unchecked.png; sourceTree = "<group>"; };
+		41EE34711713064F00EF2823 /* BNCellandHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BNCellandHeader.xib; sourceTree = "<group>"; };
+		41EE347317131CAC00EF2823 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41EE347417131CAC00EF2823 /* QuartzCore.framework in Frameworks */,
 				4196D9BB16E22D9200C99F99 /* UIKit.framework in Frameworks */,
 				4196D9BD16E22D9200C99F99 /* Foundation.framework in Frameworks */,
 				4196D9BF16E22D9200C99F99 /* CoreGraphics.framework in Frameworks */,
@@ -91,6 +103,7 @@
 		4196D9B916E22D9200C99F99 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				41EE347317131CAC00EF2823 /* QuartzCore.framework */,
 				4196D9BA16E22D9200C99F99 /* UIKit.framework */,
 				4196D9BC16E22D9200C99F99 /* Foundation.framework */,
 				4196D9BE16E22D9200C99F99 /* CoreGraphics.framework */,
@@ -150,6 +163,7 @@
 			children = (
 				4196D9E616E2FC1700C99F99 /* BNDetailViewController.xib */,
 				4196D9D516E22D9200C99F99 /* BNViewController.xib */,
+				41EE34711713064F00EF2823 /* BNCellandHeader.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -159,6 +173,8 @@
 			children = (
 				4196D9E016E22E8B00C99F99 /* BNName.h */,
 				4196D9E116E22E8B00C99F99 /* BNName.m */,
+				41EE346A1713057000EF2823 /* BNCell.h */,
+				41EE346B1713057000EF2823 /* BNCell.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -166,6 +182,8 @@
 		4196D9F316E3021600C99F99 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				41EE346D1713061D00EF2823 /* checkbox_checked_icon.png */,
+				41EE346E1713061D00EF2823 /* checkbox_unchecked.png */,
 				4196D9E916E3020D00C99F99 /* icon1.png */,
 				4196D9EA16E3020D00C99F99 /* icon2.png */,
 				4196D9EB16E3020D00C99F99 /* icon3.png */,
@@ -238,6 +256,9 @@
 				4196D9F016E3020D00C99F99 /* icon3.png in Resources */,
 				4196D9F116E3020D00C99F99 /* icon4.png in Resources */,
 				4196D9F216E3020D00C99F99 /* icon5.png in Resources */,
+				41EE346F1713061D00EF2823 /* checkbox_checked_icon.png in Resources */,
+				41EE34701713061D00EF2823 /* checkbox_unchecked.png in Resources */,
+				41EE34721713064F00EF2823 /* BNCellandHeader.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +274,7 @@
 				4196D9D416E22D9200C99F99 /* BNViewController.m in Sources */,
 				4196D9E216E22E8B00C99F99 /* BNName.m in Sources */,
 				4196D9E716E2FC1700C99F99 /* BNDetailViewController.m in Sources */,
+				41EE346C1713057000EF2823 /* BNCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
