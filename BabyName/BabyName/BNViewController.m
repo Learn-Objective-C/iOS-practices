@@ -82,10 +82,12 @@ static NSString *cellIndentifier = @"BNCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"Select Row: %d",indexPath.row);
 //    BNDetailViewController *detailViewController = [[BNDetailViewController alloc] initWithNibName:@"BNDetailViewController" bundle:nil];
 //    [detailViewController setBNName:[self.tableData objectAtIndex:[indexPath row]]];
 //    [self.navigationController pushViewController:detailViewController animated:YES];
 
+    /* BabyName
     if (indexPath.section == 1) {
         NSString *selectedName = self.tableData[indexPath.row];
         if (![_selectedNames containsObject:selectedName] && _selectedNames.count < 10) {
@@ -109,8 +111,10 @@ static NSString *cellIndentifier = @"BNCell";
     [mover setDuration:1.0f];
     [mover setToValue:[NSValue valueWithCGPoint:destination]];
     [title.layer addAnimation:mover forKey:@"MoveTitle"];
+     */
     
     //[title.layer setPosition:destination];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.tinhte.vn"]];
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
@@ -152,6 +156,7 @@ static NSString *cellIndentifier = @"BNCell";
     _headerView = [[NSBundle mainBundle] loadNibNamed:@"BNCellandHeader" owner:nil options:nil][1];
     UILabel *title = (UILabel *)[_headerView viewWithTag:1000];
     UILabel *capacity = (UILabel *)[_headerView viewWithTag:1010];
+    UIImageView *imageView = (UIImageView *)[_headerView viewWithTag:1020];
     if (section == 0) {
 //        CGRect rect = CGRectMake(100, 10, title.bounds.size.width, title.bounds.size.height);
         [UIView animateWithDuration:0.5 animations:^(){
@@ -159,6 +164,7 @@ static NSString *cellIndentifier = @"BNCell";
         }];
         title.text = @"Selected Names";
         capacity.text = [NSString stringWithFormat:@"%d/10",self.selectedNames.count];
+        imageView.image = nil;
     } else title.text = @"Names";
     return _headerView;
 }

@@ -102,6 +102,18 @@
     
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    NSLog(@"Hanle open URL");
+    if (url!= nil) {
+        NSLog(@"URL: %@",[url absoluteString]);
+        NSLog(@"URL: %@",[url absoluteURL]);
+
+    } return NO;
+    
+    return YES;
+}
+
 
 
 
