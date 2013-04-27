@@ -16,7 +16,7 @@ static NSString *cellIndentifier = @"BNCell";
 
 @interface BNViewController()
 
-@property (nonatomic, weak) UITableViewHeaderFooterView *headerView;
+@property (nonatomic, weak) UILabel * numberLabel;
 
 @end
 
@@ -103,6 +103,7 @@ static NSString *cellIndentifier = @"BNCell";
         [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
         [tableView endUpdates];
     }
+<<<<<<< HEAD
     UILabel *title = (UILabel *)[_headerView viewWithTag:1000];
     CABasicAnimation *mover = [CABasicAnimation animationWithKeyPath:@"position"];
     [mover setDuration:1.0f];
@@ -115,11 +116,25 @@ static NSString *cellIndentifier = @"BNCell";
     
     //[title.layer setPosition:destination];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.tinhte.vn"]];
+=======
+    _numberLabel.text = [NSString stringWithFormat:@"%d/10",self.selectedNames.count];
+//    UILabel *title = (UILabel *)[_headerView viewWithTag:1000];
+//    CABasicAnimation *mover = [CABasicAnimation animationWithKeyPath:@"position"];
+//    [mover setDuration:1.0f];
+//    mover.delegate = self;
+//    CGPoint destination = CGPointMake(200, title.center.y);
+//    [mover setDuration:1.0f];
+//    [mover setToValue:[NSValue valueWithCGPoint:destination]];
+//    [title.layer addAnimation:mover forKey:@"MoverTitle"];
+    
+>>>>>>> Updated
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
-
+//    UILabel *title = (UILabel *)[_headerView viewWithTag:1000];
+//    CGPoint destination = CGPointMake(200, title.center.y);
+//    title.layer.position = destination;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -153,18 +168,22 @@ static NSString *cellIndentifier = @"BNCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    _headerView = [[NSBundle mainBundle] loadNibNamed:@"BNCellandHeader" owner:nil options:nil][1];
+    UIView *_headerView = [[NSBundle mainBundle] loadNibNamed:@"BNCellandHeader" owner:nil options:nil][1];
     UILabel *title = (UILabel *)[_headerView viewWithTag:1000];
     UILabel *capacity = (UILabel *)[_headerView viewWithTag:1010];
     UIImageView *imageView = (UIImageView *)[_headerView viewWithTag:1020];
     if (section == 0) {
-//        CGRect rect = CGRectMake(100, 10, title.bounds.size.width, title.bounds.size.height);
+        title.layer.position = CGPointMake(title.layer.position.x + 20, title.layer.position.y);
         [UIView animateWithDuration:0.5 animations:^(){
             
         }];
         title.text = @"Selected Names";
         capacity.text = [NSString stringWithFormat:@"%d/10",self.selectedNames.count];
+<<<<<<< HEAD
         imageView.image = nil;
+=======
+        _numberLabel = capacity;
+>>>>>>> Updated
     } else title.text = @"Names";
     return _headerView;
 }
