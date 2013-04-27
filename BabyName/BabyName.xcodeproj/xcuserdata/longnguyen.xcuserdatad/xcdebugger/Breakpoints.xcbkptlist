@@ -13,8 +13,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "152"
          endingLineNumber = "152"
-         landmarkName = "-tableView:viewForHeaderInSection:"
-         landmarkType = "5">
+         landmarkName = "@implementation BNViewController"
+         landmarkType = "3">
       </FileBreakpoint>
    </FileBreakpoints>
 </Bucket>
