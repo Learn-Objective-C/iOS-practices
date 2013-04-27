@@ -116,7 +116,6 @@ static NSString *cellIndentifier = @"BNCell";
     
     //[title.layer setPosition:destination];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.tinhte.vn"]];
-=======
     _numberLabel.text = [NSString stringWithFormat:@"%d/10",self.selectedNames.count];
 //    UILabel *title = (UILabel *)[_headerView viewWithTag:1000];
 //    CABasicAnimation *mover = [CABasicAnimation animationWithKeyPath:@"position"];
@@ -127,7 +126,6 @@ static NSString *cellIndentifier = @"BNCell";
 //    [mover setToValue:[NSValue valueWithCGPoint:destination]];
 //    [title.layer addAnimation:mover forKey:@"MoverTitle"];
     
->>>>>>> Updated
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
@@ -179,11 +177,8 @@ static NSString *cellIndentifier = @"BNCell";
         }];
         title.text = @"Selected Names";
         capacity.text = [NSString stringWithFormat:@"%d/10",self.selectedNames.count];
-<<<<<<< HEAD
         imageView.image = nil;
-=======
         _numberLabel = capacity;
->>>>>>> Updated
     } else title.text = @"Names";
     return _headerView;
 }
