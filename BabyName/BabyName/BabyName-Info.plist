@@ -27,7 +27,7 @@
 			<string>com.visikard.babyname</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>babyname-dev1</string>
+				<string>babyname</string>
 			</array>
 		</dict>
 	</array>
