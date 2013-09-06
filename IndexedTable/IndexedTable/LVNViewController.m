@@ -15,10 +15,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    self.tableData = [[NSArray alloc] initWithObjects:@"Aaron", @"Bailey", @"Cadan", @"Dafydd", @"Eamon", @"Fabian", @"Gabrielle", @"Hafwen", @"Isaac", @"Jacinta", @"Kathleen", @"Lucy", @"Maurice", @"Nadia", @"Octavia", @"Padraig", @"Quinta", @"Rachel", @"Sabina", @"Tabitha", @"Uma", @"Valentina", @"Wallis", @"Xanthe", @"Yvonne",@"Zebadiah", nil];
+    self.tableData = [[NSArray alloc] initWithObjects:@"Bailey", @"Cadan", @"Dafydd", @"Eamon", @"Fabian", @"Gabrielle", @"Hafwen", @"Isaac", @"Jacinta", @"Kathleen", @"Lucy", @"Maurice", @"Nadia", @"Octavia", @"Padraig", @"Rachel", @"Sabina", @"Tabitha", @"Uma", @"Valentina", @"Wallis", @"Xanthe", @"Yvonne", nil]; 
     
     NSString *letters = @"A B C D E F G H I J K L M N O P Q R S T U V W X Y Z";
     self.indexTitlesArray = [letters componentsSeparatedByString:@" "];
+    
+    NSMutableArray *temp = [NSMutableArray new];
+    for (NSString *name in self.tableData) {
+        NSString *firstLetter = [name substringToIndex:1];
+        [temp addObject:[firstLetter uppercaseString]];
+    }
+    
+    self.indexTitlesArray = temp;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
