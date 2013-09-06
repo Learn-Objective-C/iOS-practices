@@ -41,6 +41,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@""]];
+    client.stringEncoding = NSUTF8StringEncoding;
 //    [client registerHTTPOperationClass:[AFHTTPRequestOperation class]];
 //    [client setDefaultHeader:@"Accept" value:@"application/vnd.apple.pkpass"];
     
@@ -147,25 +148,30 @@
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
     [dictionary setObject:@"20" forKey:@"userId"];
     [dictionary setObject:@"2178" forKey:@"kardId"];
-    [dictionary setObject:@" " forKey:@"mediaName"];
+    [dictionary setObject:@"name" forKey:@"mediaName"];
     [dictionary setObject:@"test.png" forKey:@"fileName"];
     [dictionary setObject:@"Long upload" forKey:@"mediaDescription"];
     [dictionary setObject:@"3" forKey:@"mediaType"];
     [dictionary setObject:@"0" forKey:@"postType"];
     [dictionary setObject:@"0" forKey:@"rotate"];
     
+    NSArray *keys = [NSArray arrayWithObjects:@"userId",@"kardId",@"mediaName",@"fileName",@"mediaDescription",@"mediaType",@"postType",@"rotate",@"media",nil];
+    NSArray *values = [NSArray arrayWithObjects:@"20",@"2178",@"Villager",@"test.png",@"Long upload",@"3",@"0",@"0",data, nil];
     
-    NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:path parameters:dictionary constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-//        [formData appendPartWithFormData:[@"20" dataUsingEncoding:client.stringEncoding] name:@"userId"];
-//        [formData appendPartWithFormData:[@"2178" dataUsingEncoding:client.stringEncoding] name:@"kardId"];
-//        [formData appendPartWithFormData:[@" " dataUsingEncoding:client.stringEncoding] name:@"mediaName"];
-//        [formData appendPartWithFormData:[@"test.png" dataUsingEncoding:client.stringEncoding] name:@"fileName"];
-//        [formData appendPartWithFormData:[@"Longnv test update" dataUsingEncoding:client.stringEncoding] name:@"mediaDescription"];
-//        [formData appendPartWithFormData:[@"3" dataUsingEncoding:client.stringEncoding] name:@"mediaType"];
-//        [formData appendPartWithFormData:[@"0" dataUsingEncoding:client.stringEncoding] name:@"postType"];
-//        [formData appendPartWithFormData:[@"0" dataUsingEncoding:client.stringEncoding] name:@"rotate"];
-//        
-        [formData appendPartWithFileData:data name:@"media" fileName:@"village.jpg" mimeType:@"image/jpeg"];
+    NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        if (values) {
+            for (int i = 0; i < values.count; i++) {
+                id object = [values objectAtIndex:i];
+                if ([object isKindOfClass:[NSData class]]) {                    
+                    [formData appendPartWithFileData:object name:@"media" fileName:@"uploadPhoto.jpg" mimeType:@"image/jpeg"];
+                }
+                else {
+                    [formData appendPartWithFormData:[object dataUsingEncoding:client.stringEncoding] name:[keys objectAtIndex:i]];
+                }
+            }
+        }
+//
+
         NSLog(@"Done %@",formData);
     }];
     
