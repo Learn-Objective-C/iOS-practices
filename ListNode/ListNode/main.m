@@ -162,7 +162,7 @@ LinkedListNode *addList(LinkedListNode *l1, LinkedListNode *l2, int carry)
     return node;
 }
 
-void quickSort(NSMutableArray *listNumbers)
+void bubleSort(NSMutableArray *listNumbers)
 {
     BOOL swapped = false;
     do {
@@ -176,6 +176,63 @@ void quickSort(NSMutableArray *listNumbers)
             }
         }
     } while (swapped);
+}
+
+LinkedListNode *getLoopStartOfCircularLinkList(LinkedListNode *head)
+{
+    LinkedListNode *slow = head;
+    LinkedListNode *fast = head;
+    
+    while (fast != nil) {
+        slow = slow.next;
+        fast = fast.next.next;
+        
+        if (slow == fast) {
+            break;
+        }
+    }
+    
+    if (slow == nil || slow.next == nil) {
+        return nil;
+    }
+    
+    slow = head;
+
+    while (slow != fast) {
+        slow = slow.next;
+        fast = fast.next;
+    }
+
+    return slow;
+
+}
+
+BOOL isListNodePalindrome(LinkedListNode *head)
+{
+    LinkedListNode *slow = head;
+    LinkedListNode *fast = head;
+    
+    NSMutableArray *stack = [NSMutableArray new];
+    while (fast != nil && fast.next != nil) {
+        [stack addObject:slow];
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    
+    if (fast != nil) {
+        slow = slow.next;
+    }
+    
+    while (slow != nil) {
+        LinkedListNode *node = [stack lastObject];
+        [stack removeLastObject];
+        if (node.data != slow.data) {
+            return false;
+        }
+        slow = slow.next;
+    }
+
+    return true;
 }
 
 @interface PartialSum : NSObject
@@ -251,9 +308,34 @@ int main(int argc, const char * argv[])
         NSMutableArray *numbers = [NSMutableArray arrayWithObjects:@(5), @(9),@(8),@(7), @(2), @(100), @(9), @(78), @(6), nil];
         NSLog(@"--------Before bublle sort------");
         NSLog(@"%@", numbers);
-        quickSort(numbers);
+        bubleSort(numbers);
         NSLog(@"--------After bublle sort------");
         NSLog(@"%@", numbers);
+        
+        
+        LinkedListNode *list3 = [[LinkedListNode alloc] initWithData:1];
+        [list3 appendToTailWithData:2];
+        LinkedListNode *node1 = [list3 appendToTailWithData:5];
+        [list3 appendToTailWithData:6];
+        LinkedListNode *lastNode = [list3 appendToTailWithData:8];
+        lastNode.next = node1;
+        
+        NSLog(@"--------Get Loop Node------");
+        LinkedListNode *loopNode = getLoopStartOfCircularLinkList(list3);
+        NSLog(@"%d", loopNode.data);
+        
+        NSLog(@"--------Check List Node Palindrome-----");
+        LinkedListNode *list4 = [[LinkedListNode alloc] initWithData:0];
+        [list4 appendToTailWithData:1];
+        [list4 appendToTailWithData:1];
+        [list4 appendToTailWithData:0];
+        
+        if (isListNodePalindrome(list4)) {
+            NSLog(@"This is Palindrome list");
+        } else {
+            NSLog(@"This is not Palindrome list");
+        }
+        
         
         
         
