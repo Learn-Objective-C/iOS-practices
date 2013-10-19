@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		410D0B5F17FC6D7E008C7DB8 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 410D0B5E17FC6D7E008C7DB8 /* Stack.m */; };
 		F6403C9917D8397B00A80D3F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6403C9817D8397B00A80D3F /* Foundation.framework */; };
 		F6403C9C17D8397B00A80D3F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F6403C9B17D8397B00A80D3F /* main.m */; };
 		F6403CA017D8397B00A80D3F /* ListNode.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = F6403C9F17D8397B00A80D3F /* ListNode.1 */; };
@@ -28,8 +27,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		410D0B5D17FC6D7D008C7DB8 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stack.h; path = Model/Stack.h; sourceTree = "<group>"; };
-		410D0B5E17FC6D7E008C7DB8 /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stack.m; path = Model/Stack.m; sourceTree = "<group>"; };
 		F6403C9517D8397B00A80D3F /* ListNode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ListNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6403C9817D8397B00A80D3F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F6403C9B17D8397B00A80D3F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -100,8 +97,6 @@
 			children = (
 				F6403CA617D839B000A80D3F /* LinkedListNode.h */,
 				F6403CA717D839B000A80D3F /* LinkedListNode.m */,
-				410D0B5D17FC6D7D008C7DB8 /* Stack.h */,
-				410D0B5E17FC6D7E008C7DB8 /* Stack.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -132,7 +127,7 @@
 		F6403C8D17D8397B00A80D3F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = VLong;
 			};
 			buildConfigurationList = F6403C9017D8397B00A80D3F /* Build configuration list for PBXProject "ListNode" */;
@@ -157,7 +152,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				410D0B5F17FC6D7E008C7DB8 /* Stack.m in Sources */,
 				F6403C9C17D8397B00A80D3F /* main.m in Sources */,
 				F6403CA817D839B000A80D3F /* LinkedListNode.m in Sources */,
 			);
@@ -170,6 +164,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -202,6 +197,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -260,7 +256,6 @@
 				F6403CA517D8397B00A80D3F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

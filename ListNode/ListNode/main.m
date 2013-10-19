@@ -178,61 +178,85 @@ void bubleSort(NSMutableArray *listNumbers)
     } while (swapped);
 }
 
-LinkedListNode *getLoopStartOfCircularLinkList(LinkedListNode *head)
-{
-    LinkedListNode *slow = head;
-    LinkedListNode *fast = head;
+
+int getPartitionIndex(NSMutableArray *listNumbers, int left, int right){
+    int pivot = [listNumbers[(right + left) / 2] intValue];
     
-    while (fast != nil) {
-        slow = slow.next;
-        fast = fast.next.next;
+    
+    while (left <= right) {
+        while ([listNumbers[left] intValue] < pivot) {
+            left ++;
+        }
         
-        if (slow == fast) {
-            break;
+        while ([listNumbers[right] intValue] > pivot) {
+            right --;
+        }
+        
+        if (left <= right) {
+            id temp = listNumbers[left];
+            listNumbers[left] = listNumbers[right];
+            listNumbers[right] = temp;
+            left ++;
+            right --;
         }
     }
     
-    if (slow == nil || slow.next == nil) {
-        return nil;
-    }
-    
-    slow = head;
-
-    while (slow != fast) {
-        slow = slow.next;
-        fast = fast.next;
-    }
-
-    return slow;
-
+    return left;
 }
 
-BOOL isListNodePalindrome(LinkedListNode *head)
-{
-    LinkedListNode *slow = head;
-    LinkedListNode *fast = head;
-    
-    NSMutableArray *stack = [NSMutableArray new];
-    while (fast != nil && fast.next != nil) {
-        [stack addObject:slow];
-        slow = slow.next;
-        fast = fast.next.next;
-    }
-    
-    if (fast != nil) {
-        slow = slow.next;
-    }
-    
-    while (slow != nil) {
-        LinkedListNode *node = [stack lastObject];
-        [stack removeLastObject];
-        if (node.data != slow.data) {
-            return false;
-        }
-        slow = slow.next;
-    }
 
-    return true;
+void quickSort(NSMutableArray *listNumbers, int left, int right)
+{
+    int index = getPartitionIndex(listNumbers, left, right);
+    
+    if (left < index - 1) {
+        quickSort(listNumbers, left, index - 1);
+    }
+    
+    if (index < right) {
+        quickSort(listNumbers, index, right);
+    }
+}
+
+void mergeArray(NSMutableArray *listNumers, int low, int mid, int high) {
+    NSMutableArray *k = [NSMutableArray new];
+    for (int i = low; i < high; i++) {
+        k[i] = listNumers[i];
+    }
+    
+    int lowLeft = low;
+    int highRight = mid + 1;
+    int current = low;
+    
+    while (lowLeft < mid || highRight < high) {
+        if ([listNumers[lowLeft] intValue] < [listNumers[highRight] intValue]) {
+            lowLeft ++;
+        } else {
+            id temp = listNumers[lowLeft];
+            listNumers[lowLeft] = listNumers[highRight];
+            listNumers[highRight] = temp;
+            highRight ++;
+        }
+        
+        current ++;
+    }
+    
+}
+
+
+void mergeSortHelper(NSMutableArray *listNumbers, int low, int high) {
+    int mid = (high + low) /  2;
+    if (mid < high) {
+        mergeSortHelper(listNumbers, low, mid);
+        mergeSortHelper(listNumbers, mid + 1, high);
+        mergeArray(listNumbers, low, mid, high);
+    }
+}
+
+
+void mergeSort(NSMutableArray *listNumbers) {
+    int length = (int)listNumbers.count;
+    mergeSortHelper(listNumbers, 0, length);
 }
 
 @interface PartialSum : NSObject
@@ -305,38 +329,18 @@ int main(int argc, const char * argv[])
         LinkedListNode *sumNode = addList(list1, list2, 0);
         printInfoListNode(sumNode);
         
-        NSMutableArray *numbers = [NSMutableArray arrayWithObjects:@(5), @(9),@(8),@(7), @(2), @(100), @(9), @(78), @(6), nil];
-        NSLog(@"--------Before bublle sort------");
+        NSMutableArray *numbers = [NSMutableArray arrayWithObjects:@(5), @(9),@(8),@(7), @(2), @(100), @(9), @(78), @(6), @(52), @(11), @(65), @(70), @(12), nil];
+//        NSLog(@"--------Before bublle sort------");
+//        NSLog(@"%@", numbers);
+//        bubleSort(numbers);
+//        NSLog(@"--------After bublle sort------");
+//        NSLog(@"%@", numbers);
+        
+        NSLog(@"--------Before quick sort------");
         NSLog(@"%@", numbers);
-        bubleSort(numbers);
-        NSLog(@"--------After bublle sort------");
+        quickSort(numbers, 0, (int)numbers.count - 1);
+        NSLog(@"--------After quick sort------");
         NSLog(@"%@", numbers);
-        
-        
-        LinkedListNode *list3 = [[LinkedListNode alloc] initWithData:1];
-        [list3 appendToTailWithData:2];
-        LinkedListNode *node1 = [list3 appendToTailWithData:5];
-        [list3 appendToTailWithData:6];
-        LinkedListNode *lastNode = [list3 appendToTailWithData:8];
-        lastNode.next = node1;
-        
-        NSLog(@"--------Get Loop Node------");
-        LinkedListNode *loopNode = getLoopStartOfCircularLinkList(list3);
-        NSLog(@"%d", loopNode.data);
-        
-        NSLog(@"--------Check List Node Palindrome-----");
-        LinkedListNode *list4 = [[LinkedListNode alloc] initWithData:0];
-        [list4 appendToTailWithData:1];
-        [list4 appendToTailWithData:1];
-        [list4 appendToTailWithData:0];
-        
-        if (isListNodePalindrome(list4)) {
-            NSLog(@"This is Palindrome list");
-        } else {
-            NSLog(@"This is not Palindrome list");
-        }
-        
-        
         
         
     }
