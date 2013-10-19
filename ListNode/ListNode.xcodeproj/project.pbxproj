@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+<<<<<<< Updated upstream
+=======
+		410D0B5F17FC6D7E008C7DB8 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 410D0B5E17FC6D7E008C7DB8 /* Stack.m */; };
+		410D0B6217FC6F40008C7DB8 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 410D0B6117FC6F40008C7DB8 /* Queue.m */; };
+>>>>>>> Stashed changes
 		F6403C9917D8397B00A80D3F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6403C9817D8397B00A80D3F /* Foundation.framework */; };
 		F6403C9C17D8397B00A80D3F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F6403C9B17D8397B00A80D3F /* main.m */; };
 		F6403CA017D8397B00A80D3F /* ListNode.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = F6403C9F17D8397B00A80D3F /* ListNode.1 */; };
@@ -27,6 +32,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+<<<<<<< Updated upstream
+=======
+		410D0B5D17FC6D7D008C7DB8 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stack.h; path = Model/Stack.h; sourceTree = "<group>"; };
+		410D0B5E17FC6D7E008C7DB8 /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stack.m; path = Model/Stack.m; sourceTree = "<group>"; };
+		410D0B6017FC6F40008C7DB8 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Queue.h; path = Model/Queue.h; sourceTree = "<group>"; };
+		410D0B6117FC6F40008C7DB8 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Queue.m; path = Model/Queue.m; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		F6403C9517D8397B00A80D3F /* ListNode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ListNode; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6403C9817D8397B00A80D3F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F6403C9B17D8397B00A80D3F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -97,6 +109,13 @@
 			children = (
 				F6403CA617D839B000A80D3F /* LinkedListNode.h */,
 				F6403CA717D839B000A80D3F /* LinkedListNode.m */,
+<<<<<<< Updated upstream
+=======
+				410D0B5D17FC6D7D008C7DB8 /* Stack.h */,
+				410D0B5E17FC6D7E008C7DB8 /* Stack.m */,
+				410D0B6017FC6F40008C7DB8 /* Queue.h */,
+				410D0B6117FC6F40008C7DB8 /* Queue.m */,
+>>>>>>> Stashed changes
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -154,6 +173,7 @@
 			files = (
 				F6403C9C17D8397B00A80D3F /* main.m in Sources */,
 				F6403CA817D839B000A80D3F /* LinkedListNode.m in Sources */,
+				410D0B6217FC6F40008C7DB8 /* Queue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
