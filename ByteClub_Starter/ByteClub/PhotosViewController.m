@@ -11,11 +11,12 @@
 #import "Dropbox.h"
 #import "DBFile.h"
 
-@interface PhotosViewController ()<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface PhotosViewController ()<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate, NSURLSessionTaskDelegate>
 
 @property (weak, nonatomic) IBOutlet UIProgressView *progress;
 @property (weak, nonatomic) IBOutlet UIView *uploadView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSURLSessionUploadTask *uploadTask;
 
 @property (nonatomic, strong) NSArray *photoThumbnails;
 
@@ -62,7 +63,41 @@
 
 - (void)refreshPhotos
 {
-
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    NSString *photoDir = [NSString stringWithFormat:@"https://api.dropbox.com/1/search/dropbox/%@/photos?query=.jpg", appFolder];
+    NSURL *url = [NSURL URLWithString:photoDir];
+    
+    [[_session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            if (((NSHTTPURLResponse *)response).statusCode == 200) {
+                NSError *jsonError;
+                NSArray *filesJson = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&jsonError];
+                
+                NSMutableArray *dbFiles = [[NSMutableArray alloc] init];
+                
+                if (!jsonError) {
+                    for (NSDictionary *fileMetadata in filesJson) {
+                        DBFile *file = [[DBFile alloc] initWithJSONData:fileMetadata];
+                        [dbFiles addObject:file];
+                    }
+                    
+                    [dbFiles sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                        return [obj1 compare:obj2];
+                    }];
+                    
+                    _photoThumbnails = dbFiles;
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                         [self.tableView reloadData];
+                     });
+                }
+            } else {
+                // Handle bad response
+            }
+        } else {
+            // Always handle errors
+        }
+    }] resume];
 }
 
 
@@ -110,10 +145,17 @@
                 NSURL *url = [NSURL URLWithString:encodedUrl];
                 NSLog(@"logging this url so no warning in starter project %@",url);
                 
-                // GO GET THUMBNAILS //
+                [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+                NSURLSessionDataTask *dataTask = [_session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                    UIImage *image = [[UIImage alloc] initWithData:data];
+                    photo.thumbNail = image;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+                        cell.thumbnailImage.image = photo.thumbNail;
+                    });
+                }];
                 
-                
-                
+                [dataTask resume];
             }
         }
     }
@@ -130,6 +172,13 @@
     [self presentViewController:picker animated:YES completion:nil];
 }
 
+- (IBAction)cancelUpload:(id)sender
+{
+    if (_uploadTask.state == NSURLSessionTaskStateRunning) {
+        [_uploadTask cancel];
+    }
+}
+
 #pragma mark - UIImagePickerControllerDelegate methods
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -143,15 +192,51 @@
     [self uploadImage:image];
 }
 
-// stop upload
-- (IBAction)cancelUpload:(id)sender
-{
-    
-}
 
 - (void)uploadImage:(UIImage*)image
 {
-  
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.6f);
+    
+    NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+    config.HTTPMaximumConnectionsPerHost = 1;
+    [config setHTTPAdditionalHeaders:@{@"Authorization": [Dropbox apiAuthorizationHeader]}];
+    
+    NSURLSession *uploadSession = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:nil];
+    NSURL *url = [Dropbox createPhotoUploadURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
+    [request setHTTPMethod:@"PUT"];
+    
+    self.uploadTask = [uploadSession uploadTaskWithRequest:request fromData:imageData];
+    
+    self.uploadView.hidden = NO;
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    [self.uploadTask resume];
+}
+
+#pragma mark - NSURLSessionTaskDelegate
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didSendBodyData:(int64_t)bytesSent totalBytesSent:(int64_t)totalBytesSent totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_progress setProgress:(double)totalBytesSent / (double)totalBytesExpectedToSend];
+    });
+}
+
+ - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+{
+    // 1
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        _uploadView.hidden = YES;
+        [_progress setProgress:0.5];
+    });
+    
+    if (!error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self refreshPhotos];
+        });
+    } else {
+        // alert errors
+    }
 }
 
 
