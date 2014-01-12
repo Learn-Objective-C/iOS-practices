@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WXViewController.h"
+#import <TSMessages/TSMessage.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
