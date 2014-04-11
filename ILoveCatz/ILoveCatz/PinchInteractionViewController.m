@@ -21,6 +21,11 @@
     _presentedViewController = viewController;
 }
 
+- (CGFloat)completionSpeed
+{
+    return 1.0 - self.percentComplete;
+}
+
 - (void)handlePinch:(UIPinchGestureRecognizer *)gesture
 {
     CGFloat scale = gesture.scale;
@@ -32,8 +37,7 @@
         case UIGestureRecognizerStateChanged:
         {
             CGFloat fraction = 1.0 * 0.1 / scale;
-            _shouldCompleteTransition = scale < 0.5;
-            NSLog(@"Scale %f fraction %f", scale, fraction);
+            _shouldCompleteTransition = scale < 0.4;
             [self updateInteractiveTransition:fraction];
             break;
         }

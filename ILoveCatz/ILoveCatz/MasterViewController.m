@@ -108,10 +108,10 @@
     _shrinkDismissAnimationController.reverse = flag;
 }
 
-//- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator
-//{
-//    return _pinchInteractionController.interactionInProgress?_pinchInteractionController:nil;
-//}
+- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator
+{
+    return _pinchInteractionController.interactionInProgress?_pinchInteractionController:nil;
+}
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
