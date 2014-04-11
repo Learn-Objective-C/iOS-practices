@@ -10,4 +10,6 @@
 
 @interface ShrinkDismissAnimationController : NSObject<UIViewControllerAnimatedTransitioning>
 
+@property (nonatomic, assign) BOOL reverse;
+
 @end

@@ -10,6 +10,8 @@
 		414C8E7918F5327C00FC2AE8 /* BouncePresentAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414C8E7818F5327C00FC2AE8 /* BouncePresentAnimationController.m */; };
 		414C8E7C18F5391B00FC2AE8 /* ShrinkDismissAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414C8E7B18F5391B00FC2AE8 /* ShrinkDismissAnimationController.m */; };
 		414C8E7F18F53E6500FC2AE8 /* FlipAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414C8E7E18F53E6500FC2AE8 /* FlipAnimationController.m */; };
+		414C8E8218F5480F00FC2AE8 /* SwipeInteractionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414C8E8118F5480F00FC2AE8 /* SwipeInteractionController.m */; };
+		414C8E8518F54DF300FC2AE8 /* PinchInteractionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414C8E8418F54DF300FC2AE8 /* PinchInteractionViewController.m */; };
 		7224764E17CFD590007EE998 /* cat.png in Resources */ = {isa = PBXBuildFile; fileRef = 7224764C17CFD590007EE998 /* cat.png */; };
 		7224764F17CFD590007EE998 /* cat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7224764D17CFD590007EE998 /* cat@2x.png */; };
 		72A50CB117C65A1A009EF8D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72A50CB017C65A1A009EF8D2 /* Foundation.framework */; };
@@ -58,6 +60,10 @@
 		414C8E7B18F5391B00FC2AE8 /* ShrinkDismissAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShrinkDismissAnimationController.m; sourceTree = "<group>"; };
 		414C8E7D18F53E6500FC2AE8 /* FlipAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlipAnimationController.h; sourceTree = "<group>"; };
 		414C8E7E18F53E6500FC2AE8 /* FlipAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlipAnimationController.m; sourceTree = "<group>"; };
+		414C8E8018F5480F00FC2AE8 /* SwipeInteractionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeInteractionController.h; sourceTree = "<group>"; };
+		414C8E8118F5480F00FC2AE8 /* SwipeInteractionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeInteractionController.m; sourceTree = "<group>"; };
+		414C8E8318F54DF300FC2AE8 /* PinchInteractionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinchInteractionViewController.h; sourceTree = "<group>"; };
+		414C8E8418F54DF300FC2AE8 /* PinchInteractionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinchInteractionViewController.m; sourceTree = "<group>"; };
 		7224764C17CFD590007EE998 /* cat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cat.png; sourceTree = "<group>"; };
 		7224764D17CFD590007EE998 /* cat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cat@2x.png"; sourceTree = "<group>"; };
 		72A50CAD17C65A1A009EF8D2 /* ILoveCatz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ILoveCatz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +182,10 @@
 				414C8E7B18F5391B00FC2AE8 /* ShrinkDismissAnimationController.m */,
 				414C8E7D18F53E6500FC2AE8 /* FlipAnimationController.h */,
 				414C8E7E18F53E6500FC2AE8 /* FlipAnimationController.m */,
+				414C8E8018F5480F00FC2AE8 /* SwipeInteractionController.h */,
+				414C8E8118F5480F00FC2AE8 /* SwipeInteractionController.m */,
+				414C8E8318F54DF300FC2AE8 /* PinchInteractionViewController.h */,
+				414C8E8418F54DF300FC2AE8 /* PinchInteractionViewController.m */,
 			);
 			path = ILoveCatz;
 			sourceTree = "<group>";
@@ -340,7 +350,9 @@
 				72A50CF017C65D63009EF8D2 /* AboutViewController.m in Sources */,
 				414C8E7C18F5391B00FC2AE8 /* ShrinkDismissAnimationController.m in Sources */,
 				72A50CCC17C65A1A009EF8D2 /* MasterViewController.m in Sources */,
+				414C8E8218F5480F00FC2AE8 /* SwipeInteractionController.m in Sources */,
 				72A50CC317C65A1A009EF8D2 /* AppDelegate.m in Sources */,
+				414C8E8518F54DF300FC2AE8 /* PinchInteractionViewController.m in Sources */,
 				72A50CBF17C65A1A009EF8D2 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

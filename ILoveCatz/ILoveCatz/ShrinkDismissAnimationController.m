@@ -35,26 +35,29 @@
     CGRect fromFinalFrame = CGRectOffset(shrunkenFrame, 0.0, screenBounds.size.height);
     
     // Create a snapshot
-    UIView *intermediateView = [fromVC.view snapshotViewAfterScreenUpdates:NO];
-    intermediateView.frame = fromVC.view.frame;
-    [fromVC.view removeFromSuperview];
-    [containerView addSubview:intermediateView];
-    
+//    UIView *intermediateView = [fromVC.view snapshotViewAfterScreenUpdates:NO];
+//    intermediateView.frame = fromVC.view.frame;
+//    [fromVC.view removeFromSuperview];
+//    [containerView addSubview:intermediateView];
+//
+    // reverse
+    float factor = self.reverse? 0.5 : 1.0;
     NSTimeInterval duration = [self transitionDuration:transitionContext];
     
     // animate with keyframes
     [UIView animateKeyframesWithDuration:duration delay:0.0 options:UIViewKeyframeAnimationOptionCalculationModeCubic animations:^{
         [UIView addKeyframeWithRelativeStartTime:0.0 relativeDuration:0.5 animations:^{
-            intermediateView.frame = shrunkenFrame;
-            toVC.view.alpha = 0.5f;
+//            intermediateView.frame = shrunkenFrame;
+            fromVC.view.transform = CGAffineTransformMakeScale(0.5 / factor, 0.5 / factor);
+            toVC.view.alpha = 0.5f / factor;
         }];
         [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.5 animations:^{
-            intermediateView.frame = fromFinalFrame;
+            fromVC.view.frame = fromFinalFrame;
             toVC.view.alpha = 1.0f;
         }];
     } completion:^(BOOL finished) {
-        [intermediateView removeFromSuperview];
-        [transitionContext completeTransition:YES];
+//        [intermediateView removeFromSuperview];
+        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];
 }
 

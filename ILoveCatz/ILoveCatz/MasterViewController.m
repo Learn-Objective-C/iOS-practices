@@ -13,6 +13,8 @@
 #import "BouncePresentAnimationController.h"
 #import "ShrinkDismissAnimationController.h"
 #import "FlipAnimationController.h"
+#import "SwipeInteractionController.h"
+#import "PinchInteractionViewController.h"
 
 @interface MasterViewController ()<UIViewControllerTransitioningDelegate, UINavigationControllerDelegate>
 
@@ -23,6 +25,8 @@
     BouncePresentAnimationController *_bounceAnimationController;
     ShrinkDismissAnimationController *_shrinkDismissAnimationController;
     FlipAnimationController *_filpAnimationController;
+    SwipeInteractionController *_swipeInteractionController;
+    PinchInteractionViewController *_pinchInteractionController;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -31,6 +35,8 @@
         _bounceAnimationController = [BouncePresentAnimationController new];
         _shrinkDismissAnimationController = [ShrinkDismissAnimationController new];
         _filpAnimationController = [FlipAnimationController new];
+        _swipeInteractionController = [SwipeInteractionController new];
+        _pinchInteractionController = [PinchInteractionViewController new];
     }
     
     return self;
@@ -88,6 +94,7 @@
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
+    [_pinchInteractionController wireToViewController:presented];
     return _bounceAnimationController;
 }
 
@@ -96,10 +103,28 @@
     return _shrinkDismissAnimationController;
 }
 
+- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion
+{
+    _shrinkDismissAnimationController.reverse = flag;
+}
+
+//- (id<UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id<UIViewControllerAnimatedTransitioning>)animator
+//{
+//    return _pinchInteractionController.interactionInProgress?_pinchInteractionController:nil;
+//}
+
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
+    if (operation == UINavigationControllerOperationPush) {
+        [_swipeInteractionController wireToViewController:toVC];
+    }
     _filpAnimationController.reverse = operation == UINavigationControllerOperationPop;
     return _filpAnimationController;
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
+{
+    return _swipeInteractionController.interactionInProgress?_swipeInteractionController:nil;
 }
 
 @end
