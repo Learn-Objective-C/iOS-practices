@@ -56,8 +56,10 @@
     // you to work out the complex calculatins required to accomodate the variability of real-world
     // data. C'est la vie!
     float padding = 5.0f;
+    NSLog(@"Self.center before = %@ _label origin %@", NSStringFromCGPoint(self.center), NSStringFromCGPoint(_label.frame.origin));
     self.center = CGPointMake(self.center.x + _label.frame.origin.x - padding,
                               self.center.y - _label.frame.origin.y + padding);
+    NSLog(@"Self.center after = %@", NSStringFromCGPoint(self.center));
     
 }
 
@@ -67,7 +69,7 @@
 }
 
 - (UIBezierPath *)curvePathWithOrigin:(CGPoint)origin {
-    return [UIBezierPath bezierPathWithArcCenter:_label.center
+    return [UIBezierPath bezierPathWithArcCenter:origin
                                           radius:[self radiusToSurroundFrame:_label.frame]
                                       startAngle:-180.0f
                                         endAngle:180.0f
@@ -79,7 +81,7 @@
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetShouldAntialias(ctx, YES);
-    UIBezierPath* path = [self curvePathWithOrigin:CGPointMake(self.frame.size.width, 0)];
+    UIBezierPath* path = [self curvePathWithOrigin:_label.center];
     
     [[UIColor colorWithRed:0.329f green:0.584f blue:0.898f alpha:1.0f] setFill];
     [path fill];

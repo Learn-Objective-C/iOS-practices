@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		414C8E8818F837BD00FC2AE8 /* SyntaxHighLightTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 414C8E8718F837BD00FC2AE8 /* SyntaxHighLightTextStorage.m */; };
+		414C8E8B18F9916F00FC2AE8 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 414C8E8A18F9916F00FC2AE8 /* WebViewController.m */; };
 		722C4581177C501100F1DDA2 /* TimeIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 722C4580177C500B00F1DDA2 /* TimeIndicatorView.m */; };
 		72DDD4F817719E03009BA334 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72DDD4F717719E03009BA334 /* Foundation.framework */; };
 		72DDD4FA17719E03009BA334 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 72DDD4F917719E03009BA334 /* CoreGraphics.framework */; };
@@ -38,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		414C8E8618F837BD00FC2AE8 /* SyntaxHighLightTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyntaxHighLightTextStorage.h; sourceTree = "<group>"; };
+		414C8E8718F837BD00FC2AE8 /* SyntaxHighLightTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyntaxHighLightTextStorage.m; sourceTree = "<group>"; };
+		414C8E8918F9916F00FC2AE8 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		414C8E8A18F9916F00FC2AE8 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		722C457F177C500B00F1DDA2 /* TimeIndicatorView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeIndicatorView.h; sourceTree = "<group>"; };
 		722C4580177C500B00F1DDA2 /* TimeIndicatorView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeIndicatorView.m; sourceTree = "<group>"; };
 		72DDD4F417719E03009BA334 /* TextKitNotepad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextKitNotepad.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,6 +144,10 @@
 				72DDD5301771B395009BA334 /* Note.m */,
 				72DDD5321771B6B7009BA334 /* NoteEditorViewController.h */,
 				72DDD5331771B6B7009BA334 /* NoteEditorViewController.m */,
+				414C8E8618F837BD00FC2AE8 /* SyntaxHighLightTextStorage.h */,
+				414C8E8718F837BD00FC2AE8 /* SyntaxHighLightTextStorage.m */,
+				414C8E8918F9916F00FC2AE8 /* WebViewController.h */,
+				414C8E8A18F9916F00FC2AE8 /* WebViewController.m */,
 			);
 			path = TextKitNotepad;
 			sourceTree = "<group>";
@@ -270,7 +280,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				72DDD5311771B395009BA334 /* Note.m in Sources */,
+				414C8E8818F837BD00FC2AE8 /* SyntaxHighLightTextStorage.m in Sources */,
 				72DDD50817719E03009BA334 /* AppDelegate.m in Sources */,
+				414C8E8B18F9916F00FC2AE8 /* WebViewController.m in Sources */,
 				72DDD5341771B6B7009BA334 /* NoteEditorViewController.m in Sources */,
 				722C4581177C501100F1DDA2 /* TimeIndicatorView.m in Sources */,
 				72DDD52E1771A156009BA334 /* NotesListViewController.m in Sources */,

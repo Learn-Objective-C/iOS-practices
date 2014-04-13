@@ -16,5 +16,6 @@
 // updates the size of this view to comfortably hold the current text. After this
 // method is invoked the view will be located at the origin.
 - (void) updateSize;
+- (UIBezierPath *)curvePathWithOrigin:(CGPoint)origin;
 
 @end
