@@ -9,8 +9,9 @@
 #import "BookViewController.h"
 #import "BookView.h"
 #import "AppDelegate.h"
+#import "MarkdownParser.h"
 
-@interface BookViewController ()
+@interface BookViewController ()<BookViewDelegate, UIPopoverControllerDelegate>
 
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 
@@ -19,6 +20,7 @@
 @implementation BookViewController
 {
     BookView *_bookView;
+    UIPopoverController *_popover;
 }
 
 - (void)viewDidLoad
@@ -33,7 +35,9 @@
     _bookView = [[BookView alloc] initWithFrame:self.view.bounds];
     _bookView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _bookView.bookMarkup = appDelegate.bookMarkup;
+    _bookView.bookViewDelegate = self;
     [self.view addSubview:_bookView];
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(preferredChangeContentSize:) name:UIContentSizeCategoryDidChangeNotification object:nil];
     
     NSLog(@"viewDidLoad");
 }
@@ -69,6 +73,28 @@
 {
     [self.masterPopoverController dismissPopoverAnimated:YES];
     [_bookView navigateToCharacterLocation:location];
+}
+
+#pragma mark - BookView Delegate
+- (void)bookView:(BookView *)bookView didHighLightWord:(NSString *)word inRect:(CGRect)rect
+{
+    UIReferenceLibraryViewController *dictionaryVC = [[UIReferenceLibraryViewController alloc] initWithTerm:word];
+    _popover = [[UIPopoverController alloc] initWithContentViewController:dictionaryVC];
+    _popover.delegate = self;
+    [_popover presentPopoverFromRect:rect inView:_bookView permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    [_bookView removeWordHighLight];
+}
+
+#pragma mark - Notifications
+- (void)preferredChangeContentSize:(NSNotification *)notification
+{
+    MarkdownParser *parser = [MarkdownParser new];
+    _bookView.bookMarkup = [parser parseMarkdownFile:[[NSBundle mainBundle] pathForResource:@"alices_adventures" ofType:@"md"]];
+    [_bookView buildFrames];
 }
 
 @end

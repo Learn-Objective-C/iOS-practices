@@ -8,11 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@class BookView;
+
+@protocol BookViewDelegate <NSObject>
+
+- (void)bookView:(BookView *)bookView didHighLightWord:(NSString *)word inRect:(CGRect)rect;
+
+@end
+
 @interface BookView : UIScrollView<UIScrollViewDelegate>
 
 @property (nonatomic, copy) NSAttributedString *bookMarkup;
+@property (nonatomic, weak) id<BookViewDelegate>bookViewDelegate;
 
 - (void)buildFrames;
 - (void)navigateToCharacterLocation:(NSUInteger)location;
+- (void)removeWordHighLight;
 
 @end

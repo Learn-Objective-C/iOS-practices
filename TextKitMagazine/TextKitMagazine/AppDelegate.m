@@ -26,10 +26,6 @@
     
     // make the status bar white
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"alices_adventures" ofType:@"md"];
-    MarkdownParser *markdownParser = [[MarkdownParser alloc] init];
-    self.bookMarkup = [markdownParser parseMarkdownFile:path];
     self.chapters = [self locateChapters:self.bookMarkup.string];
     
     return YES;
@@ -48,6 +44,14 @@
     }];
     
     return chapters;
+}
+
+- (NSAttributedString *)bookMarkup
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"alices_adventures" ofType:@"md"];
+    MarkdownParser *markdownParser = [[MarkdownParser alloc] init];
+    _bookMarkup = [markdownParser parseMarkdownFile:path];
+    return _bookMarkup;
 }
 
 @end

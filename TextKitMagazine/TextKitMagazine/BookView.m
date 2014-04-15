@@ -12,6 +12,7 @@
 {
     NSLayoutManager *_layoutManager;
     NSRange _wordCharacterRange;
+    NSUInteger _currentLocation;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -78,6 +79,18 @@
             }
         }
     }
+
+    for (int index = 0; index < _layoutManager.textContainers.count; index++) {
+        CGRect textViewFrame = [self frameForViewAtIndex:index];
+        // update the current index
+        if (textViewFrame.origin.x > self.contentOffset.x) {
+            NSTextContainer *container = _layoutManager.textContainers[index];
+            NSRange glyphRange = [_layoutManager glyphRangeForTextContainer:container];
+            NSRange characterRange = [_layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:nil];
+            _currentLocation = characterRange.location;
+            break;
+        }
+    }
 }
 
 - (void)buildFrames
@@ -96,11 +109,11 @@
         CGSize containerSize = CGSizeMake(textViewRect.size.width, textViewRect.size.height - 16.0);
         NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:containerSize];
         [_layoutManager addTextContainer:textContainer];
-        
-        [self buildViewsForCurrentOffset];
+
         range = [_layoutManager glyphRangeForTextContainer:textContainer];
         containerIndex ++;
     }
+    [self navigateToCharacterLocation:_currentLocation];
     
     self.contentSize = CGSizeMake((self.bounds.size.width / 2) * (CGFloat)containerIndex, self.bounds.size.height);
     self.pagingEnabled = YES;
@@ -127,7 +140,7 @@
         NSRange characterRange = [_layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:nil];
         if (location >= characterRange.location && location < NSMaxRange(characterRange)) {
             self.contentOffset = CGPointMake(offset, 0);
-            [self buildFrames];
+            [self buildViewsForCurrentOffset];
             return;
         }
         offset += self.bounds.size.width / 2;
@@ -162,6 +175,25 @@
     
     _wordCharacterRange = [self wordContainsCharacter:characterIndex inString:textStorage.string];
     [textStorage addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:_wordCharacterRange];
+    
+    // 1
+    CGRect rect = [_layoutManager lineFragmentRectForGlyphAtIndex:glyphIndex effectiveRange:nil];
+    
+    // 2
+    NSRange wordGlyphRange = [_layoutManager glyphRangeForCharacterRange:_wordCharacterRange actualCharacterRange:nil];
+    CGPoint startLocation = [_layoutManager locationForGlyphAtIndex:wordGlyphRange.location];
+    CGPoint endLocation = [_layoutManager locationForGlyphAtIndex:NSMaxRange(wordGlyphRange)];
+    
+    CGRect wordRect = CGRectMake(startLocation.x, rect.origin.y, endLocation.x - startLocation.x, rect.size.height);
+    wordRect = CGRectOffset(wordRect, tappedTextView.frame.origin.x, tappedTextView.frame.origin.y);
+    wordRect = CGRectOffset(wordRect, 0, 8.0);
+    
+    if ([_bookViewDelegate respondsToSelector:@selector(bookView:didHighLightWord:inRect:)]) {
+        NSString *word = [textStorage.string substringWithRange:_wordCharacterRange];
+        [_bookViewDelegate bookView:self didHighLightWord:word inRect:wordRect];
+    }
+    
+    
 }
 
 - (NSRange)wordContainsCharacter:(NSUInteger)charIndex inString:(NSString *)string
@@ -177,6 +209,11 @@
     }
     
     return NSMakeRange(startLocation, endLocation-startLocation+1);
+}
+
+- (void)removeWordHighLight
+{
+    [_layoutManager.textStorage removeAttribute:NSForegroundColorAttributeName range:_wordCharacterRange];
 }
 
 
