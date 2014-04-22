@@ -55,7 +55,33 @@
 
 -(void)retreiveNoteText
 {
-
+    //
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    NSString *fileAPI = @"https://api-content.dropbox.com/1/files/dropbox";
+    NSString *escapePath = [_note.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@", fileAPI, escapePath];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    [[_session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            if (httpResponse.statusCode == 200) {
+                //
+                NSString *text = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.textView.text = text;
+                });
+            } else {
+                NSLog(@"bad request %d", httpResponse.statusCode);
+            }
+        } else {
+            NSLog(@"Error %@", error);
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        });
+    }] resume];
 }
 
 #pragma mark - send messages to delegate
@@ -76,7 +102,23 @@
         _note.path = _filename.text;
         
         // - UPLOAD FILE TO DROPBOX - //
-        [self.delegate noteDetailsViewControllerDoneWithDetails:self];
+        // 1
+        NSURL *url = [Dropbox uploadURLForPath:_note.path];
+        
+        // 2
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setHTTPMethod:@"PUT"];
+        NSData *noteContents = [_note.contents dataUsingEncoding:NSUTF8StringEncoding];
+        
+        [[_session uploadTaskWithRequest:request fromData:noteContents completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+            if (!error && httpResponse.statusCode == 200) {
+                
+                [self.delegate noteDetailsViewControllerDoneWithDetails:self];
+            } else {
+                
+            }
+        }] resume];
         
     } else {
         UIAlertView *noTextAlert = [[UIAlertView alloc] initWithTitle:@"No text"
