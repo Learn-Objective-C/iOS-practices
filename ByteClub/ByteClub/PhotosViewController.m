@@ -10,6 +10,7 @@
 #import "PhotoCell.h"
 #import "Dropbox.h"
 #import "DBFile.h"
+#import "DownloadViewController.h"
 
 @interface PhotosViewController ()<UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate, NSURLSessionTaskDelegate>
 
@@ -110,6 +111,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"downloadPhoto"]) {
+        DownloadViewController *viewController = (DownloadViewController *)segue.destinationViewController;
+        int selectedRow = [self.tableView indexPathForSelectedRow].row;
+        DBFile *file = _photoThumbnails[selectedRow];
+        viewController.path = file.path;
+    }
+}
 
 #pragma mark - UITableViewDatasource and UITableViewDelegate methods
 
@@ -128,7 +138,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

@@ -140,4 +140,11 @@ NSString * const accessTokenSecret = @"accessTokenSecret";
     return url;
 }
 
++ (NSURL*)createPhotoDownloadURL:(NSString *)fileName
+{
+    NSString *urlWithParams = [NSString stringWithFormat:@"https://api-content.dropbox.com/1/files/dropbox%@",fileName];
+    NSURL *url = [NSURL URLWithString:urlWithParams];
+    return url;
+}
+
 @end

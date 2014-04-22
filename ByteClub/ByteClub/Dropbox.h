@@ -36,4 +36,5 @@ typedef void (^DropboxRequestTokenCompletionHandler)(NSData *data, NSURLResponse
 + (NSURL*)appRootURL;
 + (NSURL*)uploadURLForPath:(NSString*)path;
 + (NSURL*)createPhotoUploadURL;
++ (NSURL*)createPhotoDownloadURL:(NSString *)fileName;
 @end
