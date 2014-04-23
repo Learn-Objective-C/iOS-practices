@@ -15,7 +15,6 @@
 @property (nonatomic, weak) IBOutlet UIImageView *photoView;
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;
 @property (nonatomic, strong) NSURLSession *session;
-@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
 @property (nonatomic, strong) NSData *resumeData;
 
 @end
@@ -49,9 +48,16 @@
     [self downloadPhoto];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)dealloc
 {
+    [_session invalidateAndCancel];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
     if (_downloadTask.state == NSURLSessionTaskStateRunning) {
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         [_downloadTask cancelByProducingResumeData:nil];
     }
 }
@@ -60,11 +66,9 @@
 {
     //
     NSURL *url = [Dropbox createPhotoDownloadURL:self.path];
-    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    self.downloadTask = [_session downloadTaskWithURL:url];
+    _downloadTask = [_session downloadTaskWithURL:url];
     [self.downloadTask resume];
-    NSLog(@"url %@", url);
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,7 +86,7 @@
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location
 {
-    if (location) {
+    if (location && downloadTask.state == NSURLSessionTaskStateRunning) {
         // load image from temp
         NSLog(@"location %@", location);
         NSData *data = [NSData dataWithContentsOfURL:location];
@@ -90,10 +94,9 @@
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, NULL);
         dispatch_async(dispatch_get_main_queue(), ^{
             self.photoView.image = image;
+            self.progressView.hidden = YES;
             _titleLabel.text = [NSString stringWithFormat:@"Download full size photo\n %@", self.path];
-            [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         });
-
     }
 }
 
@@ -112,26 +115,29 @@
     }
 }
 
-//- (IBAction)cancel:(id)sender
-//{
-//    if (_downloadTask.state == (NSURLSessionTaskStateRunning | NSURLSessionTaskStateSuspended)) {
-//        NSLog(@"Cancel tapped");
-//        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//        [_downloadTask cancelByProducingResumeData:nil];
-//    }
-//}
+- (IBAction)cancel:(id)sender
+{
+    if (_downloadTask.state == (NSURLSessionTaskStateRunning | NSURLSessionTaskStateSuspended)) {
+        NSLog(@"Cancel tapped");
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+        [_downloadTask cancelByProducingResumeData:nil];
+    }
+}
 //
-//- (IBAction)pause:(id)sender
-//{
-//    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-//    if (_downloadTask.state == NSURLSessionTaskStateRunning) {
-//        [_downloadTask cancelByProducingResumeData:^(NSData *data) {
-//            _resumeData = data;
-//        }];
-//    } else {
-//        [_session downloadTaskWithResumeData:_resumeData];
-//    }
-//}
+- (IBAction)pause:(id)sender
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    if (_downloadTask.state == NSURLSessionTaskStateRunning) {
+        [sender setTitle:@"Resume"];
+        [_downloadTask cancelByProducingResumeData:^(NSData *data) {
+            _resumeData = data;
+        }];
+    } else {
+        [sender setTitle:@"Pause"];
+        _downloadTask = [_session downloadTaskWithResumeData:_resumeData];
+        [_downloadTask resume];
+    }
+}
 
 
 /*

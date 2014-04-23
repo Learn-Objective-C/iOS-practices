@@ -11,5 +11,6 @@
 @interface DownloadViewController : UIViewController
 
 @property (nonatomic, copy) NSString *path;
+@property (nonatomic, strong) NSURLSessionDownloadTask *downloadTask;
 
 @end
