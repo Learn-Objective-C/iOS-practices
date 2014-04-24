@@ -10,4 +10,7 @@
 
 @interface NewsViewController : UIViewController
 
+
+- (void)populateDataWithCompletionHandler:(void(^)(UIBackgroundFetchResult))completionHandler;
+
 @end

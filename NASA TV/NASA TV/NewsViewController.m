@@ -48,7 +48,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self populateData];
+    [self populateDataWithCompletionHandler:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,9 +57,8 @@
 }
 
 #pragma mark - Data
-
-- (void)populateData {
-    
+- (void)populateDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
     self.getNewsWebOperation = [[GetNewsWebOperation alloc] init];
     
     __weak NewsViewController* weakSelf = self;
@@ -84,17 +83,29 @@
             [weakSelf.tableView reloadData];
             [weakSelf.refreshControl endRefreshing];
         });
+        
+        if (completionHandler) {
+            if (hasNewEntries) {
+                completionHandler(UIBackgroundFetchResultNewData);
+                [UIApplication sharedApplication].applicationIconBadgeNumber++;
+            } else {
+                completionHandler(UIBackgroundFetchResultNoData);
+            }
+        }
     }];
     
     [self.getNewsWebOperation setFailureBlock:^{
         [weakSelf.refreshControl endRefreshing];
+        if (completionHandler) {
+            completionHandler(UIBackgroundFetchResultFailed);
+        }
     }];
     
     [self.getNewsWebOperation startAsynchronous];
 }
 
 - (void)refreshTableView:(id)sender {
-    [self populateData];
+    [self populateDataWithCompletionHandler:nil];
 }
 
 #pragma mark - UITableViewDelegate/DataSource

@@ -21,7 +21,7 @@
     // Override point for customization after application launch.
     
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:@"http://192.168.1.123:44447"
+    [ud setObject:@"http://localhost:44447"
            forKey:@"baseURLString"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -62,7 +62,6 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
@@ -185,6 +184,20 @@
 - (NSURL *)applicationDocumentsDirectory {
     
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    UITabBarController *rootVC = (UITabBarController *)self.window.rootViewController;
+    UIViewController *selectedVC = rootVC.selectedViewController;
+    
+    if ([selectedVC isMemberOfClass:[UINavigationController class]]) {
+        UIViewController *topVC = ((UINavigationController *)selectedVC).topViewController;
+        if ([topVC isMemberOfClass:[NewsViewController class]]) {
+            [(NewsViewController *)topVC populateDataWithCompletionHandler:completionHandler];
+        }
+    }
+    
 }
 
 @end
