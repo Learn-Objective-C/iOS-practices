@@ -100,7 +100,20 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="PU7-UB-3Uy">
                         <nil key="title"/>
+                        <progressView key="titleView" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" id="alD-ii-KKT">
+                            <rect key="frame" x="8" y="21" width="220" height="3"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </progressView>
+                        <barButtonItem key="rightBarButtonItem" title="Download" id="93P-ew-pVo">
+                            <connections>
+                                <action selector="downloadButtonTapped:" destination="hUa-kK-VBR" id="rmE-J1-uw8"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="downloadButton" destination="93P-ew-pVo" id="EfT-IY-E4V"/>
+                        <outlet property="progressView" destination="alD-ii-KKT" id="x6v-9m-65k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s3T-YK-KOR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

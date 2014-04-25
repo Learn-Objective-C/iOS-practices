@@ -49,7 +49,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self populateData];
+    [self populateDataWithCompletionHandler:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,13 +59,13 @@
 
 #pragma mark - Data
 
-- (void)populateData {
+- (void)populateDataWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
     self.getVideosWebOperation = [[GetVideosWebOperation alloc] init];
     
     __weak VideoViewController* weakSelf = self;
     
-    [self.getVideosWebOperation setSuccessBlock:^(NSArray* managedObjects) {
+    [self.getVideosWebOperation setSuccessBlock:^(NSArray* managedObjects, BOOL hasNewVideos) {
         dispatch_async(dispatch_get_main_queue(), ^{
             
             AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
@@ -89,18 +89,31 @@
             
             [weakSelf.collectionView reloadData];
             [weakSelf.refreshControl endRefreshing];
+            
+            if (completionHandler) {
+                if (hasNewVideos) {
+                    completionHandler(UIBackgroundFetchResultNewData);
+                    [UIApplication sharedApplication].applicationIconBadgeNumber++;
+                } else {
+                    completionHandler(UIBackgroundFetchResultNoData);
+                }
+            }
+
         });
     }];
     
     [self.getVideosWebOperation setFailureBlock:^{
         [weakSelf.refreshControl endRefreshing];
+        if (completionHandler) {
+            completionHandler(UIBackgroundFetchResultFailed);
+        }
     }];
     
     [self.getVideosWebOperation startAsynchronous];
 }
 
 - (void)refreshCollectionView:(id)sender {
-    [self populateData];
+    [self populateDataWithCompletionHandler:nil];
 }
 
 #pragma mark - UICollectionView Datasource

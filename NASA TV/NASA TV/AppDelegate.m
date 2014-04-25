@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "NewsViewController.h"
+#import "VideoViewController.h"
 #import "PhotoViewController.h"
 
 @implementation AppDelegate
@@ -195,8 +196,18 @@
         UIViewController *topVC = ((UINavigationController *)selectedVC).topViewController;
         if ([topVC isMemberOfClass:[NewsViewController class]]) {
             [(NewsViewController *)topVC populateDataWithCompletionHandler:completionHandler];
+        } else if ([topVC isMemberOfClass:[VideoViewController class]]) {
+            [(VideoViewController *)topVC populateDataWithCompletionHandler:completionHandler];
         }
     }
+}
+
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)())completionHandler
+{
+    NSDictionary *userInfo = @{@"completionHandler": completionHandler,
+                               @"sessionIdentifier": identifier};
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BackgroundTransferNotification" object:nil userInfo:userInfo];
     
 }
 
