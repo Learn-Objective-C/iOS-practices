@@ -11,9 +11,10 @@
 #import "MyBrowserViewController.h"
 #import "Card.h"
 #import "SingleCardViewController.h"
+@import MultipeerConnectivity;
 
 @interface ShareViewController ()
-<UITableViewDataSource, UITableViewDelegate>
+<UITableViewDataSource, UITableViewDelegate, MCBrowserViewControllerDelegate, MyBrowserViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *emptyAddButton;
@@ -29,8 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dataReceived:) name:DataReceivedNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,7 +42,20 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self dataReceived:nil];
+}
+
+- (void)dataReceived:(NSNotification *)notification
+{
     [self showHideNoDataView];
+    [self.tableView reloadData];
+}
+
+- (void)sendCard
+{
+    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
+    [appDelegate sendCardToPeer];
+    [self showMessage:@"Card sent to nearby device"];
 }
 
 #pragma mark - Action methods
@@ -57,6 +70,19 @@
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil]
          show];
+    } else {
+        if ([[delegate.session connectedPeers] count] == 0) {
+            if (kProgrammaticDiscovery) {
+                [self performSegueWithIdentifier:@"SegueToMyBrowser" sender:self];
+            } else {
+                MCBrowserViewController *browserViewController = [[MCBrowserViewController alloc] initWithServiceType:kServiceType session:delegate.session];
+                browserViewController.view.tintColor = [UIColor whiteColor];
+                browserViewController.delegate = self;
+                [self presentViewController:browserViewController animated:YES completion:nil];
+            }
+        } else {
+            [self sendCard];
+        }
     }
 }
 
@@ -66,6 +92,11 @@
         SingleCardViewController *singleCardViewController = (SingleCardViewController *)segue.destinationViewController;
         singleCardViewController.card = self.selectedCard;
         singleCardViewController.enableAddToCards = YES;
+    } else if ([segue.identifier isEqualToString:@"SegueToMyBrowser"]) {
+        AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+        MyBrowserViewController *browserViewController = (MyBrowserViewController *)segue.destinationViewController;
+        browserViewController.delegate = self;
+        [browserViewController setupWithServiceType:kServiceType session:delegate.session peer:delegate.peerId];
     }
 }
 
@@ -151,6 +182,32 @@
                       cancelButtonTitle:@"OK"
                       otherButtonTitles:nil]
      show];
+}
+
+#pragma mark - MCBrowserViewController Delegate
+- (void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController
+{
+    [browserViewController dismissViewControllerAnimated:YES completion:^{
+        [self sendCard];
+    }];
+}
+
+- (void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController
+{
+    [browserViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - MyBrowserViewController Delegate
+- (void)myBrowserViewControllerDidFinish:(MyBrowserViewController *)browserViewController
+{
+    [browserViewController dismissViewControllerAnimated:YES completion:^{
+        [self sendCard];
+    }];
+}
+
+- (void)myBrowserViewControllerWasCancelled:(MyBrowserViewController *)browserViewController
+{
+    [browserViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

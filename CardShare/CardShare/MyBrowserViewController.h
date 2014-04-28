@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@import MultipeerConnectivity;
 
 @protocol MyBrowserViewControllerDelegate;
 
@@ -15,6 +16,8 @@
 @property (nonatomic, weak, readwrite) id<MyBrowserViewControllerDelegate> delegate;
 @property(nonatomic, assign) NSUInteger maximumNumberOfPeers;
 @property(nonatomic, assign) NSUInteger minimumNumberOfPeers;
+
+- (void)setupWithServiceType:(NSString *)serviceType session:(MCSession *)session peer:(MCPeerID *)peerId;
 
 @end
 

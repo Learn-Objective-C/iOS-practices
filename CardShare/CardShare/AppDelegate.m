@@ -8,7 +8,18 @@
 
 #import "AppDelegate.h"
 
-@interface AppDelegate ()
+NSString *const kServiceType = @"ln-careshare";
+NSString *const DataReceivedNotification = @"com.longnv.apps.CardShare:DataReceivedNotification";
+NSString *const PeerConnectionAcceptedNotification = @"com.longnv.apps.CardShare:PeerConnectionAcceptedNotification";
+BOOL const kProgrammaticDiscovery = YES;
+
+typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
+
+@interface AppDelegate ()<MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, UIAlertViewDelegate>
+
+@property (nonatomic, strong) MCAdvertiserAssistant *advertiserAssistant;
+@property (nonatomic, strong) MCNearbyServiceAdvertiser *advertiser;
+@property (nonatomic, copy) InvitationHandler handler;
 
 @end
 
@@ -41,6 +52,20 @@
     if ([defaults objectForKey:@"otherCards"]) {
         NSData *otherCardsData = [defaults objectForKey:@"otherCards"];
         self.otherCards = (NSMutableArray *)[NSKeyedUnarchiver unarchiveObjectWithData:otherCardsData];
+    }
+    
+    //
+    NSString *peerName = self.myCard.firstName?:[[UIDevice currentDevice] name];
+    self.peerId = [[MCPeerID alloc] initWithDisplayName:peerName];
+    self.session = [[MCSession alloc] initWithPeer:self.peerId securityIdentity:nil encryptionPreference:MCEncryptionOptional];
+    self.session.delegate = self;
+    if (kProgrammaticDiscovery) {
+        self.advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:self.peerId discoveryInfo:nil serviceType:kServiceType];
+        self.advertiser.delegate = self;
+        [self.advertiser startAdvertisingPeer];
+    } else {
+        self.advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:kServiceType discoveryInfo:nil session:self.session];
+        [self.advertiserAssistant start];
     }
     
     return YES;
@@ -84,5 +109,61 @@
     [cardsSet removeObject:card];
     self.cards = [[cardsSet allObjects] mutableCopy];
 }
+
+- (void)sendCardToPeer
+{
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.myCard];
+    NSError *error;
+    [self.session sendData:data toPeers:self.session.connectedPeers withMode:MCSessionSendDataReliable error:&error];
+}
+
+#pragma mark - MCSession Delegate
+- (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
+{
+    Card *card = (Card *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+    [self.cards addObject:card];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DataReceivedNotification object:nil];
+}
+
+- (void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error
+{
+    
+}
+
+- (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress
+{
+    
+}
+
+- (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID
+{
+    
+}
+
+- (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
+{
+    if (state == MCSessionStateConnected && self.session) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:PeerConnectionAcceptedNotification object:nil userInfo:@{@"peer": peerID, @"accept":@YES}];
+    } else if (state == MCSessionStateNotConnected && self.session) {
+        if (![self.session.connectedPeers containsObject:peerID]) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:PeerConnectionAcceptedNotification object:nil userInfo:@{@"peer": peerID, @"accept":@NO}];
+        }
+    }
+}
+
+#pragma mark - MCNearbyService Delegate
+- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void (^)(BOOL, MCSession *))invitationHandler
+{
+    self.handler = invitationHandler;
+    [[[UIAlertView alloc] initWithTitle:@"Invitation" message:[NSString stringWithFormat:@"%@ watns to connect", peerID.displayName] delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Sure", nil] show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    BOOL accept = (buttonIndex == alertView.cancelButtonIndex) ? NO : YES;
+    self.handler(accept, self.session);
+}
+
+
 
 @end

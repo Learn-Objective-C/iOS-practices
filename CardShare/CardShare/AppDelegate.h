@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Card.h"
+@import MultipeerConnectivity;
+
+extern NSString *const kServiceType;
+extern NSString *const DataReceivedNotification;
+extern BOOL const kProgrammaticDiscovery;
+extern NSString *const PeerConnectionAcceptedNotification;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -16,8 +22,12 @@
 @property (strong, nonatomic) Card *myCard;
 @property (strong, nonatomic) NSMutableArray *otherCards;
 
+@property (nonatomic, strong) MCSession *session;
+@property (nonatomic, strong) MCPeerID *peerId;
+
 - (void) addToOtherCardsList:(Card *)card;
 - (void) removeCardFromExchangeList:(Card *)card;
+- (void)sendCardToPeer;
 - (UIColor *) mainColor;
 
 @end
