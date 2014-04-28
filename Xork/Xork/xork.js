@@ -199,9 +199,9 @@ function processCommand(action, object) {
 
     if (action == "go") {
         go(object);
-    }
-
-    else {
+    } else if (action == "take") {
+        take(object)
+    } else {
         print("You can't do that.");
     }
 
@@ -247,6 +247,19 @@ function go(direction) {
         print("Can't go there!");
     }
 
+}
+
+function take(itemName) {
+    var room = getCurrentRoom();
+    
+    if (room.hasItem(itemName)) {
+        item = room.itemForName(itemName);
+        inventory.addItem(item);
+        room.removeItem(item);
+        print("You picked it up.Woot!");
+    } else {
+        print("You can't pick that up");
+    }
 }
 
 /* Helper functions */

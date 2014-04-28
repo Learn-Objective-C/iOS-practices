@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8473231D190B5C5100061343 /* hello.js in Resources */ = {isa = PBXBuildFile; fileRef = 8473231C190B5C3000061343 /* hello.js */; };
 		FEB7B24717BE6212004A5DF0 /* xork.js in Resources */ = {isa = PBXBuildFile; fileRef = FEB7B24517BE6203004A5DF0 /* xork.js */; };
 		FEDFD80517AED8F900E052A1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEDFD80417AED8F900E052A1 /* Foundation.framework */; };
 		FEDFD80717AED8F900E052A1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEDFD80617AED8F900E052A1 /* CoreGraphics.framework */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8473231C190B5C3000061343 /* hello.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = hello.js; sourceTree = "<group>"; };
 		FEB7B24517BE6203004A5DF0 /* xork.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = xork.js; sourceTree = "<group>"; };
 		FEDFD80117AED8F900E052A1 /* Xork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEDFD80417AED8F900E052A1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -87,6 +89,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84732319190B5B8F00061343 /* JS */ = {
+			isa = PBXGroup;
+			children = (
+				8473231C190B5C3000061343 /* hello.js */,
+			);
+			name = JS;
+			sourceTree = "<group>";
+		};
 		FEDFD7F817AED8F900E052A1 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +131,7 @@
 		FEDFD80A17AED8F900E052A1 /* Xork */ = {
 			isa = PBXGroup;
 			children = (
+				84732319190B5B8F00061343 /* JS */,
 				FEDFD81317AED8F900E052A1 /* AppDelegate.h */,
 				FEDFD81417AED8F900E052A1 /* AppDelegate.m */,
 				FEDFD81617AED8F900E052A1 /* Main.storyboard */,
@@ -241,6 +252,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8473231D190B5C5100061343 /* hello.js in Resources */,
 				FEDFD81D17AED8F900E052A1 /* Images.xcassets in Resources */,
 				FEDFD80F17AED8F900E052A1 /* InfoPlist.strings in Resources */,
 				FEB7B24717BE6212004A5DF0 /* xork.js in Resources */,
