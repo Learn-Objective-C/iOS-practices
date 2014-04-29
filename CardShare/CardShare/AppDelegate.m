@@ -11,15 +11,18 @@
 NSString *const kServiceType = @"ln-careshare";
 NSString *const DataReceivedNotification = @"com.longnv.apps.CardShare:DataReceivedNotification";
 NSString *const PeerConnectionAcceptedNotification = @"com.longnv.apps.CardShare:PeerConnectionAcceptedNotification";
+NSString *const kSecretCode = @"secretCode";
 BOOL const kProgrammaticDiscovery = YES;
 
 typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
 
-@interface AppDelegate ()<MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, UIAlertViewDelegate>
+@interface AppDelegate ()<MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, UIAlertViewDelegate, NSStreamDelegate>
 
 @property (nonatomic, strong) MCAdvertiserAssistant *advertiserAssistant;
 @property (nonatomic, strong) MCNearbyServiceAdvertiser *advertiser;
 @property (nonatomic, copy) InvitationHandler handler;
+@property (nonatomic, strong) NSDictionary *discoveryInfo;
+@property (nonatomic, strong) NSOutputStream *outputStream;
 
 @end
 
@@ -53,20 +56,8 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
         NSData *otherCardsData = [defaults objectForKey:@"otherCards"];
         self.otherCards = (NSMutableArray *)[NSKeyedUnarchiver unarchiveObjectWithData:otherCardsData];
     }
-    
-    //
-    NSString *peerName = self.myCard.firstName?:[[UIDevice currentDevice] name];
-    self.peerId = [[MCPeerID alloc] initWithDisplayName:peerName];
-    self.session = [[MCSession alloc] initWithPeer:self.peerId securityIdentity:nil encryptionPreference:MCEncryptionOptional];
-    self.session.delegate = self;
-    if (kProgrammaticDiscovery) {
-        self.advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:self.peerId discoveryInfo:nil serviceType:kServiceType];
-        self.advertiser.delegate = self;
-        [self.advertiser startAdvertisingPeer];
-    } else {
-        self.advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:kServiceType discoveryInfo:nil session:self.session];
-        [self.advertiserAssistant start];
-    }
+    self.discoveryInfo = @{kSecretCode: @"WOW"};
+    [self setUpMultipeerConnectivity];
     
     return YES;
 }
@@ -112,9 +103,84 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
 
 - (void)sendCardToPeer
 {
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.myCard];
+    self.sentBusinessCard = YES;
     NSError *error;
-    [self.session sendData:data toPeers:self.session.connectedPeers withMode:MCSessionSendDataReliable error:&error];
+//    [self.session sendData:data toPeers:self.session.connectedPeers withMode:MCSessionSendDataReliable error:&error];
+    self.outputStream = [self.session startStreamWithName:@"CardShare" toPeer:self.session.connectedPeers[1] error:&error];
+    self.outputStream.delegate = self;
+    [self.outputStream scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode: NSDefaultRunLoopMode];
+    [self.outputStream open];
+
+}
+
+- (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
+{
+    switch (eventCode) {
+        case NSStreamEventHasSpaceAvailable:
+        {
+            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.myCard];
+            [self.outputStream write:[data bytes] maxLength:[data length]];
+            break;
+        }
+
+            
+        default:
+            break;
+    }
+}
+
+- (void)cleanUpMultipeerConnectivity
+{
+    [self.session disconnect];
+    self.session.delegate = nil;
+    
+    if (kProgrammaticDiscovery) {
+        [self.advertiserAssistant stop];
+        self.advertiserAssistant.delegate = nil;
+    } else {
+        [self.advertiser stopAdvertisingPeer];
+    }
+    
+    // Cleanup the session
+    self.session = nil;
+    // Cleanup peer info
+    self.peerId = nil;
+}
+
+- (void)setUpMultipeerConnectivity
+{
+    //
+    NSString *peerName = self.myCard.firstName?:[[UIDevice currentDevice] name];
+    self.peerId = [[MCPeerID alloc] initWithDisplayName:peerName];
+    self.session = [[MCSession alloc] initWithPeer:self.peerId securityIdentity:nil encryptionPreference:MCEncryptionOptional];
+    self.session.delegate = self;
+    if (kProgrammaticDiscovery) {
+        self.advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:self.peerId discoveryInfo:self.discoveryInfo serviceType:kServiceType];
+        self.advertiser.delegate = self;
+        [self.advertiser startAdvertisingPeer];
+    } else {
+        self.advertiserAssistant = [[MCAdvertiserAssistant alloc] initWithServiceType:kServiceType discoveryInfo:self.discoveryInfo session:self.session];
+        [self.advertiserAssistant start];
+    }
+    self.receivedCardPeers = [NSMutableArray new];
+    self.sentBusinessCard = NO;
+}
+
+- (BOOL)isMatchingInfo:(NSDictionary *)info
+{
+    if (self.discoveryInfo == nil) {
+        return YES;
+    }
+    return [info isEqualToDictionary:self.discoveryInfo];
+}
+
+- (void)isDisconnectSession
+{
+    if ([self.receivedCardPeers isEqualToArray:self.session.connectedPeers] && self.isSentBusinessCard) {
+        NSLog(@"Disconnect");
+        [self cleanUpMultipeerConnectivity];
+        [self setUpMultipeerConnectivity];
+    }
 }
 
 #pragma mark - MCSession Delegate
@@ -122,6 +188,8 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
 {
     Card *card = (Card *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
     [self.cards addObject:card];
+    [self.receivedCardPeers addObject:peerID];
+    [self isDisconnectSession];
     [[NSNotificationCenter defaultCenter] postNotificationName:DataReceivedNotification object:nil];
 }
 
@@ -147,6 +215,7 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
     } else if (state == MCSessionStateNotConnected && self.session) {
         if (![self.session.connectedPeers containsObject:peerID]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:PeerConnectionAcceptedNotification object:nil userInfo:@{@"peer": peerID, @"accept":@NO}];
+            [self isDisconnectSession];
         }
     }
 }

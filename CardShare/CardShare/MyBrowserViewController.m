@@ -117,6 +117,8 @@
 #pragma mark - Action methods
 
 - (IBAction)cancelButtonPressed:(id)sender {
+    [self.browser stopBrowsingForPeers];
+    self.browser.delegate = nil;
     // Send the delegate a message that the controller was canceled.
     if ([self.delegate respondsToSelector:@selector(myBrowserViewControllerWasCancelled:)]) {
         [self.delegate myBrowserViewControllerWasCancelled:self];
@@ -125,6 +127,8 @@
 
 - (IBAction)doneButtonPressed:(id)sender {
     // Send the delegate a message that the controller was done browsing.
+    [self.browser stopBrowsingForPeers];
+    self.browser.delegate = nil;
     if ([self.delegate respondsToSelector:@selector(myBrowserViewControllerDidFinish:)]) {
         [self.delegate myBrowserViewControllerDidFinish:self];
     }
@@ -223,8 +227,11 @@
 
 - (void)browser:(MCNearbyServiceBrowser *)browser foundPeer:(MCPeerID *)peerID withDiscoveryInfo:(NSDictionary *)info
 {
-    [self.nearbyPeers addObject:peerID];
-    [self.tableView reloadData];
+    AppDelegate *delegate = [UIApplication sharedApplication].delegate;
+    if ([delegate isMatchingInfo:info]) {
+        [self.nearbyPeers addObject:peerID];
+        [self.tableView reloadData];
+    }
 }
 
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID
