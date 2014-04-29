@@ -8,6 +8,8 @@
 
 #import "XorkViewController.h"
 #import "ConsoleTextView.h"
+#import "Item.h"
+#import "XorkAlertView.h"
 @import JavaScriptCore;
 
 @interface XorkViewController () <UITextFieldDelegate>
@@ -15,6 +17,8 @@
 @property (strong, nonatomic) IBOutlet ConsoleTextView *outputTextView;
 @property (strong, nonatomic) IBOutlet UITextField *inputTextField;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (nonatomic, strong) IBOutlet UIImageView *winnerImageview;
+@property (nonatomic, strong) JSManagedValue *inventory;
 
 @property (nonatomic, strong) JSContext *context;
 
@@ -31,6 +35,7 @@
     UIFont *navBarFont = [UIFont fontWithName:@"Courier" size:23];
     NSDictionary *attributes = @{NSFontAttributeName : navBarFont};
     [self.navigationBar setTitleTextAttributes:attributes];
+    _winnerImageview.hidden = YES;
 }
 
 - (void)viewDidLoad {
@@ -59,10 +64,36 @@
         [weakSelf.outputTextView setText:text concatenate:NO];
     };
     
+    self.context[@"getVersion"] = ^{
+        NSString *versionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        versionString = [@"Xork version " stringByAppendingString:versionString];
+        JSContext *context = [JSContext currentContext];
+        JSValue *value = [JSValue valueWithObject:versionString inContext:context];
+        return value;
+    };
+    
+    self.context[@"presentNativeAlert"] = ^(NSString *title, NSString *message, JSValue *successHandler, JSValue *failureHandler) {
+        JSContext *context = [JSContext currentContext];
+        XorkAlertView *alertView = [[XorkAlertView alloc] initWithTitle:title message:message success:successHandler failure:failureHandler context:context];
+        [alertView show];
+    };
+
+    __weak UIImageView *weakImageView = _winnerImageview;
+    self.context[@"showImage"] = ^(){
+        UIImage *image = [UIImage imageNamed:@"me-gusta.jpg"];
+        weakImageView.image = image;
+        weakImageView.hidden = NO;
+        [weakSelf.view endEditing:YES];
+    };
+    
 
     JSValue *dataValue = [JSValue valueWithObject:jsonArray inContext:self.context];
     JSValue *function = self.context[@"startGame"];
     [function callWithArguments:@[dataValue]];
+    
+    JSValue *value = self.context[@"inventory"];
+    self.inventory = [JSManagedValue managedValueWithValue:value];
+    [self.context.virtualMachine addManagedReference:self.inventory withOwner:self];
     
 }
 
@@ -88,13 +119,31 @@
     
     if ([inputString isEqualToString:@"clear"]) {
         [self.outputTextView clear];
-    } else {
+    } else if ([inputString isEqualToString:@"cheat"]) {
+        [self addPantryKeyToInventory];
+    } else if ([inputString isEqualToString:@"save"]) {
+        JSValue *function = self.context[@"saveGame"];
+        [function callWithArguments:@[]];
+    }
+    else {
         [self processUserInput:inputString];
     }
     
     self.inputTextField.text = @"";
     
     return YES;
+}
+
+- (void)addPantryKeyToInventory
+{
+    // 1
+    Item *pantryKey = [[Item alloc] init];
+    pantryKey.name = @"pantry key";
+    pantryKey.description = @"Looks like a normal key. Hehe.";
+    
+    JSValue *inventory = [self.inventory value];
+    JSValue *function = inventory[@"addItem"];
+    [function callWithArguments:@[pantryKey]];
 }
 
 

@@ -8,6 +8,7 @@ var inventory = {};
 inventory.items = [];
 
 inventory.addItem = function(item) {
+    print("You added item "+ item.name);
     inventory.items.push(item);
 }
 
@@ -176,6 +177,8 @@ function processAction(action) {
     }
     else if (action == "hint") {
         print(getCurrentRoom().description);
+    } else if (action == "version") {
+        print(getVersion());
     }
     else {
         print("You can't do that.");
@@ -201,6 +204,8 @@ function processCommand(action, object) {
         go(object);
     } else if (action == "take") {
         take(object)
+    } else if (action == "eat") {
+        eat(object);
     } else {
         print("You can't do that.");
     }
@@ -262,6 +267,15 @@ function take(itemName) {
     }
 }
 
+function eat(itemName) {
+    var room = getCurrentRoom();
+    if (room.hasItem(itemName) || inventory.contains(itemName)) {
+        showImage();
+    } else {
+        print("You can't not eat.")
+    }
+}
+
 /* Helper functions */
 
 function getCurrentRoom() {
@@ -272,3 +286,15 @@ function removeNewLines(s) {
     return s.replace("\n", "");
 }
 
+
+function saveGame() {
+    presentNativeAlert ("Hello", "Do you want to save the game?", saveGameConfirm, saveGameCancel);
+}
+
+function saveGameConfirm() {
+    print("Yes");
+}
+
+function saveGameCancel() {
+    print("No");
+}
