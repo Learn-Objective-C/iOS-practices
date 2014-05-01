@@ -251,8 +251,11 @@
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
+                                <connections>
+                                    <outlet property="delegate" destination="IE9-jG-Dd3" id="Vpm-tc-14c"/>
+                                </connections>
                             </navigationBar>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zjj-Kb-eNh">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zjj-Kb-eNh">
                                 <rect key="frame" x="0.0" y="69" width="320" height="499"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
@@ -261,6 +264,7 @@
                     </view>
                     <connections>
                         <outlet property="imageView" destination="zjj-Kb-eNh" id="bHI-Yj-DyL"/>
+                        <outlet property="navigationBar" destination="bo5-cr-ndy" id="MN7-in-0v5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eUY-VT-nrv" userLabel="First Responder" sceneMemberID="firstResponder"/>

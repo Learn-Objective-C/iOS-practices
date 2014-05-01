@@ -93,6 +93,27 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     [PFPush handlePush:userInfo];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    PhotoViewController *photoViewController = [storyboard instantiateViewControllerWithIdentifier:@"PhotoViewController"];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:photoViewController];
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    [tabBarController presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    self.silientRemoteCompletionHandler = completionHandler;
+    NSString *photoTitle = userInfo[@"photoTitle"];
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:photoTitle
+           forKey:@"photoTitle"];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    PhotoViewController *photoViewController = [storyboard instantiateViewControllerWithIdentifier:@"PhotoViewController"];
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    [tabBarController presentViewController:photoViewController animated:YES completion:nil];
 }
 
 #pragma mark - Core Data stack
