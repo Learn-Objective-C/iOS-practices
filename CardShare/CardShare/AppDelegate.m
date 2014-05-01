@@ -13,6 +13,7 @@ NSString *const DataReceivedNotification = @"com.longnv.apps.CardShare:DataRecei
 NSString *const PeerConnectionAcceptedNotification = @"com.longnv.apps.CardShare:PeerConnectionAcceptedNotification";
 NSString *const kSecretCode = @"secretCode";
 BOOL const kProgrammaticDiscovery = YES;
+NSInteger kBufferSize = 1024;
 
 typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
 
@@ -23,6 +24,12 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
 @property (nonatomic, copy) InvitationHandler handler;
 @property (nonatomic, strong) NSDictionary *discoveryInfo;
 @property (nonatomic, strong) NSOutputStream *outputStream;
+@property (nonatomic, strong) NSInputStream *dataStream;
+@property (nonatomic, strong) NSInputStream *inputStream;
+@property (nonatomic, strong) NSMutableData *receivedData;
+@property (nonatomic, strong) MCPeerID *streamPeerID;
+@property (nonatomic, assign) size_t buffetLimit;
+@property (nonatomic, assign) size_t bufferOffset;
 
 @end
 
@@ -106,7 +113,12 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
     self.sentBusinessCard = YES;
     NSError *error;
 //    [self.session sendData:data toPeers:self.session.connectedPeers withMode:MCSessionSendDataReliable error:&error];
-    self.outputStream = [self.session startStreamWithName:@"CardShare" toPeer:self.session.connectedPeers[1] error:&error];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.myCard];
+    self.dataStream = [NSInputStream inputStreamWithData:data];
+    [self.dataStream open];
+    
+    // Start an output stream to the connected peer, there should be only one device connected
+    self.outputStream = [self.session startStreamWithName:@"myCard" toPeer:self.session.connectedPeers[0] error:&error];
     self.outputStream.delegate = self;
     [self.outputStream scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode: NSDefaultRunLoopMode];
     [self.outputStream open];
@@ -116,16 +128,116 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
 - (void)stream:(NSStream *)aStream handleEvent:(NSStreamEvent)eventCode
 {
     switch (eventCode) {
+        case NSStreamEventOpenCompleted:
+        {
+            if (aStream == self.inputStream) {
+                self.receivedData = [NSMutableData new];
+            }
+            break;
+        }
         case NSStreamEventHasSpaceAvailable:
         {
-            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.myCard];
-            [self.outputStream write:[data bytes] maxLength:[data length]];
+            if (aStream == self.outputStream) {
+                u_int8_t buffer[kBufferSize];
+                if (self.buffetLimit == self.bufferOffset) {
+                    NSInteger bytesRead = [self.dataStream read:buffer maxLength:sizeof(buffer)];
+                    if (bytesRead == -1) {
+                        [self closeOutputStream];
+                    } else if (bytesRead == 0) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [self closeOutputStream];
+                        });
+                    } else {
+                        self.bufferOffset = 0;
+                        self.buffetLimit = bytesRead;
+                    }
+                }
+                
+                if (self.buffetLimit != self.bufferOffset) {
+                    NSInteger bytesWritten = [self.outputStream write:&buffer[self.bufferOffset] maxLength:self.buffetLimit - self.bufferOffset];
+                    NSLog(@"bytes Written %d bufferOffset %zu bytesLimit %zu", bytesWritten, self.bufferOffset, self.buffetLimit);
+                    if (bytesWritten == - 1) {
+                        [self closeOutputStream];
+                    } else {
+                        self.bufferOffset += bytesWritten;
+                    }
+                }
+            }
+            break;
+        }
+        case NSStreamEventHasBytesAvailable:
+        {
+            if (aStream == self.inputStream) {
+                u_int8_t buffer[kBufferSize];
+                NSInteger bytesRead = [self.inputStream read:buffer maxLength:sizeof(buffer)];
+                if (bytesRead == -1) {
+                    [self closeInputStream];
+                } else if (bytesRead == 0) {
+                    
+                } else {
+                    [self.receivedData appendBytes:&buffer length:bytesRead];
+                }
+            }
+            break;
+        }
+        case NSStreamEventErrorOccurred:
+        {NSError* error = [aStream streamError];
+            NSString* errorMessage = [NSString stringWithFormat:@"%@ and code = %d",
+                                      [error localizedDescription],
+                                      [error code]];
+            NSLog(@"Error in stream event: %@", errorMessage);
+            // Error, cleanup streams
+            if (aStream == self.inputStream) {
+                [self closeInputStream];
+            }
+            if (aStream == self.outputStream) {
+                [self closeOutputStream];
+            }
+            break;
+            
+        }
+        case NSStreamEventEndEncountered:
+        {
+            if (aStream == self.inputStream) {
+                [self session:self.session didReceiveData:self.receivedData fromPeer:self.streamPeerID];
+                [self closeInputStream];
+            }
             break;
         }
 
             
         default:
             break;
+    }
+}
+
+- (void)closeOutputStream
+{
+    if (self.outputStream) {
+        [self.outputStream close];
+        [self.outputStream removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        self.outputStream.delegate = nil;
+        self.outputStream = nil;
+    }
+    
+    if (self.dataStream) {
+        [self.dataStream close];
+        [self.dataStream removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        self.dataStream.delegate = nil;
+        self.dataStream = nil;
+    }
+    
+    self.bufferOffset = 0;
+    self.buffetLimit = 0;
+}
+
+- (void)closeInputStream
+{
+    if (self.inputStream) {
+        [self.inputStream close];
+        [self.inputStream removeFromRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        self.inputStream.delegate = nil;
+        self.inputStream = nil;
     }
 }
 
@@ -205,7 +317,17 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
 
 - (void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID
 {
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.inputStream) {
+            return;
+        }
+        
+        self.streamPeerID = peerID;
+        self.inputStream = stream;
+        self.inputStream.delegate = self;
+        [self.inputStream scheduleInRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+        [self.inputStream open];
+    });
 }
 
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
@@ -224,7 +346,7 @@ typedef void (^InvitationHandler) (BOOL accept, MCSession *session);
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void (^)(BOOL, MCSession *))invitationHandler
 {
     self.handler = invitationHandler;
-    [[[UIAlertView alloc] initWithTitle:@"Invitation" message:[NSString stringWithFormat:@"%@ watns to connect", peerID.displayName] delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Sure", nil] show];
+    [[[UIAlertView alloc] initWithTitle:@"Invitation" message:[NSString stringWithFormat:@"%@ want to connect", peerID.displayName] delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Sure", nil] show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

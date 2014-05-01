@@ -225,7 +225,6 @@ function processTrigger(trigger, action, object) {
     /* Condition: check if inventory contains item  */
     var condition = trigger["condition"];
     var itemName = condition["inventoryContains"];
-
     if (!inventory.contains(itemName)) {
         print(trigger["print"]);
         return false;

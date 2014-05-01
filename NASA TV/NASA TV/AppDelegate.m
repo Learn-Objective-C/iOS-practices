@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Pietro Rea. All rights reserved.
 //
 
+#import <Parse/Parse.h>
+
 #import "AppDelegate.h"
 #import "NewsViewController.h"
 #import "VideoViewController.h"
@@ -22,7 +24,7 @@
     // Override point for customization after application launch.
     
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:@"http://localhost:44447"
+    [ud setObject:@"http://192.168.0.101:44447"
            forKey:@"baseURLString"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -42,6 +44,9 @@
     
     // Change status bar color to white
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    [Parse setApplicationId:@"PRphmG4WVOHHx3O2LO5M3DWCxhnborx9hhk23KwB" clientKey:@"vZ0tQnQGfS8AAi1lQYq4qhmUK2cSBhsk5XXaLoWg"];
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     
     return YES;
 }
@@ -77,24 +82,38 @@
     [self saveContext];
 }
 
-- (void)saveContext
+#pragma mark - Push Notification
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
-    }
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    [PFPush handlePush:userInfo];
 }
 
 #pragma mark - Core Data stack
 
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
+- (void)saveContext
+{
+    NSError *error = nil;
+    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
+    if (managedObjectContext != nil) {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+            // Replace this implementation with code to handle the error appropriately.
+            // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
+}
+
+
 - (NSManagedObjectContext *)managedObjectContext
 {
     if (_managedObjectContext != nil) {

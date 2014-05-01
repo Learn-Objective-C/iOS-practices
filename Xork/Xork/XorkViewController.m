@@ -61,7 +61,7 @@
     __weak XorkViewController *weakSelf = self;
     self.context[@"print"] = ^(NSString *text) {
         text = [NSString stringWithFormat:@"\n%@", text];
-        [weakSelf.outputTextView setText:text concatenate:NO];
+        [weakSelf.outputTextView setText:text concatenate:YES];
     };
     
     self.context[@"getVersion"] = ^{

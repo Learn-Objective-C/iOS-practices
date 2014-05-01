@@ -47,7 +47,7 @@
     if (self) {
         // Default maximum and minimum number of
         // peers allowed in a session
-        self.maximumNumberOfPeers = 8;
+        self.maximumNumberOfPeers = 2;
         self.minimumNumberOfPeers = 2;
     }
     return self;
