@@ -22,6 +22,8 @@
 		4172E49C191A6FCF003875D8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4172E47B191A6FCF003875D8 /* UIKit.framework */; };
 		4172E4A4191A6FCF003875D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4172E4A2191A6FCF003875D8 /* InfoPlist.strings */; };
 		4172E4A6191A6FCF003875D8 /* MCDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4A5191A6FCF003875D8 /* MCDemoTests.m */; };
+		4172E4B1191A701C003875D8 /* ConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4B0191A701C003875D8 /* ConnectionsViewController.m */; };
+		4172E4B4191A7236003875D8 /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4B3191A7236003875D8 /* MCManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,11 @@
 		4172E4A1191A6FCF003875D8 /* MCDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MCDemoTests-Info.plist"; sourceTree = "<group>"; };
 		4172E4A3191A6FCF003875D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4172E4A5191A6FCF003875D8 /* MCDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCDemoTests.m; sourceTree = "<group>"; };
+		4172E4AF191A701C003875D8 /* ConnectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsViewController.h; sourceTree = "<group>"; };
+		4172E4B0191A701C003875D8 /* ConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsViewController.m; sourceTree = "<group>"; };
+		4172E4B2191A7236003875D8 /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
+		4172E4B3191A7236003875D8 /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
+		4172E4B5191A7DB5003875D8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +92,7 @@
 		4172E46B191A6FCF003875D8 = {
 			isa = PBXGroup;
 			children = (
+				4172E4B5191A7DB5003875D8 /* Default-568h@2x.png */,
 				4172E47D191A6FCF003875D8 /* MCDemo */,
 				4172E49F191A6FCF003875D8 /* MCDemoTests */,
 				4172E476191A6FCF003875D8 /* Frameworks */,
@@ -124,6 +132,10 @@
 				4172E490191A6FCF003875D8 /* SecondViewController.m */,
 				4172E492191A6FCF003875D8 /* Images.xcassets */,
 				4172E47E191A6FCF003875D8 /* Supporting Files */,
+				4172E4AF191A701C003875D8 /* ConnectionsViewController.h */,
+				4172E4B0191A701C003875D8 /* ConnectionsViewController.m */,
+				4172E4B2191A7236003875D8 /* MCManager.h */,
+				4172E4B3191A7236003875D8 /* MCManager.m */,
 			);
 			path = MCDemo;
 			sourceTree = "<group>";
@@ -254,6 +266,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4172E4B1191A701C003875D8 /* ConnectionsViewController.m in Sources */,
+				4172E4B4191A7236003875D8 /* MCManager.m in Sources */,
 				4172E491191A6FCF003875D8 /* SecondViewController.m in Sources */,
 				4172E488191A6FCF003875D8 /* AppDelegate.m in Sources */,
 				4172E48E191A6FCF003875D8 /* FirstViewController.m in Sources */,
@@ -381,7 +395,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Long Nguyen (M6FKXHWXBY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCDemo/MCDemo-Prefix.pch";
 				INFOPLIST_FILE = "MCDemo/MCDemo-Info.plist";
@@ -394,7 +408,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Long Nguyen (UGSPUG2S7C)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCDemo/MCDemo-Prefix.pch";
 				INFOPLIST_FILE = "MCDemo/MCDemo-Info.plist";
