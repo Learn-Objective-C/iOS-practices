@@ -82,6 +82,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    [_appDelegate.mcManager.session disconnect];
+    [_appDelegate.mcManager advertiseSelf:NO];
     _appDelegate.mcManager.peerID = nil;
     _appDelegate.mcManager.session = nil;
     _appDelegate.mcManager.browser = nil;

@@ -24,6 +24,8 @@
 		4172E4A6191A6FCF003875D8 /* MCDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4A5191A6FCF003875D8 /* MCDemoTests.m */; };
 		4172E4B1191A701C003875D8 /* ConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4B0191A701C003875D8 /* ConnectionsViewController.m */; };
 		4172E4B4191A7236003875D8 /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4B3191A7236003875D8 /* MCManager.m */; };
+		4172E4B7191BDAF5003875D8 /* sample_file1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4172E4B6191BDAF5003875D8 /* sample_file1.txt */; };
+		4172E4B9191BDAFA003875D8 /* sample_file2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4172E4B8191BDAFA003875D8 /* sample_file2.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		4172E4B2191A7236003875D8 /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
 		4172E4B3191A7236003875D8 /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
 		4172E4B5191A7DB5003875D8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4172E4B6191BDAF5003875D8 /* sample_file1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_file1.txt; sourceTree = "<group>"; };
+		4172E4B8191BDAFA003875D8 /* sample_file2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_file2.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +127,8 @@
 		4172E47D191A6FCF003875D8 /* MCDemo */ = {
 			isa = PBXGroup;
 			children = (
+				4172E4B8191BDAFA003875D8 /* sample_file2.txt */,
+				4172E4B6191BDAF5003875D8 /* sample_file1.txt */,
 				4172E486191A6FCF003875D8 /* AppDelegate.h */,
 				4172E487191A6FCF003875D8 /* AppDelegate.m */,
 				4172E489191A6FCF003875D8 /* Main.storyboard */,
@@ -245,6 +251,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4172E4B9191BDAFA003875D8 /* sample_file2.txt in Resources */,
+				4172E4B7191BDAF5003875D8 /* sample_file1.txt in Resources */,
 				4172E493191A6FCF003875D8 /* Images.xcassets in Resources */,
 				4172E482191A6FCF003875D8 /* InfoPlist.strings in Resources */,
 				4172E48B191A6FCF003875D8 /* Main.storyboard in Resources */,
@@ -476,6 +484,7 @@
 				4172E4AB191A6FCF003875D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4172E4AC191A6FCF003875D8 /* Build configuration list for PBXNativeTarget "MCDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +493,7 @@
 				4172E4AE191A6FCF003875D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
