@@ -75,6 +75,7 @@
 		845AE46B1920A34C00CE4856 /* JSQMessagesTypingIndicatorFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845AE4371920A34C00CE4856 /* JSQMessagesTypingIndicatorFooterView.m */; };
 		845AE46C1920A34C00CE4856 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845AE4381920A34C00CE4856 /* JSQMessagesTypingIndicatorFooterView.xib */; };
 		845AE46D1920A34C00CE4856 /* JSQSystemSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 845AE43C1920A34C00CE4856 /* JSQSystemSoundPlayer.m */; };
+		845AE4711920A7EE00CE4856 /* LNBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845AE4701920A7EE00CE4856 /* LNBrowserViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -192,6 +193,8 @@
 		845AE4381920A34C00CE4856 /* JSQMessagesTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
 		845AE43B1920A34C00CE4856 /* JSQSystemSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQSystemSoundPlayer.h; sourceTree = "<group>"; };
 		845AE43C1920A34C00CE4856 /* JSQSystemSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQSystemSoundPlayer.m; sourceTree = "<group>"; };
+		845AE46F1920A7EE00CE4856 /* LNBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNBrowserViewController.h; sourceTree = "<group>"; };
+		845AE4701920A7EE00CE4856 /* LNBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNBrowserViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,8 +267,7 @@
 				4172E490191A6FCF003875D8 /* SecondViewController.m */,
 				4172E492191A6FCF003875D8 /* Images.xcassets */,
 				4172E47E191A6FCF003875D8 /* Supporting Files */,
-				4172E4AF191A701C003875D8 /* ConnectionsViewController.h */,
-				4172E4B0191A701C003875D8 /* ConnectionsViewController.m */,
+				845AE46E1920A75800CE4856 /* ConnectPeer */,
 				4172E4B2191A7236003875D8 /* MCManager.h */,
 				4172E4B3191A7236003875D8 /* MCManager.m */,
 			);
@@ -480,6 +482,17 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		845AE46E1920A75800CE4856 /* ConnectPeer */ = {
+			isa = PBXGroup;
+			children = (
+				4172E4AF191A701C003875D8 /* ConnectionsViewController.h */,
+				4172E4B0191A701C003875D8 /* ConnectionsViewController.m */,
+				845AE46F1920A7EE00CE4856 /* LNBrowserViewController.h */,
+				845AE4701920A7EE00CE4856 /* LNBrowserViewController.m */,
+			);
+			name = ConnectPeer;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -623,6 +636,7 @@
 				845AE4511920A34C00CE4856 /* UIColor+JSQMessages.m in Sources */,
 				845AE4591920A34C00CE4856 /* JSQMessagesTimestampFormatter.m in Sources */,
 				845AE45C1920A34C00CE4856 /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
+				845AE4711920A7EE00CE4856 /* LNBrowserViewController.m in Sources */,
 				845AE45B1920A34C00CE4856 /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
 				4172E488191A6FCF003875D8 /* AppDelegate.m in Sources */,
 				845AE45A1920A34C00CE4856 /* JSQMessagesToolbarButtonFactory.m in Sources */,

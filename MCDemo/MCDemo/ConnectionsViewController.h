@@ -19,6 +19,6 @@
 - (IBAction)browseForDevices:(id)sender;
 - (IBAction)toogleVisibility:(id)sender;
 - (IBAction)disconnect:(id)sender;
-- (void)peerDidChangeStateWithNotification:(NSNotification *)notification;
+//- (void)peerDidChangeStateWithNotification:(NSNotification *)notification;
 
 @end

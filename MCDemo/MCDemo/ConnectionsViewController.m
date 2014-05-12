@@ -8,8 +8,9 @@
 
 #import "ConnectionsViewController.h"
 #import "AppDelegate.h"
+#import "LNBrowserViewController.h"
 
-@interface ConnectionsViewController ()<MCBrowserViewControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ConnectionsViewController ()<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, LNBrowserViewControllerDelegate>
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSMutableArray *arrConnectedDevices;
@@ -35,7 +36,7 @@
     [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
     [_appDelegate.mcManager advertiseSelf:YES];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerDidChangeStateWithNotification:) name:@"MCDidChangeStateNotification" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerDidChangeStateWithNotification:) name:@"MCDidChangeStateNotification" object:nil];
     _arrConnectedDevices = [NSMutableArray new];
 }
 
@@ -49,9 +50,12 @@
 #pragma mark - Action methods
 - (void)browseForDevices:(id)sender
 {
-    [_appDelegate.mcManager setupMCBrowser];
-    _appDelegate.mcManager.browser.delegate = self;
-    [self presentViewController:_appDelegate.mcManager.browser animated:YES completion:nil];
+    [_appDelegate.mcManager setupNearbyServiceBrowser];
+    LNBrowserViewController *browserController = [[LNBrowserViewController alloc] init];
+    browserController.view.frame = self.view.bounds;
+    browserController.delegate = self;
+    browserController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentViewController:browserController animated:YES completion:nil];
 }
 
 - (void)toogleVisibility:(id)sender
@@ -61,67 +65,72 @@
 
 - (void)disconnect:(id)sender
 {
-    [_appDelegate.mcManager.session disconnect];
+    [_appDelegate.mcManager tearDown];
     _txtName.enabled = YES;
     [_arrConnectedDevices removeAllObjects];
     [_tblConnectedDevices reloadData];
 }
 
 #pragma mark - MCBrowserViewController delegate
-- (void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController
-{
-    [_appDelegate.mcManager.browser dismissViewControllerAnimated:YES completion:nil];
-}
 
-- (void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController
-{
-    [_appDelegate.mcManager.browser dismissViewControllerAnimated:YES completion:nil];
-}
 
 #pragma mark - UITextFieled delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    [_appDelegate.mcManager.session disconnect];
-    [_appDelegate.mcManager advertiseSelf:NO];
-    _appDelegate.mcManager.peerID = nil;
-    _appDelegate.mcManager.session = nil;
-    _appDelegate.mcManager.browser = nil;
-    
-    if ([_swVisible isOn]) {
-        [_appDelegate.mcManager.advertiser stop];
-    }
-    
+    [_appDelegate.mcManager tearDown];
+
     [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:_txtName.text];
-    [_appDelegate.mcManager setupMCBrowser];
+    [_appDelegate.mcManager setupNearbyServiceBrowser];
     [_appDelegate.mcManager advertiseSelf:_swVisible.isOn];
     
     return YES;
 }
 
 
-- (void)peerDidChangeStateWithNotification:(NSNotification *)notification
-{
-    MCPeerID *peerID = notification.userInfo[@"peerID"];
-    NSString *peerDisplayName = peerID.displayName;
-    MCSessionState state = [notification.userInfo[@"state"] integerValue];
-    
-    if (state != MCSessionStateConnecting) {
-        if (state == MCSessionStateConnected) {
-            [_arrConnectedDevices addObject:peerDisplayName];
-        } else if (state ==  MCSessionStateNotConnected) {
-            if ([_arrConnectedDevices count] > 0) {
-                int indexOfPeer = [_arrConnectedDevices indexOfObject:peerDisplayName];
-                [_arrConnectedDevices removeObjectAtIndex:indexOfPeer];
-            }
-        }
-        
-        [_tblConnectedDevices reloadData];
-        BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
-        [_btnDisconnect setEnabled:!peersExist];
-        [_txtName setEnabled:peersExist];
-    }
+//- (void)peerDidChangeStateWithNotification:(NSNotification *)notification
+//{
+//    MCPeerID *peerID = notification.userInfo[@"peerID"];
+//    NSString *peerDisplayName = peerID.displayName;
+//    MCSessionState state = [notification.userInfo[@"state"] integerValue];
+//    
+//    if (state != MCSessionStateConnecting) {
+//        if (state == MCSessionStateConnected) {
+//            [_arrConnectedDevices addObject:peerDisplayName];
+//        } else if (state ==  MCSessionStateNotConnected) {
+//            if ([_arrConnectedDevices count] > 0) {
+//                int indexOfPeer = [_arrConnectedDevices indexOfObject:peerDisplayName];
+//                [_arrConnectedDevices removeObjectAtIndex:indexOfPeer];
+//            }
+//        }
+//        
+//        [_tblConnectedDevices reloadData];
+//        BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
+//        [_btnDisconnect setEnabled:!peersExist];
+//        [_txtName setEnabled:peersExist];
+//    }
+//
+//}
 
+#pragma mark - LNBrowserViewController
+- (void)browserViewControllerDidFinish:(LNBrowserViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
+    [_btnDisconnect setEnabled:!peersExist];
+    [_txtName setEnabled:peersExist];
+    _arrConnectedDevices = [NSMutableArray arrayWithArray:_appDelegate.mcManager.session.connectedPeers];
+    [self.tblConnectedDevices reloadData];
+}
+
+- (void)browserViewControllerWasCancelled:(LNBrowserViewController *)controller
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
+    BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
+    [_btnDisconnect setEnabled:!peersExist];
+    [_txtName setEnabled:peersExist];
+    _arrConnectedDevices = [NSMutableArray arrayWithArray:_appDelegate.mcManager.session.connectedPeers];
+    [self.tblConnectedDevices reloadData];
 }
 
 #pragma mark - ConnectedPeer tableview
@@ -148,19 +157,9 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"CellIdentifier"];
     }
     
-    cell.textLabel.text = _arrConnectedDevices[indexPath.row];
+    cell.textLabel.text = [_arrConnectedDevices[indexPath.row] displayName];
     
     return cell;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -8,9 +8,13 @@
 
 #import "MCManager.h"
 
-@interface MCManager()<MCSessionDelegate>
+ NSString *const kServiceType = @"chat-files";
 
+typedef void(^InvitationHandler) (BOOL accept, MCSession *session);
 
+@interface MCManager()<MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, UIAlertViewDelegate>
+
+@property (nonatomic, copy) InvitationHandler handler;
 
 @end
 
@@ -36,18 +40,19 @@
     _session.delegate = self;
 }
 
-- (void)setupMCBrowser
+- (void)setupNearbyServiceBrowser
 {
-    _browser = [[MCBrowserViewController alloc] initWithServiceType:@"chat-files" session:_session];
+    _browser = [[MCNearbyServiceBrowser alloc] initWithPeer:_peerID serviceType:kServiceType];
 }
 
 - (void)advertiseSelf:(BOOL)shouldAdvertise
 {
     if (shouldAdvertise) {
-        _advertiser = [[MCAdvertiserAssistant alloc] initWithServiceType:@"chat-files" discoveryInfo:nil session:_session];
-        [_advertiser start];
+        _advertiser = [[MCNearbyServiceAdvertiser alloc] initWithPeer:self.peerID discoveryInfo:nil serviceType:kServiceType];
+        _advertiser.delegate = self;
+        [_advertiser startAdvertisingPeer];
     } else {
-        [_advertiser stop];
+        [_advertiser stopAdvertisingPeer];
         _advertiser = nil;
     }
 }
@@ -55,8 +60,14 @@
 #pragma mark - MCSessionDelegate
 - (void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state
 {
-    NSDictionary *dict = @{@"peerID": peerID, @"state": [NSNumber numberWithInt:state]};
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidChangeStateNotification" object:nil userInfo:dict];
+
+    if (state == MCSessionStateConnected) {
+        NSDictionary *dict = @{@"peerID": peerID, @"accept": @YES};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidAcceptInvitation" object:nil userInfo:dict];
+    } else if (state == MCSessionStateNotConnected) {
+        NSDictionary *dict = @{@"peerID": peerID, @"accept": @NO};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidAcceptInvitation" object:nil userInfo:dict];
+    }
 }
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
@@ -96,6 +107,32 @@
                                                         object:nil
                                                       userInfo:@{@"progress": (NSProgress *)object}];
 }
+
+#pragma mark - MCNearbyServiceAdvertiser delegate
+- (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void (^)(BOOL accept, MCSession *session))invitationHandler
+{
+    self.handler = invitationHandler;
+    [[[UIAlertView alloc] initWithTitle:@"Invitation" message:[NSString stringWithFormat:@"%@ wants to connect", self.peerID.displayName] delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Sure", nil] show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    BOOL accept = (buttonIndex == alertView.cancelButtonIndex)?NO:YES;
+    self.handler(accept, self.session);
+}
+
+#pragma mark - End Connection
+- (void)tearDown
+{
+    [self.browser stopBrowsingForPeers];
+    [self.advertiser stopAdvertisingPeer];
+    [self.session disconnect];
+    
+    self.browser = nil;
+    self.advertiser = nil;
+    self.session =nil;
+}
+
 
 
 
