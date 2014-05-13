@@ -8,13 +8,14 @@
 
 #import "FirstViewController.h"
 #import "AppDelegate.h"
+#import "JSQMessage.h"
+#import "JSQMessagesBubbleImageFactory.h"
 
 @interface FirstViewController ()<UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UITextField *messageTextField;
-@property (nonatomic, weak) IBOutlet UITextView *chatTextView;
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
+@property (nonatomic, strong) NSMutableArray *messsages;
 
 @end
 
@@ -23,51 +24,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _chatTextView.editable = NO;
+    self.tabBarController.tabBar.hidden = true;
+    [self setSender:@"Long"];
+    self.collectionView.backgroundColor = [UIColor brownColor];
+    _messsages = [NSMutableArray new];
     _appDelegate = [UIApplication sharedApplication].delegate;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveDataWithNotification:)
                                                  name:@"MCDidReceiveDataNotification"
                                                object:nil];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [self sendMyMessage];
-    return YES;
-}
-
-- (IBAction)sendMessage:(id)sender
-{
-    [self sendMyMessage];
-}
-
-- (IBAction)cancelMessage:(id)sender
-{
-    
-}
-
-- (void)sendMyMessage
-{
-    NSData *data = [_messageTextField.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
-    NSError *error;
-    
-    [_appDelegate.mcManager.session sendData:data toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
-    
-    if (error) {
-        NSLog(@"Error: %@", error.localizedDescription);
-    }
-    
-    _chatTextView.text = [_chatTextView.text stringByAppendingFormat:@"I wrote: \n%@\n\n", _messageTextField.text];
-    _messageTextField.text = @"";
-    [_messageTextField resignFirstResponder];
 }
 
 - (void)didReceiveDataWithNotification:(NSNotification *)nc
@@ -77,7 +42,55 @@
     
     NSData *receivedData = nc.userInfo[@"data"];
     NSString *receivedText = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
-    [_chatTextView performSelectorOnMainThread:@selector(setText:) withObject:[_chatTextView.text stringByAppendingString:[NSString stringWithFormat:@"%@ wrote:\n%@\n\n", displayName, receivedText]] waitUntilDone:NO];
+    NSLog(@"displayName: %@ %@", displayName, receivedText);
+    JSQMessage *message = [JSQMessage messageWithText:receivedText sender:displayName];
+    [_messsages addObject:message];
+    
+    [self.collectionView reloadData];
+}
+
+
+#pragma mark - JSQMessagesCollectionViewDataSource
+- (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return _messsages[indexPath.item];
+}
+
+- (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView bubbleImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [JSQMessagesBubbleImageFactory outgoingMessageBubbleImageViewWithColor:[UIColor purpleColor]];
+}
+
+- (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
+}
+
+
+#pragma mark - ColllectionView DataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return _messsages.count;
+}
+
+#pragma mark - JSQMessagesCollectionViewDelegateFlowLayout
+
+#pragma mark - MessageView Controller
+- (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text sender:(NSString *)sender date:(NSDate *)date
+{
+    JSQMessage *message = [JSQMessage messageWithText:text sender:sender];
+    [_messsages addObject:message];
+    
+    NSData *data = [text dataUsingEncoding:NSUTF8StringEncoding];
+    NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+    NSError *error;
+    
+    [_appDelegate.mcManager.session sendData:data toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
+    
+    if (error) {
+        NSLog(@"Error: %@", error.localizedDescription);
+    }
+    [self finishSendingMessage];
 }
 
 @end

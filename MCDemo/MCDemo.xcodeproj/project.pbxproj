@@ -76,6 +76,7 @@
 		845AE46C1920A34C00CE4856 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845AE4381920A34C00CE4856 /* JSQMessagesTypingIndicatorFooterView.xib */; };
 		845AE46D1920A34C00CE4856 /* JSQSystemSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 845AE43C1920A34C00CE4856 /* JSQSystemSoundPlayer.m */; };
 		845AE4711920A7EE00CE4856 /* LNBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845AE4701920A7EE00CE4856 /* LNBrowserViewController.m */; };
+		84BB744719220E7200D0BC05 /* anonymous.png in Resources */ = {isa = PBXBuildFile; fileRef = 84BB744619220E7200D0BC05 /* anonymous.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -195,6 +196,7 @@
 		845AE43C1920A34C00CE4856 /* JSQSystemSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQSystemSoundPlayer.m; sourceTree = "<group>"; };
 		845AE46F1920A7EE00CE4856 /* LNBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNBrowserViewController.h; sourceTree = "<group>"; };
 		845AE4701920A7EE00CE4856 /* LNBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNBrowserViewController.m; sourceTree = "<group>"; };
+		84BB744619220E7200D0BC05 /* anonymous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anonymous.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +257,7 @@
 		4172E47D191A6FCF003875D8 /* MCDemo */ = {
 			isa = PBXGroup;
 			children = (
+				84BB744519220E6500D0BC05 /* Assets */,
 				845AE3E41920A32E00CE4856 /* LIBRARIES */,
 				4172E4B8191BDAFA003875D8 /* sample_file2.txt */,
 				4172E4B6191BDAF5003875D8 /* sample_file1.txt */,
@@ -493,6 +496,14 @@
 			name = ConnectPeer;
 			sourceTree = "<group>";
 		};
+		84BB744519220E6500D0BC05 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				84BB744619220E7200D0BC05 /* anonymous.png */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -599,6 +610,7 @@
 				845AE4611920A34C00CE4856 /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
 				845AE4631920A34C00CE4856 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
 				845AE43D1920A34C00CE4856 /* bubble.png in Resources */,
+				84BB744719220E7200D0BC05 /* anonymous.png in Resources */,
 				845AE4411920A34C00CE4856 /* bubble_min_tailless.png in Resources */,
 				845AE46A1920A34C00CE4856 /* JSQMessagesToolbarContentView.xib in Resources */,
 			);
