@@ -14,7 +14,7 @@
 		4172E484191A6FCF003875D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E483191A6FCF003875D8 /* main.m */; };
 		4172E488191A6FCF003875D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E487191A6FCF003875D8 /* AppDelegate.m */; };
 		4172E48B191A6FCF003875D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4172E489191A6FCF003875D8 /* Main.storyboard */; };
-		4172E48E191A6FCF003875D8 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E48D191A6FCF003875D8 /* FirstViewController.m */; };
+		4172E48E191A6FCF003875D8 /* MCMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E48D191A6FCF003875D8 /* MCMessagesViewController.m */; };
 		4172E491191A6FCF003875D8 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E490191A6FCF003875D8 /* SecondViewController.m */; };
 		4172E493191A6FCF003875D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4172E492191A6FCF003875D8 /* Images.xcassets */; };
 		4172E49A191A6FCF003875D8 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4172E499191A6FCF003875D8 /* XCTest.framework */; };
@@ -77,6 +77,7 @@
 		845AE46D1920A34C00CE4856 /* JSQSystemSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 845AE43C1920A34C00CE4856 /* JSQSystemSoundPlayer.m */; };
 		845AE4711920A7EE00CE4856 /* LNBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845AE4701920A7EE00CE4856 /* LNBrowserViewController.m */; };
 		84BB744719220E7200D0BC05 /* anonymous.png in Resources */ = {isa = PBXBuildFile; fileRef = 84BB744619220E7200D0BC05 /* anonymous.png */; };
+		84BB744A1922196400D0BC05 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BB74491922196400D0BC05 /* FirstViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,8 +102,8 @@
 		4172E486191A6FCF003875D8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4172E487191A6FCF003875D8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4172E48A191A6FCF003875D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4172E48C191A6FCF003875D8 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		4172E48D191A6FCF003875D8 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		4172E48C191A6FCF003875D8 /* MCMessagesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCMessagesViewController.h; sourceTree = "<group>"; };
+		4172E48D191A6FCF003875D8 /* MCMessagesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCMessagesViewController.m; sourceTree = "<group>"; };
 		4172E48F191A6FCF003875D8 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		4172E490191A6FCF003875D8 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		4172E492191A6FCF003875D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -197,6 +198,8 @@
 		845AE46F1920A7EE00CE4856 /* LNBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LNBrowserViewController.h; sourceTree = "<group>"; };
 		845AE4701920A7EE00CE4856 /* LNBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LNBrowserViewController.m; sourceTree = "<group>"; };
 		84BB744619220E7200D0BC05 /* anonymous.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = anonymous.png; sourceTree = "<group>"; };
+		84BB74481922196400D0BC05 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		84BB74491922196400D0BC05 /* FirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,8 +267,8 @@
 				4172E486191A6FCF003875D8 /* AppDelegate.h */,
 				4172E487191A6FCF003875D8 /* AppDelegate.m */,
 				4172E489191A6FCF003875D8 /* Main.storyboard */,
-				4172E48C191A6FCF003875D8 /* FirstViewController.h */,
-				4172E48D191A6FCF003875D8 /* FirstViewController.m */,
+				4172E48C191A6FCF003875D8 /* MCMessagesViewController.h */,
+				4172E48D191A6FCF003875D8 /* MCMessagesViewController.m */,
 				4172E48F191A6FCF003875D8 /* SecondViewController.h */,
 				4172E490191A6FCF003875D8 /* SecondViewController.m */,
 				4172E492191A6FCF003875D8 /* Images.xcassets */,
@@ -273,6 +276,8 @@
 				845AE46E1920A75800CE4856 /* ConnectPeer */,
 				4172E4B2191A7236003875D8 /* MCManager.h */,
 				4172E4B3191A7236003875D8 /* MCManager.m */,
+				84BB74481922196400D0BC05 /* FirstViewController.h */,
+				84BB74491922196400D0BC05 /* FirstViewController.m */,
 			);
 			path = MCDemo;
 			sourceTree = "<group>";
@@ -653,8 +658,9 @@
 				4172E488191A6FCF003875D8 /* AppDelegate.m in Sources */,
 				845AE45A1920A34C00CE4856 /* JSQMessagesToolbarButtonFactory.m in Sources */,
 				845AE45F1920A34C00CE4856 /* JSQMessagesCollectionViewCell.m in Sources */,
+				84BB744A1922196400D0BC05 /* FirstViewController.m in Sources */,
 				845AE46D1920A34C00CE4856 /* JSQSystemSoundPlayer.m in Sources */,
-				4172E48E191A6FCF003875D8 /* FirstViewController.m in Sources */,
+				4172E48E191A6FCF003875D8 /* MCMessagesViewController.m in Sources */,
 				845AE4571920A34C00CE4856 /* JSQMessagesAvatarFactory.m in Sources */,
 				845AE4621920A34C00CE4856 /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				845AE4651920A34C00CE4856 /* JSQMessagesInputToolbar.m in Sources */,
