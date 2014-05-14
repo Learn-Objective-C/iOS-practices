@@ -23,7 +23,7 @@
 		4172E4A4191A6FCF003875D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4172E4A2191A6FCF003875D8 /* InfoPlist.strings */; };
 		4172E4A6191A6FCF003875D8 /* MCDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4A5191A6FCF003875D8 /* MCDemoTests.m */; };
 		4172E4B1191A701C003875D8 /* ConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4B0191A701C003875D8 /* ConnectionsViewController.m */; };
-		4172E4B4191A7236003875D8 /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4B3191A7236003875D8 /* MCManager.m */; };
+		4172E4B4191A7236003875D8 /* MCChatSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4B3191A7236003875D8 /* MCChatSession.m */; };
 		4172E4B7191BDAF5003875D8 /* sample_file1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4172E4B6191BDAF5003875D8 /* sample_file1.txt */; };
 		4172E4B9191BDAFA003875D8 /* sample_file2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4172E4B8191BDAFA003875D8 /* sample_file2.txt */; };
 		845AE43D1920A34C00CE4856 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 845AE3E81920A34C00CE4856 /* bubble.png */; };
@@ -114,8 +114,8 @@
 		4172E4A5191A6FCF003875D8 /* MCDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCDemoTests.m; sourceTree = "<group>"; };
 		4172E4AF191A701C003875D8 /* ConnectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsViewController.h; sourceTree = "<group>"; };
 		4172E4B0191A701C003875D8 /* ConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsViewController.m; sourceTree = "<group>"; };
-		4172E4B2191A7236003875D8 /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
-		4172E4B3191A7236003875D8 /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
+		4172E4B2191A7236003875D8 /* MCChatSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCChatSession.h; sourceTree = "<group>"; };
+		4172E4B3191A7236003875D8 /* MCChatSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCChatSession.m; sourceTree = "<group>"; };
 		4172E4B5191A7DB5003875D8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4172E4B6191BDAF5003875D8 /* sample_file1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_file1.txt; sourceTree = "<group>"; };
 		4172E4B8191BDAFA003875D8 /* sample_file2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_file2.txt; sourceTree = "<group>"; };
@@ -274,8 +274,8 @@
 				4172E492191A6FCF003875D8 /* Images.xcassets */,
 				4172E47E191A6FCF003875D8 /* Supporting Files */,
 				845AE46E1920A75800CE4856 /* ConnectPeer */,
-				4172E4B2191A7236003875D8 /* MCManager.h */,
-				4172E4B3191A7236003875D8 /* MCManager.m */,
+				4172E4B2191A7236003875D8 /* MCChatSession.h */,
+				4172E4B3191A7236003875D8 /* MCChatSession.m */,
 				84BB74481922196400D0BC05 /* FirstViewController.h */,
 				84BB74491922196400D0BC05 /* FirstViewController.m */,
 			);
@@ -642,7 +642,7 @@
 				4172E4B1191A701C003875D8 /* ConnectionsViewController.m in Sources */,
 				845AE4541920A34C00CE4856 /* JSQMessagesKeyboardController.m in Sources */,
 				845AE45D1920A34C00CE4856 /* JSQMessage.m in Sources */,
-				4172E4B4191A7236003875D8 /* MCManager.m in Sources */,
+				4172E4B4191A7236003875D8 /* MCChatSession.m in Sources */,
 				845AE4671920A34C00CE4856 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				845AE4641920A34C00CE4856 /* JSQMessagesComposerTextView.m in Sources */,
 				845AE4501920A34C00CE4856 /* NSString+JSQMessages.m in Sources */,

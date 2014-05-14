@@ -14,7 +14,7 @@
 {
     // Override point for customization after application launch.
     
-    _mcManager = [[MCManager alloc] init];
+    _mcManager = [[MCChatSession alloc] init];
     
     return YES;
 }

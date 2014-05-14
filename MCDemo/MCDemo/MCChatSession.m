@@ -6,19 +6,19 @@
 //  Copyright (c) 2014 Home Inc. All rights reserved.
 //
 
-#import "MCManager.h"
+#import "MCChatSession.h"
 
  NSString *const kServiceType = @"chat-files";
 
 typedef void(^InvitationHandler) (BOOL accept, MCSession *session);
 
-@interface MCManager()<MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, UIAlertViewDelegate>
+@interface MCChatSession()<MCSessionDelegate, MCNearbyServiceAdvertiserDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, copy) InvitationHandler handler;
 
 @end
 
-@implementation MCManager
+@implementation MCChatSession
 
 - (id)init
 {

@@ -13,12 +13,11 @@ extern NSString *const kServiceType;
 
 @import MultipeerConnectivity;
 
-@interface MCManager : NSObject
+@interface MCChatSession : NSObject
 
 @property (nonatomic, strong) MCPeerID *peerID;
 @property (nonatomic, strong) MCSession *session;
 @property (strong, nonatomic) MCNearbyServiceBrowser *browser;
-
 @property (nonatomic, strong) MCNearbyServiceAdvertiser *advertiser;
 
 - (void)setupPeerAndSessionWithDisplayName:(NSString *)displayName;
