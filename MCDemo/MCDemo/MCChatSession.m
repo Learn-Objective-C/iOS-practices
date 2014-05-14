@@ -64,6 +64,9 @@ typedef void(^InvitationHandler) (BOOL accept, MCSession *session);
     if (state == MCSessionStateConnected) {
         NSDictionary *dict = @{@"peerID": peerID, @"accept": @YES};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidAcceptInvitation" object:nil userInfo:dict];
+        if ([_delegate respondsToSelector:@selector(peerIDDidJoinChatSeesion:)]) {
+            [_delegate peerIDDidJoinChatSeesion:peerID];
+        }
     } else if (state == MCSessionStateNotConnected) {
         NSDictionary *dict = @{@"peerID": peerID, @"accept": @NO};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidAcceptInvitation" object:nil userInfo:dict];
@@ -72,8 +75,11 @@ typedef void(^InvitationHandler) (BOOL accept, MCSession *session);
 
 - (void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID
 {
-    NSDictionary *dict = @{@"peerID": peerID, @"data": data};
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidReceiveDataNotification" object:nil userInfo:dict];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([_delegate respondsToSelector:@selector(didReveivedData:from:)]) {
+            [_delegate didReveivedData:data from:peerID];
+        }
+    });
 }
 
 - (void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress
@@ -112,14 +118,9 @@ typedef void(^InvitationHandler) (BOOL accept, MCSession *session);
 - (void)advertiser:(MCNearbyServiceAdvertiser *)advertiser didReceiveInvitationFromPeer:(MCPeerID *)peerID withContext:(NSData *)context invitationHandler:(void (^)(BOOL accept, MCSession *session))invitationHandler
 {
     self.handler = invitationHandler;
-    [[[UIAlertView alloc] initWithTitle:@"Invitation" message:[NSString stringWithFormat:@"%@ wants to connect", self.peerID.displayName] delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Sure", nil] show];
+    self.handler(YES, self.session);
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    BOOL accept = (buttonIndex == alertView.cancelButtonIndex)?NO:YES;
-    self.handler(accept, self.session);
-}
 
 #pragma mark - End Connection
 - (void)tearDown

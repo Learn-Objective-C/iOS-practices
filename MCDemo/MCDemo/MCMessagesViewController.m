@@ -11,7 +11,7 @@
 #import "JSQMessage.h"
 #import "JSQMessagesBubbleImageFactory.h"
 
-@interface MCMessagesViewController()
+@interface MCMessagesViewController()<MCChatSessionDelegate>
 
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
@@ -25,30 +25,13 @@
 {
     [super viewDidLoad];
     self.tabBarController.tabBar.hidden = true;
-    [self setSender:@"Long"];
+    [self setSender:[UIDevice currentDevice].name];
     self.collectionView.backgroundColor = [UIColor brownColor];
     _messsages = [NSMutableArray new];
     _appDelegate = [UIApplication sharedApplication].delegate;
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveDataWithNotification:)
-                                                 name:@"MCDidReceiveDataNotification"
-                                               object:nil];
+    _appDelegate.mcManager.delegate = self;
 }
-
-- (void)didReceiveDataWithNotification:(NSNotification *)nc
-{
-    MCPeerID *peerID = nc.userInfo[@"peerID"];
-    NSString *displayName = peerID.displayName;
     
-    NSData *receivedData = nc.userInfo[@"data"];
-    NSString *receivedText = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
-    NSLog(@"displayName: %@ %@", displayName, receivedText);
-    JSQMessage *message = [JSQMessage messageWithText:receivedText sender:displayName];
-    [_messsages addObject:message];
-    
-    [self.collectionView reloadData];
-}
-
 
 #pragma mark - JSQMessagesCollectionViewDataSource
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView messageDataForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -58,12 +41,17 @@
 
 - (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView bubbleImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [JSQMessagesBubbleImageFactory outgoingMessageBubbleImageViewWithColor:[UIColor purpleColor]];
+    JSQMessage *message = _messsages[indexPath.row];
+    if ([message.sender isEqualToString:self.sender]) {
+        return [JSQMessagesBubbleImageFactory outgoingMessageBubbleImageViewWithColor:[UIColor blueColor]];
+    }
+    return [JSQMessagesBubbleImageFactory incomingMessageBubbleImageViewWithColor:[UIColor purpleColor]];
 }
 
 - (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
+//    return [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
+    return nil;
 }
 
 
@@ -92,5 +80,29 @@
     }
     [self finishSendingMessage];
 }
+
+#pragma mark - MCChatSessionDelegate
+- (void)didReveivedData:(NSData *)data from:(MCPeerID *)peerID
+{
+    NSData *receivedData = data;
+    NSString *displayName = peerID.displayName;
+    NSString *receivedText = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+    NSLog(@"displayName: %@ %@", displayName, receivedText);
+    JSQMessage *message = [JSQMessage messageWithText:receivedText sender:displayName];
+    [_messsages addObject:message];
+    
+    [self finishReceivingMessage];
+}
+
+- (void)peerIDDidJoinChatSeesion:(MCPeerID *)peerID
+{
+    
+}
+
+- (void)didReveiveResource:(NSURL *)url from:(MCPeerID *)peerID
+{
+    
+}
+    
 
 @end

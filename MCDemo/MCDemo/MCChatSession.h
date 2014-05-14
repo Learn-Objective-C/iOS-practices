@@ -7,11 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
-
-
-extern NSString *const kServiceType;
-
 @import MultipeerConnectivity;
+
+@class MCChatSession;
+
+
+@protocol MCChatSessionDelegate <NSObject>
+
+- (void)didReveivedData:(NSData *)data from:(MCPeerID *)peerID;
+- (void)didReveiveResource:(NSURL *)url from:(MCPeerID *)peerID;
+- (void)peerIDDidJoinChatSeesion:(MCPeerID *)peerID;
+
+@end
+
 
 @interface MCChatSession : NSObject
 
@@ -19,6 +27,8 @@ extern NSString *const kServiceType;
 @property (nonatomic, strong) MCSession *session;
 @property (strong, nonatomic) MCNearbyServiceBrowser *browser;
 @property (nonatomic, strong) MCNearbyServiceAdvertiser *advertiser;
+
+@property (nonatomic, weak) id<MCChatSessionDelegate>delegate;
 
 - (void)setupPeerAndSessionWithDisplayName:(NSString *)displayName;
 - (void)setupNearbyServiceBrowser;

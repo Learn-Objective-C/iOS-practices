@@ -177,7 +177,10 @@
         cell.accessoryView = checkMarkLabel;
     } else if ([_declinedPeers containsObject:cellPeerID]) {
         if ([cell.accessoryView isKindOfClass:
-             [UIActivityIndicatorView class]]) { UIActivityIndicatorView *activityIndicatorView = (UIActivityIndicatorView *)cell.accessoryView; [activityIndicatorView stopAnimating];
+             [UIActivityIndicatorView class]])
+        {
+            UIActivityIndicatorView *activityIndicatorView = (UIActivityIndicatorView *)cell.accessoryView;
+            [activityIndicatorView stopAnimating];
         }
         UILabel *unCheckmarkLabel =
         [[UILabel alloc]
@@ -190,7 +193,7 @@
         activityIndicatorView.hidesWhenStopped = YES;
         cell.accessoryView = activityIndicatorView;
         [activityIndicatorView startAnimating];
-        [_appDelegate.mcManager.browser invitePeer:cellPeerID toSession:_appDelegate.mcManager.session withContext:[@"Making Contact" dataUsingEncoding:NSUTF8StringEncoding] timeout:10];
+        [_appDelegate.mcManager.browser invitePeer:cellPeerID toSession:_appDelegate.mcManager.session withContext:[@"Making Contact" dataUsingEncoding:NSUTF8StringEncoding] timeout:20];
     }
     
     

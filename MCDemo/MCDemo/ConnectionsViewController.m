@@ -35,8 +35,7 @@
     _appDelegate = [UIApplication sharedApplication].delegate;
     [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
     [_appDelegate.mcManager advertiseSelf:YES];
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerDidChangeStateWithNotification:) name:@"MCDidChangeStateNotification" object:nil];
+
     _arrConnectedDevices = [NSMutableArray new];
 }
 
@@ -86,31 +85,6 @@
     
     return YES;
 }
-
-
-//- (void)peerDidChangeStateWithNotification:(NSNotification *)notification
-//{
-//    MCPeerID *peerID = notification.userInfo[@"peerID"];
-//    NSString *peerDisplayName = peerID.displayName;
-//    MCSessionState state = [notification.userInfo[@"state"] integerValue];
-//    
-//    if (state != MCSessionStateConnecting) {
-//        if (state == MCSessionStateConnected) {
-//            [_arrConnectedDevices addObject:peerDisplayName];
-//        } else if (state ==  MCSessionStateNotConnected) {
-//            if ([_arrConnectedDevices count] > 0) {
-//                int indexOfPeer = [_arrConnectedDevices indexOfObject:peerDisplayName];
-//                [_arrConnectedDevices removeObjectAtIndex:indexOfPeer];
-//            }
-//        }
-//        
-//        [_tblConnectedDevices reloadData];
-//        BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
-//        [_btnDisconnect setEnabled:!peersExist];
-//        [_txtName setEnabled:peersExist];
-//    }
-//
-//}
 
 #pragma mark - LNBrowserViewController
 - (void)browserViewControllerDidFinish:(LNBrowserViewController *)controller
