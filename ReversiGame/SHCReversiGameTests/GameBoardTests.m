@@ -53,4 +53,7 @@
                                  @"Out-of-bounds board access should raise an exception");
 }
 
+- (void)test_iLikeBreakingBuildsAndICannotLie {
+    XCTAssertTrue(false, @"The integration will fail"); }
+
 @end
