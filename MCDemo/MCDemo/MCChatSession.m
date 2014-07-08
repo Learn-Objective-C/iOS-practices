@@ -68,6 +68,7 @@ typedef void(^InvitationHandler) (BOOL accept, MCSession *session);
             [_delegate peerIDDidJoinChatSeesion:peerID];
         }
     } else if (state == MCSessionStateNotConnected) {
+        NSLog(@"Disconnect");
         NSDictionary *dict = @{@"peerID": peerID, @"accept": @NO};
         [[NSNotificationCenter defaultCenter] postNotificationName:@"MCDidAcceptInvitation" object:nil userInfo:dict];
     }

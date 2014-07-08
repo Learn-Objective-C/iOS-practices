@@ -107,10 +107,10 @@
         [self doneButtonTapped:nil];
     } else {
         if ([self.acceptedPeers count] < (self.maximumNumbers - 1)) {
-            [self showButtonDone:NO];
+            [self showButtonDone:YES];
         }
         else {
-            [self showButtonDone:YES];
+            [self showButtonDone:NO];
         }
         [self.peersTableView reloadData];
     }
@@ -121,8 +121,8 @@
 - (void)cancelButtonTapped:(id)sender
 {
     [_appDelegate.mcManager.browser stopBrowsingForPeers];
-    if ([_delegate respondsToSelector:@selector(browserViewControllerDidFinish:)]) {
-        [_delegate browserViewControllerDidFinish:self];
+    if ([_delegate respondsToSelector:@selector(browserViewControllerWasCancelled:)]) {
+        [_delegate browserViewControllerWasCancelled:self];
     }
 }
 
@@ -187,19 +187,24 @@
          initWithFrame:CGRectMake(0, 0, 20, 20)];
         unCheckmarkLabel.text = @" X ";
         cell.accessoryView = unCheckmarkLabel;
-    } else {
-        UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc]
-                                                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        activityIndicatorView.hidesWhenStopped = YES;
-        cell.accessoryView = activityIndicatorView;
-        [activityIndicatorView startAnimating];
-        [_appDelegate.mcManager.browser invitePeer:cellPeerID toSession:_appDelegate.mcManager.session withContext:[@"Making Contact" dataUsingEncoding:NSUTF8StringEncoding] timeout:20];
     }
-    
     
     cell.textLabel.text = cellPeerID.displayName;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    MCPeerID *cellPeerID = _nearbyPeers[indexPath.row];
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc]
+                                                      initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicatorView.hidesWhenStopped = YES;
+    cell.accessoryView = activityIndicatorView;
+
+    [activityIndicatorView startAnimating];
+    [_appDelegate.mcManager.browser invitePeer:cellPeerID toSession:_appDelegate.mcManager.session withContext:[@"Making Contact" dataUsingEncoding:NSUTF8StringEncoding] timeout:30];
 }
 
 #pragma mark - MCNearbyServiceBrowser delegate
@@ -216,11 +221,13 @@
 
 - (void)browser:(MCNearbyServiceBrowser *)browser lostPeer:(MCPeerID *)peerID
 {
+    NSLog(@"Lost peer %@ peerID", peerID);
     [_nearbyPeers removeObject:peerID];
     [_acceptedPeers removeObject:peerID];
     [_declinedPeers removeObject:peerID];
     
     if (_acceptedPeers.count < self.minimumNumbers - 1) {
+        NSLog(@"_acceptedPeers %d minimumNumbers %d", _acceptedPeers.count, _minimumNumbers);
         [self showButtonDone:NO];
     }
     

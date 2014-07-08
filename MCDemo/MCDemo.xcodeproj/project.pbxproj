@@ -792,12 +792,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: FPT Software Company Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Long Nguyen (M6FKXHWXBY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCDemo/MCDemo-Prefix.pch";
 				INFOPLIST_FILE = "MCDemo/MCDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9ECCE559-56DA-4C30-A3C8-A170C01A277C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -806,12 +807,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: FPT Software Company Limited";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Long Nguyen (M6FKXHWXBY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MCDemo/MCDemo-Prefix.pch";
 				INFOPLIST_FILE = "MCDemo/MCDemo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9ECCE559-56DA-4C30-A3C8-A170C01A277C";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

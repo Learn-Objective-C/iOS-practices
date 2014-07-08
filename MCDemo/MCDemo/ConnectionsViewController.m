@@ -33,7 +33,11 @@
     [super viewDidLoad];
     
     _appDelegate = [UIApplication sharedApplication].delegate;
-    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name];
+#if TARGET_IPHONE_SIMULATOR
+    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:@"SIMULATOR"];
+#else
+    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:@"LongNV"];
+#endif
     [_appDelegate.mcManager advertiseSelf:YES];
 
     _arrConnectedDevices = [NSMutableArray new];
@@ -51,7 +55,6 @@
 {
     [_appDelegate.mcManager setupNearbyServiceBrowser];
     LNBrowserViewController *browserController = [[LNBrowserViewController alloc] init];
-    browserController.view.frame = self.view.bounds;
     browserController.delegate = self;
     browserController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     [self presentViewController:browserController animated:YES completion:nil];

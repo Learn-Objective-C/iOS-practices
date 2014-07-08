@@ -26,7 +26,6 @@
     [super viewDidLoad];
     self.tabBarController.tabBar.hidden = true;
     [self setSender:[UIDevice currentDevice].name];
-    self.collectionView.backgroundColor = [UIColor brownColor];
     _messsages = [NSMutableArray new];
     _appDelegate = [UIApplication sharedApplication].delegate;
     _appDelegate.mcManager.delegate = self;
@@ -45,7 +44,7 @@
     if ([message.sender isEqualToString:self.sender]) {
         return [JSQMessagesBubbleImageFactory outgoingMessageBubbleImageViewWithColor:[UIColor blueColor]];
     }
-    return [JSQMessagesBubbleImageFactory incomingMessageBubbleImageViewWithColor:[UIColor purpleColor]];
+    return [JSQMessagesBubbleImageFactory incomingMessageBubbleImageViewWithColor:[UIColor lightGrayColor]];
 }
 
 - (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -74,6 +73,7 @@
     NSError *error;
     
     [_appDelegate.mcManager.session sendData:data toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
+    NSLog(@"peer: %@", allPeers);
     
     if (error) {
         NSLog(@"Error: %@", error.localizedDescription);
@@ -87,9 +87,15 @@
     NSData *receivedData = data;
     NSString *displayName = peerID.displayName;
     NSString *receivedText = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
-    NSLog(@"displayName: %@ %@", displayName, receivedText);
     JSQMessage *message = [JSQMessage messageWithText:receivedText sender:displayName];
     [_messsages addObject:message];
+    
+    if ([NSThread currentThread] == [NSThread mainThread]) {
+        NSLog(@"Thread %@ displayName: %@ %@", [NSThread currentThread],displayName, receivedText);
+    } else {
+        NSLog(@"displayName: %@ %@",displayName, receivedText);
+    }
+
     
     [self finishReceivingMessage];
 }
