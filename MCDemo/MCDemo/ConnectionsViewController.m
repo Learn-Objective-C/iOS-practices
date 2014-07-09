@@ -18,12 +18,20 @@
 @end
 
 @implementation ConnectionsViewController
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        _arrConnectedDevices = [NSMutableArray new];
+    }
+    
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        _arrConnectedDevices = [NSMutableArray new];
     }
     return self;
 }
@@ -32,15 +40,13 @@
 {
     [super viewDidLoad];
     
-    _appDelegate = [UIApplication sharedApplication].delegate;
+    _appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 #if TARGET_IPHONE_SIMULATOR
     [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:@"SIMULATOR"];
 #else
     [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:@"LongNV"];
 #endif
     [_appDelegate.mcManager advertiseSelf:YES];
-
-    _arrConnectedDevices = [NSMutableArray new];
 }
 
 - (void)didReceiveMemoryWarning
@@ -60,33 +66,12 @@
     [self presentViewController:browserController animated:YES completion:nil];
 }
 
-- (void)toogleVisibility:(id)sender
-{
-    [_appDelegate.mcManager advertiseSelf:_swVisible.isOn];
-}
 
 - (void)disconnect:(id)sender
 {
     [_appDelegate.mcManager tearDown];
-    _txtName.enabled = YES;
     [_arrConnectedDevices removeAllObjects];
     [_tblConnectedDevices reloadData];
-}
-
-#pragma mark - MCBrowserViewController delegate
-
-
-#pragma mark - UITextFieled delegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    [_appDelegate.mcManager tearDown];
-
-    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:_txtName.text];
-    [_appDelegate.mcManager setupNearbyServiceBrowser];
-    [_appDelegate.mcManager advertiseSelf:_swVisible.isOn];
-    
-    return YES;
 }
 
 #pragma mark - LNBrowserViewController
@@ -95,7 +80,6 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
     BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
     [_btnDisconnect setEnabled:!peersExist];
-    [_txtName setEnabled:peersExist];
     _arrConnectedDevices = [NSMutableArray arrayWithArray:_appDelegate.mcManager.session.connectedPeers];
     [self.tblConnectedDevices reloadData];
 }
@@ -105,7 +89,6 @@
     [controller dismissViewControllerAnimated:YES completion:nil];
     BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
     [_btnDisconnect setEnabled:!peersExist];
-    [_txtName setEnabled:peersExist];
     _arrConnectedDevices = [NSMutableArray arrayWithArray:_appDelegate.mcManager.session.connectedPeers];
     [self.tblConnectedDevices reloadData];
 }

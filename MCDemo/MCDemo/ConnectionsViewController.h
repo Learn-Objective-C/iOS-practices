@@ -10,15 +10,11 @@
 
 @interface ConnectionsViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet UITextField *txtName;
-@property (nonatomic, weak) IBOutlet UISwitch *swVisible;
 @property (nonatomic, weak) IBOutlet UITableView *tblConnectedDevices;
 @property (nonatomic, weak) IBOutlet UIButton *btnDisconnect;
 
 
 - (IBAction)browseForDevices:(id)sender;
-- (IBAction)toogleVisibility:(id)sender;
 - (IBAction)disconnect:(id)sender;
-//- (void)peerDidChangeStateWithNotification:(NSNotification *)notification;
 
 @end

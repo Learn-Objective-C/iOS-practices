@@ -9,19 +9,28 @@
 #import "FirstViewController.h"
 #import "MCMessagesViewController.h"
 
-@interface FirstViewController ()
+@interface FirstViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) MCMessagesViewController *messagesViewController;
+@property (nonatomic, weak) IBOutlet UITableView *tbvmessages;
+@property (nonatomic, strong) NSMutableArray *groupMessages;
 
 @end
 
 @implementation FirstViewController
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self  = [super initWithCoder:aDecoder]) {
+        _groupMessages = [NSMutableArray new];
+    }
+    
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -29,18 +38,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _messagesViewController = [MCMessagesViewController messagesViewController];
-    _messagesViewController.view.frame = CGRectInset(self.view.bounds, 0, self.tabBarController.tabBar.frame.size.height);
-    NSLog(@"%@ %f", NSStringFromCGRect(_messagesViewController.view.frame), self.tabBarController.tabBar.frame.size.height);
-    [self addChildViewController:_messagesViewController];
-    [self.view addSubview:_messagesViewController.view];
-    [_messagesViewController didMoveToParentViewController:self];
+    [_groupMessages addObject:@"nomad-group"];
+    [_tbvmessages reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UITableView delegate & datasource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.groupMessages count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    }
+    
+    cell.textLabel.text = self.groupMessages[indexPath.row];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    MCMessagesViewController *messageViewController = [MCMessagesViewController messagesViewController];
+    [self.navigationController pushViewController:messageViewController animated:YES];
 }
 
 @end

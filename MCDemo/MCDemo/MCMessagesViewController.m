@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) AppDelegate *appDelegate;
 @property (nonatomic, strong) NSMutableArray *messsages;
+@property (nonatomic, strong) NSDateFormatter *dateFormat;
 
 @end
 
@@ -29,6 +30,13 @@
     _messsages = [NSMutableArray new];
     _appDelegate = [UIApplication sharedApplication].delegate;
     _appDelegate.mcManager.delegate = self;
+}
+
+- (NSDateFormatter *)dateFormat
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateStyle = NSDateFormatterShortStyle;
+    return formatter;
 }
     
 
@@ -49,10 +57,22 @@
 
 - (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    return [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
-    return nil;
+    return [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
 }
 
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    JSQMessage *message = _messsages[indexPath.item];
+
+    NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:[self.dateFormat stringFromDate:message.date] attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+    return dateAttributedString;
+}
+
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSAttributedString *dateAttributedString = [[NSAttributedString alloc] initWithString:@"LongBubbleTop" attributes:@{NSForegroundColorAttributeName:[UIColor lightGrayColor]}];
+    return dateAttributedString;
+}
 
 #pragma mark - ColllectionView DataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -61,7 +81,6 @@
 }
 
 #pragma mark - JSQMessagesCollectionViewDelegateFlowLayout
-
 #pragma mark - MessageView Controller
 - (void)didPressSendButton:(UIButton *)button withMessageText:(NSString *)text sender:(NSString *)sender date:(NSDate *)date
 {

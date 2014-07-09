@@ -8,7 +8,7 @@
 
 #import "MCChatSession.h"
 
- NSString *const kServiceType = @"chat-files";
+NSString *const kServiceType = @"nomad-group";
 
 typedef void(^InvitationHandler) (BOOL accept, MCSession *session);
 
