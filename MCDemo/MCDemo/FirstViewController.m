@@ -8,6 +8,7 @@
 
 #import "FirstViewController.h"
 #import "MCMessagesViewController.h"
+#import "MCSettingsViewController.h"
 
 @interface FirstViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -42,6 +43,11 @@
     [_tbvmessages reloadData];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.tabBarController.tabBar.hidden = false;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -74,7 +80,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     MCMessagesViewController *messageViewController = [MCMessagesViewController messagesViewController];
+    messageViewController.messageTitle = self.groupMessages[indexPath.row];
     [self.navigationController pushViewController:messageViewController animated:YES];
 }
+
 
 @end

@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "JSQMessage.h"
 #import "JSQMessagesBubbleImageFactory.h"
+#import "MCUserDataManager.h"
 
 @interface MCMessagesViewController()<MCChatSessionDelegate>
 
@@ -25,8 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tabBarController.tabBar.hidden = true;
+    self.tabBarController.tabBar.hidden = YES;
     [self setSender:[UIDevice currentDevice].name];
+    self.navigationItem.title = _messageTitle;
     _messsages = [NSMutableArray new];
     _appDelegate = [UIApplication sharedApplication].delegate;
     _appDelegate.mcManager.delegate = self;
@@ -57,7 +59,12 @@
 
 - (UIImageView *)collectionView:(JSQMessagesCollectionView *)collectionView avatarImageViewForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    JSQMessage *message = _messsages[indexPath.row];
+    if ([message.sender isEqualToString:self.sender]) {
+        return [[UIImageView alloc] initWithImage:[MCUserDataManager shared].avatarIcon];
+    }
     return [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
+
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath

@@ -66,6 +66,7 @@
     [self.view addSubview:navBar];
     _appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
     _appDelegate.mcManager.browser.delegate = self;
+    [self showButtonDone:NO];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerConnected:) name:@"MCDidAcceptInvitation" object:nil];
 }

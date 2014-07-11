@@ -26,6 +26,8 @@
 		4172E4B4191A7236003875D8 /* MCChatSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 4172E4B3191A7236003875D8 /* MCChatSession.m */; };
 		4172E4B7191BDAF5003875D8 /* sample_file1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4172E4B6191BDAF5003875D8 /* sample_file1.txt */; };
 		4172E4B9191BDAFA003875D8 /* sample_file2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4172E4B8191BDAFA003875D8 /* sample_file2.txt */; };
+		8406D5B4196FC65200E55826 /* MCSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8406D5B3196FC65200E55826 /* MCSettingsViewController.m */; };
+		8406D5B7196FC7A800E55826 /* MCUserDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8406D5B6196FC7A800E55826 /* MCUserDataManager.m */; };
 		845AE43D1920A34C00CE4856 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 845AE3E81920A34C00CE4856 /* bubble.png */; };
 		845AE43E1920A34C00CE4856 /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 845AE3E91920A34C00CE4856 /* bubble@2x.png */; };
 		845AE43F1920A34C00CE4856 /* bubble_min.png in Resources */ = {isa = PBXBuildFile; fileRef = 845AE3EA1920A34C00CE4856 /* bubble_min.png */; };
@@ -119,6 +121,10 @@
 		4172E4B5191A7DB5003875D8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4172E4B6191BDAF5003875D8 /* sample_file1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_file1.txt; sourceTree = "<group>"; };
 		4172E4B8191BDAFA003875D8 /* sample_file2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample_file2.txt; sourceTree = "<group>"; };
+		8406D5B2196FC65200E55826 /* MCSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSettingsViewController.h; sourceTree = "<group>"; };
+		8406D5B3196FC65200E55826 /* MCSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSettingsViewController.m; sourceTree = "<group>"; };
+		8406D5B5196FC7A800E55826 /* MCUserDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCUserDataManager.h; sourceTree = "<group>"; };
+		8406D5B6196FC7A800E55826 /* MCUserDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCUserDataManager.m; sourceTree = "<group>"; };
 		845AE3E81920A34C00CE4856 /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
 		845AE3E91920A34C00CE4856 /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
 		845AE3EA1920A34C00CE4856 /* bubble_min.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_min.png; sourceTree = "<group>"; };
@@ -278,6 +284,10 @@
 				4172E4B3191A7236003875D8 /* MCChatSession.m */,
 				84BB74481922196400D0BC05 /* FirstViewController.h */,
 				84BB74491922196400D0BC05 /* FirstViewController.m */,
+				8406D5B2196FC65200E55826 /* MCSettingsViewController.h */,
+				8406D5B3196FC65200E55826 /* MCSettingsViewController.m */,
+				8406D5B5196FC7A800E55826 /* MCUserDataManager.h */,
+				8406D5B6196FC7A800E55826 /* MCUserDataManager.m */,
 			);
 			path = MCDemo;
 			sourceTree = "<group>";
@@ -640,9 +650,11 @@
 				845AE4661920A34C00CE4856 /* JSQMessagesLabel.m in Sources */,
 				845AE4601920A34C00CE4856 /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
 				4172E4B1191A701C003875D8 /* ConnectionsViewController.m in Sources */,
+				8406D5B7196FC7A800E55826 /* MCUserDataManager.m in Sources */,
 				845AE4541920A34C00CE4856 /* JSQMessagesKeyboardController.m in Sources */,
 				845AE45D1920A34C00CE4856 /* JSQMessage.m in Sources */,
 				4172E4B4191A7236003875D8 /* MCChatSession.m in Sources */,
+				8406D5B4196FC65200E55826 /* MCSettingsViewController.m in Sources */,
 				845AE4671920A34C00CE4856 /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				845AE4641920A34C00CE4856 /* JSQMessagesComposerTextView.m in Sources */,
 				845AE4501920A34C00CE4856 /* NSString+JSQMessages.m in Sources */,

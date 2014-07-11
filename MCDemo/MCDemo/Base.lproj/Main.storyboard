@@ -28,14 +28,83 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="49L-pv-EAY"/>
+                    <navigationItem key="navigationItem" id="49L-pv-EAY">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="compose" id="BhY-Zc-a1d">
+                            <connections>
+                                <segue destination="Dby-W4-nkV" kind="modal" id="5wY-jY-vaW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tbvmessages" destination="Tft-p4-fes" id="Rtj-ZN-WA4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qh2-T1-AhA" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071" y="-486"/>
+            <point key="canvasLocation" x="1103" y="-486"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="Ods-Nz-Rcd">
+            <objects>
+                <viewController id="HBs-Nw-Je6" customClass="MCSettingsViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zif-dx-mXc"/>
+                        <viewControllerLayoutGuide type="bottom" id="X5O-Jq-KZW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JvU-vU-P6c">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-3V-2Wo">
+                                <rect key="frame" x="110" y="86" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s6W-jF-6rv">
+                                <rect key="frame" x="0.0" y="206" width="320" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mq4-Mi-5gt">
+                                        <rect key="frame" x="20" y="9" width="51" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="enter name here..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="O1B-5I-KYU">
+                                        <rect key="frame" x="79" y="5" width="221" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="HBs-Nw-Je6" id="5Yq-Cb-ayT"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Iks-IW-hG1">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="C1w-kl-awh">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="HBs-Nw-Je6" id="hNe-Nd-Jzq"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="Iyx-pT-sBS">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="HBs-Nw-Je6" id="nUt-WZ-xgf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="imvAvatar" destination="iHw-3V-2Wo" id="WU0-Kd-ZqE"/>
+                        <outlet property="tfName" destination="O1B-5I-KYU" id="rAc-CE-aAQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Idq-kF-6DO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2089" y="-486"/>
         </scene>
         <!--Second View Controller - Second-->
         <scene sceneID="ot8-2e-RuS">
@@ -198,6 +267,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roF-cS-7Iu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="545" y="-486"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eCA-p5-uNh">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Dby-W4-nkV" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qWz-Uh-3Jh">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="HBs-Nw-Je6" kind="relationship" relationship="rootViewController" id="XdV-rz-Wa4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8XD-xE-QHz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1563" y="-486"/>
         </scene>
     </scenes>
     <resources>
