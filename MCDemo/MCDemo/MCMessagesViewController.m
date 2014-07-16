@@ -61,10 +61,15 @@
 {
     JSQMessage *message = _messsages[indexPath.row];
     if ([message.sender isEqualToString:self.sender]) {
-        return [[UIImageView alloc] initWithImage:[MCUserDataManager shared].avatarIcon];
+        UIImageView *avatarIconView = [[UIImageView alloc] initWithImage:[MCUserDataManager shared].avatarIcon];
+        avatarIconView.layer.cornerRadius = 5.0f;
+        avatarIconView.layer.masksToBounds = YES;
+        return avatarIconView;
     }
-    return [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
-
+    UIImageView *defaultIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
+    defaultIconView.layer.cornerRadius = 5.0f;
+    defaultIconView.layer.masksToBounds = YES;
+    return defaultIconView;
 }
 
 - (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath

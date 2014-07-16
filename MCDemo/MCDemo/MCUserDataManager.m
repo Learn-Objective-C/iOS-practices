@@ -9,6 +9,7 @@
 #import "MCUserDataManager.h"
 
 @implementation MCUserDataManager
+@synthesize avatarImage = _avatarImage;
 
 + (instancetype)shared
 {
@@ -27,7 +28,7 @@
         UIGraphicsBeginImageContext(CGSizeMake(34, 34));
         [_avatarImage drawInRect:CGRectMake(0, 0, 34, 34)];
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        _avatarImage = image;
+        _avatarIcon = image;
     }
     
     return _avatarIcon;
@@ -41,6 +42,12 @@
     }
     
     return _avatarImage;
+}
+
+- (void)setAvatarImage:(UIImage *)avatarImage
+{
+    _avatarImage = avatarImage;
+    _avatarIcon = nil;
 }
 
 - (NSString *)userName
