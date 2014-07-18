@@ -62,12 +62,16 @@
     JSQMessage *message = _messsages[indexPath.row];
     if ([message.sender isEqualToString:self.sender]) {
         UIImageView *avatarIconView = [[UIImageView alloc] initWithImage:[MCUserDataManager shared].avatarIcon];
-        avatarIconView.layer.cornerRadius = 5.0f;
+        avatarIconView.layer.borderWidth = 1.0f;
+        avatarIconView.layer.borderColor = [UIColor blackColor].CGColor;
+        avatarIconView.layer.cornerRadius = 20.0f;
         avatarIconView.layer.masksToBounds = YES;
         return avatarIconView;
     }
     UIImageView *defaultIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"anonymous"]];
-    defaultIconView.layer.cornerRadius = 5.0f;
+    defaultIconView.layer.borderWidth = 1.0f;
+    defaultIconView.layer.borderColor = [UIColor blackColor].CGColor;
+    defaultIconView.layer.cornerRadius = 20.0f;
     defaultIconView.layer.masksToBounds = YES;
     return defaultIconView;
 }
@@ -104,7 +108,6 @@
     NSError *error;
     
     [_appDelegate.mcManager.session sendData:data toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
-    NSLog(@"peer: %@", allPeers);
     
     if (error) {
         NSLog(@"Error: %@", error.localizedDescription);

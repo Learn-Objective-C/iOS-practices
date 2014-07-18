@@ -31,7 +31,7 @@
                     <navigationItem key="navigationItem" id="49L-pv-EAY">
                         <barButtonItem key="rightBarButtonItem" style="plain" systemItem="compose" id="BhY-Zc-a1d">
                             <connections>
-                                <segue destination="Dby-W4-nkV" kind="modal" id="5wY-jY-vaW"/>
+                                <segue destination="Dby-W4-nkV" kind="modal" identifier="openSetting" id="5wY-jY-vaW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -237,7 +237,8 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="JQR-rB-NYL">
                         <rect key="frame" x="0.0" y="431" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.40622877038043481" blue="3.3316655067204085e-05" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.25365149456521741" green="0.0" blue="0.2536306914612329" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="TJK-ff-bCp" kind="relationship" relationship="viewControllers" id="SUk-Ux-ee1"/>
@@ -276,6 +277,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qWz-Uh-3Jh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.96359120244565222" green="0.48754688298161475" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -284,7 +286,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8XD-xE-QHz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1563" y="-486"/>
+            <point key="canvasLocation" x="1588" y="-486"/>
         </scene>
     </scenes>
     <resources>

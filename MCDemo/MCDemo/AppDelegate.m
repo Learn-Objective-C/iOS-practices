@@ -16,6 +16,11 @@
     
     _mcManager = [[MCChatSession alloc] init];
     
+    [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:246.0/255.0 green:124.0/255 blue:0 alpha:1.0]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0 green:93.0/255.0 blue:0 alpha:1.0]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:0 green:93.0/255.0 blue:0 alpha:1.0]];
+    [[UITabBar appearance ]setTintColor:[UIColor colorWithRed:246.0/255.0 green:124.0/255 blue:0 alpha:1.0]];
+    
     return YES;
 }
 							
@@ -47,3 +52,4 @@
 }
 
 @end
+;

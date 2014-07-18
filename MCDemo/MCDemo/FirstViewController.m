@@ -43,6 +43,14 @@
     [_tbvmessages reloadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self performSegueWithIdentifier:@"openSetting" sender:nil];
+    });
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     self.tabBarController.tabBar.hidden = false;
