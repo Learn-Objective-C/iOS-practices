@@ -41,12 +41,12 @@
     [super viewDidLoad];
     
     _appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-#if TARGET_IPHONE_SIMULATOR
-    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:@"SIMULATOR"];
-#else
-    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:@"LongNV"];
-#endif
-    [_appDelegate.mcManager advertiseSelf:YES];
+//#if TARGET_IPHONE_SIMULATOR
+//    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:@"SIMULATOR"];
+//#else
+//    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:@"LongNV"];
+//#endif
+//    [_appDelegate.mcManager advertiseSelf:YES];
 }
 
 - (void)didReceiveMemoryWarning

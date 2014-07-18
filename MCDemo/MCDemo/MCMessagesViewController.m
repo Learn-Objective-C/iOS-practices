@@ -104,7 +104,6 @@
     NSError *error;
     
     [_appDelegate.mcManager.session sendData:data toPeers:allPeers withMode:MCSessionSendDataReliable error:&error];
-    NSLog(@"peer: %@", allPeers);
     
     if (error) {
         NSLog(@"Error: %@", error.localizedDescription);
