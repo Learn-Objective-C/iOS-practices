@@ -60,6 +60,10 @@ class ViewController: UIViewController {
       status.hidden = true
       status.center = loginButton.center
       view.addSubview(status)
+        
+        status.userInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: "didTapStatus")
+        status.addGestureRecognizer(tap)
       
       //add the status label
       label.frame = CGRect(x: 0, y: 0, width: status.frame.size.width, height: status.frame.size.height)
@@ -74,9 +78,6 @@ class ViewController: UIViewController {
       
       username.layer.position.x -= view.bounds.width
       password.layer.position.x -= view.bounds.width
-        
-      loginButton.layer.position.y += 100
-      loginButton.layer.opacity = 0
     }
   
     override func viewDidAppear(animated: Bool) {
@@ -100,21 +101,16 @@ class ViewController: UIViewController {
         flyRight.beginTime = CACurrentMediaTime() + 0.4
         password.layer.addAnimation(flyRight, forKey: nil)
         
-        
-        let flyUpAndFadeIn = CAAnimationGroup()
-        flyUpAndFadeIn.beginTime = CACurrentMediaTime() + 0.5
-        flyUpAndFadeIn.duration = 0.5
-        flyUpAndFadeIn.delegate = self
-        flyUpAndFadeIn.setValue("loginButton", forKey: "name")
-        
-      let flyUp = CABasicAnimation(keyPath: "position.y")
-        flyUp.toValue = loginButton.layer.position.y - 100
-        
-        let fadeIn = CABasicAnimation(keyPath: "opacity")
-        fadeIn.toValue = 1
-        
-        flyUpAndFadeIn.animations = [flyUp, fadeIn]
-        loginButton.layer.addAnimation(flyUpAndFadeIn, forKey: nil)
+        let loginButtonAnimation = CAKeyframeAnimation(keyPath: "position")
+        loginButtonAnimation.duration = 1.5
+        loginButtonAnimation.values = [
+            NSValue(CGPoint: CGPoint(x: -view.bounds.size.width / 2, y: loginButton.layer.position.y + 100)),
+            NSValue(CGPoint: CGPoint(x: view.bounds.size.width / 2, y: loginButton.layer.position.y + 100)),
+            NSValue(CGPoint: CGPoint(x: view.bounds.size.width / 2, y: loginButton.layer.position.y))
+        ]
+        loginButtonAnimation.keyTimes = [0.0, 0.5, 1.0]
+        loginButtonAnimation.additive = false
+        loginButton.layer.addAnimation(loginButtonAnimation, forKey: nil)
         
         
 
@@ -136,6 +132,13 @@ class ViewController: UIViewController {
             } else if name == "loginButton" {
                 loginButton.layer.position.y -= 100
                 loginButton.layer.opacity = 1
+            } else if name == "cloud" {
+                let cloud = anim.valueForKey("view") as UIImageView
+                cloud.frame.origin.x = -self.cloud1.frame.width
+                delay(seconds: 0.1, { () -> () in
+                    self.animateCloud(cloud)
+                })
+                
             }
         }
     }
@@ -234,22 +237,35 @@ class ViewController: UIViewController {
         
     })
     
+    let bounce = CAKeyframeAnimation(keyPath: "transform.rotation.z")
+    bounce.values = [0.0, -M_PI_4/2, M_PI_4/2, 0.0]
+    bounce.keyTimes = [0.0, 0.33, 0.67, 1.0]
+    bounce.additive = true
+    bounce.repeatCount = HUGE
+    status.layer.addAnimation(bounce, forKey: "wobble")
+    
   }
 
   func animateCloud(cloud: UIImageView) {
     //animate clouds
+    cloud.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
     let cloudSpeed = 20.0 / Double(view.frame.size.width)
     let duration: NSTimeInterval = Double(view.frame.size.width - cloud.frame.origin.x) * cloudSpeed
     
-    UIView.animateWithDuration(duration, delay: 0.0, options: .CurveLinear, animations: {
-      //move cloud to right edge
-      cloud.frame.origin.x = self.view.bounds.size.width
-      }, completion: {_ in
-        //reset cloud
-        cloud.frame.origin.x = -self.cloud1.frame.size.width
-        self.animateCloud(cloud);
-    });
+    let cloudAnimation = CABasicAnimation(keyPath: "position.x")
+    cloudAnimation.duration = duration
+    cloudAnimation.toValue = self.view.bounds.width
+    cloudAnimation.setValue("cloud", forKey: "name")
+    cloudAnimation.setValue(cloud, forKey: "view")
+    cloudAnimation.delegate = self
+    cloud.layer.addAnimation(cloudAnimation, forKey: nil)
   }
 
+    func didTapStatus() {
+        if let wobble = status.layer.animationForKey("wobble") {
+            status.layer.removeAnimationForKey("wobble")
+        }
+    }
+    
 }
 
