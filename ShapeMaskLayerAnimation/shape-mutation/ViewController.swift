@@ -40,16 +40,31 @@ class ViewController: UIViewController {
     
     status.font = arialRounded
     vs.font = arialRounded
-    searchAgain.titleLabel.font = arialRounded
+    searchAgain.titleLabel!.font = arialRounded
+    
+    vs.alpha = 0
+    searchAgain.alpha = 0
   }
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     
+    searchForOpponent()
+    
   }
+    
+    func searchForOpponent() {
+//        let bounceXOffset:CGFloat = 46.0
+//        let leftBouncePoint = CGPoint(x: 160.0 + bounceXOffset, y: myAvatar.center.y)
+//        myAvatar.bounceOffPoint(leftBouncePoint, morphSize: CGSize(width: 75, height: 100))
+//        let rightBouncePoint = CGPoint(x: 160.0 - bounceXOffset, y: myAvatar.center.y)
+//        opponentAvatar.bounceOffPoint(rightBouncePoint, morphSize: CGSize(width: 75, height: 100))
+        myAvatar.animateToSquare()
+        opponentAvatar.animateToSquare()
+    }
       
   @IBAction func actionSearchAgain() {
-    UIApplication.sharedApplication().keyWindow!.rootViewController = storyboard.instantiateViewControllerWithIdentifier("ViewController") as UIViewController
+    UIApplication.sharedApplication().keyWindow!.rootViewController = storyboard?.instantiateViewControllerWithIdentifier("ViewController") as UIViewController
   }
 }
 

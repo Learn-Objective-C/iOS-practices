@@ -40,7 +40,7 @@ class AvatarView: UIView {
         backgroundColor = UIColor.clearColor()
         
         //add the initial image of the avatar view
-        let blankImage = UIImage(named: "empty.png")
+        let blankImage = UIImage(named: "empty.png")!
         photoLayer.contents = blankImage.CGImage
         photoLayer.frame = CGRect(
             x: (bounds.size.width - blankImage.size.width + lineWidth)/2,
@@ -68,6 +68,46 @@ class AvatarView: UIView {
         label.textAlignment = .Center
         label.textColor = UIColor.blackColor()
         addSubview(label)
+    }
+    
+    func bounceOffPoint(bouncePoint: CGPoint, morphSize: CGSize) {
+        
+        let originalCenter = center
+        
+        UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+            self.center = bouncePoint
+        }) { (_) -> Void in
+            UIView.animateWithDuration(self.animationDuration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+                self.center = originalCenter
+                }, completion: {
+                    _ in
+                    delay(seconds: 0.1, { () -> () in
+                        self.bounceOffPoint(bouncePoint, morphSize: morphSize)
+                    })
+            })
+        }
+        
+        let morphedFrame = (originalCenter.x > bouncePoint.x) ? CGRect(x: 0, y: bounds.height - morphSize.height, width: morphSize.width, height: morphSize.height) : CGRect(x: bounds.width - morphSize.width, y: bounds.height - morphSize.height, width: morphSize.width, height: morphSize.height)
+        
+        
+        let morphAnimation = CABasicAnimation(keyPath: "path")
+        morphAnimation.duration = animationDuration
+        morphAnimation.toValue = UIBezierPath(ovalInRect: morphedFrame).CGPath
+        morphAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        circleLayer.addAnimation(morphAnimation, forKey: nil)
+        maskLayer.addAnimation(morphAnimation, forKey: nil)
+    }
+    
+    func animateToSquare() {
+        let morphAnimation = CABasicAnimation(keyPath: "path")
+        morphAnimation.duration = animationDuration
+        morphAnimation.fromValue = circleLayer.path
+        morphAnimation.toValue = UIBezierPath(rect: bounds).CGPath
+        morphAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        morphAnimation.removedOnCompletion = false
+        morphAnimation.fillMode = kCAFillModeForwards
+        circleLayer.addAnimation(morphAnimation, forKey: nil)
+        maskLayer.addAnimation(morphAnimation, forKey: nil)
     }
     
 }
