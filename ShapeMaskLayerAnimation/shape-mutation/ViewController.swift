@@ -54,17 +54,17 @@ class ViewController: UIViewController {
   }
     
     func searchForOpponent() {
-//        let bounceXOffset:CGFloat = 46.0
-//        let leftBouncePoint = CGPoint(x: 160.0 + bounceXOffset, y: myAvatar.center.y)
-//        myAvatar.bounceOffPoint(leftBouncePoint, morphSize: CGSize(width: 75, height: 100))
-//        let rightBouncePoint = CGPoint(x: 160.0 - bounceXOffset, y: myAvatar.center.y)
-//        opponentAvatar.bounceOffPoint(rightBouncePoint, morphSize: CGSize(width: 75, height: 100))
-        myAvatar.animateToSquare()
-        opponentAvatar.animateToSquare()
+        let bounceXOffset:CGFloat = 46.0
+        let leftBouncePoint = CGPoint(x: 160.0 + bounceXOffset, y: myAvatar.center.y)
+        myAvatar.bounceOffPoint(leftBouncePoint, morphSize: CGSize(width: 75, height: 100))
+        let rightBouncePoint = CGPoint(x: 160.0 - bounceXOffset, y: myAvatar.center.y)
+        opponentAvatar.bounceOffPoint(rightBouncePoint, morphSize: CGSize(width: 75, height: 100))
+//        myAvatar.animateToSquare()
+//        opponentAvatar.animateToSquare()
     }
       
   @IBAction func actionSearchAgain() {
-    UIApplication.sharedApplication().keyWindow!.rootViewController = storyboard?.instantiateViewControllerWithIdentifier("ViewController") as UIViewController
+    UIApplication.sharedApplication().keyWindow!.rootViewController = storyboard?.instantiateViewControllerWithIdentifier("ViewController") as? UIViewController
   }
 }
 
