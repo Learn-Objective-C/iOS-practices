@@ -13,7 +13,7 @@ class DetailViewController: UITableViewController {
     
     let maskLayer: CAShapeLayer = RWLogoLayer.logoLayer()
     let transition = TransitionController()
-    
+    var isInteractive = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,10 @@ class DetailViewController: UITableViewController {
         view.layer.mask = maskLayer
         
         navigationController?.delegate = self
+        
+        // add pan gesture didPan
+        let pan = UIPanGestureRecognizer(target: self, action: "didPan:")
+        view.addGestureRecognizer(pan)
         
     }
     
@@ -56,12 +60,35 @@ class DetailViewController: UITableViewController {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
+    func didPan(recognizer: UIPanGestureRecognizer) {
+        if transition.animating {
+            return
+        }
+        
+        if recognizer.state == .Began {
+            isInteractive = true
+            navigationController?.popViewControllerAnimated(true)
+        } else {
+            isInteractive = false
+        }
+        
+        transition.handlePan(recognizer)
+    }
+    
 }
 
 extension DetailViewController : UINavigationControllerDelegate {
     func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if operation == .Pop {
             transition.operation = operation
+            return transition
+        } else {
+            return nil
+        }
+    }
+    
+    func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        if (isInteractive && transition.animating == false) {
             return transition
         } else {
             return nil

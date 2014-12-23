@@ -41,6 +41,9 @@ class MasterViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: Selector("didTap"))
         view.addGestureRecognizer(tap)
         
+//        let pan = UIPanGestureRecognizer(target: self, action: "didPan:")
+//        view.addGestureRecognizer(pan)
+        
         // add the logo to the view
         logo.position = CGPoint(x: view.layer.bounds.size.width/2,
             y: view.layer.bounds.size.height/2 + 30)
@@ -57,6 +60,18 @@ class MasterViewController: UIViewController {
         performSegueWithIdentifier("details", sender: nil)
     }
     
+    func didPan(recognizer: UIPanGestureRecognizer) {
+        if transition.animating {
+            return
+        }
+        
+        if recognizer.state == .Began {
+            performSegueWithIdentifier("details", sender: nil)
+        }
+        
+        transition.handlePan(recognizer)
+    }
+    
 }
 
 
@@ -69,6 +84,17 @@ extension MasterViewController : UINavigationControllerDelegate {
         } else {
             return nil
         }
+    }
+    
+    
+    func navigationController(navigationController: UINavigationController, interactionControllerForAnimationController animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        
+        if transition.animating {
+            return nil
+        } else {
+            return transition
+        }
+        
     }
 }
 

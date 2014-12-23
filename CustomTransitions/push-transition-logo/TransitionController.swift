@@ -9,7 +9,7 @@
 import UIKit
 import QuartzCore
 
-class TransitionController: NSObject, UIViewControllerAnimatedTransitioning {
+class TransitionController: UIPercentDrivenInteractiveTransition, UIViewControllerAnimatedTransitioning {
     
     let animationDuration = 1.0
     
@@ -61,7 +61,7 @@ class TransitionController: NSObject, UIViewControllerAnimatedTransitioning {
             transitionContext.containerView().insertSubview(toVC.view, belowSubview: fromVC.view)
             
             UIView.animateWithDuration(animationDuration, animations: { () -> Void in
-                fromVC.view.layer.transform = CATransform3DMakeScale(0.01, 0.01, 1.0)
+                fromVC.view.transform = CGAffineTransformMakeScale(0.01, 0.01)
             }, completion: { _ in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })
@@ -72,9 +72,61 @@ class TransitionController: NSObject, UIViewControllerAnimatedTransitioning {
     override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
         if let context = storedContext {
             context.completeTransition(!context.transitionWasCancelled())
-            storedContext = nil
-            animating = false
+        }
+        storedContext = nil
+        animating = false
+    }
+    
+    func handlePan(recognizer: UIPanGestureRecognizer) {
+        
+        let translation = recognizer.translationInView(recognizer.view!)
+        var progress: CGFloat = abs(translation.x / 200)
+        progress = min(max(progress, 0.0), 1.0)
+        
+        switch recognizer.state {
+        case .Changed:
+            updateInteractiveTransition(progress)
+        case .Cancelled:
+            fallthrough
+        case .Ended:
+            if progress < 0.5 {
+                // cancel
+                completionSpeed = 1.0 - progress
+                cancelInteractiveTransition()
+            } else {
+                // complete
+                completionSpeed = progress
+                finishInteractiveTransition()
+            }
+            animating = true
+        default:
+            break
         }
     }
+    
+    override func startInteractiveTransition(transitionContext: UIViewControllerContextTransitioning) {
+        super.startInteractiveTransition(transitionContext)
+        storedContext = transitionContext
+    }
+    
+    override func finishInteractiveTransition() {
+        super.finishInteractiveTransition()
+        
+        if let layer = storedContext?.containerView().layer {
+            layer.beginTime = CACurrentMediaTime()
+        }
+    }
+    
+    
+    override func cancelInteractiveTransition() {
+        super.cancelInteractiveTransition()
+        
+        if let layer = storedContext?.containerView().layer {
+            layer.speed = -1.0
+            layer.beginTime = CACurrentMediaTime()
+        }
+    }
+    
+    
     
 }
